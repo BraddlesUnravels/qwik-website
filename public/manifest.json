@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+  "name": "qwik-website",
+  "short_name": "Portfolio",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#09090b",
+  "description": "Personal portfolio landing page"
+}

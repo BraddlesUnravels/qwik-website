@@ -1,0 +1,29 @@
+# Dependencies
+node_modules
+
+# Build
+dist
+server
+tmp
+build
+tsc-out
+inspiration
+raw-content
+
+# Caches and logs
+.cache
+.rollup.cache
+*.log
+tsconfig.tsbuildinfo
+
+# Editor / OS
+.DS_Store
+.history
+.lh
+.vscode
+.idea
+
+# Env
+.env
+.env.*
+!.env.example
