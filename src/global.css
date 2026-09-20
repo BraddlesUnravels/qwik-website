@@ -1,12 +1,4 @@
 @import "tailwindcss";
-
-html {
-  -webkit-text-size-adjust: 100%;
-  tab-size: 4;
-}
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  line-height: inherit;
-}
+@import "./theme/fonts.css";
+@import "./theme/theme.css";
+@import "./theme/base.css";

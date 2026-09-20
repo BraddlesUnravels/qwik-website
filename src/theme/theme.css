@@ -1,0 +1,22 @@
+@layer theme {
+  :root {
+    --color-canvas: oklch(0.12 0.018 265);
+    --color-canvas-soft: oklch(0.155 0.021 265);
+    --color-surface: oklch(0.18 0.022 265);
+    --color-surface-raised: oklch(0.215 0.025 265);
+    --color-ink: oklch(0.97 0.008 255);
+    --color-ink-soft: oklch(0.78 0.018 255);
+    --color-ink-muted: oklch(0.63 0.022 255);
+    --color-line: oklch(0.35 0.025 265);
+    --color-brand: oklch(0.72 0.17 282);
+    --color-brand-bright: oklch(0.79 0.16 282);
+    --color-accent: oklch(0.78 0.13 210);
+    --color-success: oklch(0.79 0.14 155);
+
+    --radius-card: 1.5rem;
+    --radius-panel: 2rem;
+
+    --shadow-card: 0 1px 0 rgb(255 255 255 / 0.04) inset, 0 24px 80px rgb(0 0 0 / 0.28);
+    --shadow-glow: 0 0 80px rgb(124 63 235 / 0.18);
+  }
+}
