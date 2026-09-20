@@ -11,7 +11,7 @@ export default function (opts: RenderToStreamOptions) {
   return renderToStream(<Root />, {
     ...opts,
     containerAttributes: {
-      lang: "en-us",
+      lang: "en-AU",
       ...opts.containerAttributes,
     },
     serverData: {

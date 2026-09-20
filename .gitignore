@@ -8,7 +8,6 @@ tmp
 build
 tsc-out
 inspiration
-raw-content
 
 # Caches and logs
 .cache
