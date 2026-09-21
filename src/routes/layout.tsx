@@ -1,7 +1,7 @@
 import { component$, Slot } from "@builder.io/qwik";
 import type { RequestHandler } from "@builder.io/qwik-city";
-import { SiteFooter } from "~/components/layout/site-footer";
-import { SiteHeader } from "~/components/layout/site-header";
+import EdgeLitBackDrop from "~/components/layout/background";
+import SiteHeader from "~/components/layout/site-header";
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {
   cacheControl({
@@ -13,17 +13,20 @@ export const onGet: RequestHandler = async ({ cacheControl }) => {
 
 export default component$(() => {
   return (
-    <div class="min-h-screen bg-zinc-950 text-zinc-100 antialiased">
-      <a
-        href="#main-content"
-        class="sr-only z-50 rounded-md bg-zinc-100 px-4 py-2 text-zinc-950 focus:not-sr-only focus:absolute focus:top-4 focus:left-4"
-      >
-        Skip to content
-      </a>
-
-      <SiteHeader />
-      <Slot />
-      <SiteFooter />
+    <div id="layout" class="relative min-h-screen bg-zinc-950 text-zinc-100 antialiased">
+      {/* 
+        No negative z-index: #layout doesn't form a stacking context, 
+        so -z would paint behind its own bg-zinc-950 fill. 
+        DOM order alone keeps this behind the content below. 
+      */}
+      <div class="fixed inset-0 overflow-hidden">
+        <EdgeLitBackDrop />
+      </div>
+      {/* Must be positioned (relative) to paint above the fixed background regardless of DOM order. */}
+      <div class="relative">
+        <SiteHeader />
+        <Slot />
+      </div>
     </div>
   );
 });

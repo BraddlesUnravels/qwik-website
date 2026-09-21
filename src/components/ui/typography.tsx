@@ -12,7 +12,7 @@ type TypographyVariant =
   | "small"
   | "eyebrow";
 
-type TypographyTone = "default" | "muted" | "accent";
+type TypographyTone = "default" | "muted" | "accent" | "emerald" | "teal";
 
 interface TypographyProps {
   as?: TypographyElement;
@@ -25,14 +25,14 @@ interface TypographyProps {
 
 const variants: Record<TypographyVariant, string> = {
   display:
-    "text-5xl font-semibold leading-[0.96] tracking-[-0.055em] sm:text-6xl lg:text-7xl",
+    "text-6xl font-semibold leading-[0.96] tracking-[-0.055em]",
   "heading-1":
-    "text-4xl font-semibold leading-tight tracking-[-0.04em] sm:text-5xl",
+    "text-5xl font-semibold leading-tight tracking-[-0.04em]",
   "heading-2":
-    "text-3xl font-semibold leading-tight tracking-[-0.035em] sm:text-4xl",
+    "text-4xl font-semibold leading-tight tracking-[-0.035em]",
   "heading-3":
-    "text-xl font-semibold leading-tight tracking-[-0.025em] sm:text-2xl",
-  "body-large": "text-lg leading-8 sm:text-xl",
+    "text-2xl font-semibold leading-tight tracking-[-0.025em]",
+  "body-large": "text-xl leading-8",
   body: "text-base leading-7",
   small: "text-sm leading-6",
   eyebrow: "text-xs font-semibold uppercase tracking-[0.12em]",
@@ -42,6 +42,8 @@ const tones: Record<TypographyTone, string> = {
   default: "text-zinc-100",
   muted: "text-zinc-400",
   accent: "text-indigo-300",
+  emerald: "text-emerald-400",
+  teal: "text-green-200"
 };
 
 const defaultElements: Record<TypographyVariant, TypographyElement> = {
