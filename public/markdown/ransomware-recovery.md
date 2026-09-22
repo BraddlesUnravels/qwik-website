@@ -8,23 +8,23 @@ On a Monday morning March 2024, staff began finding ransom messages on their wor
 
 ## The incident
 
-I encountered the first affected workstation and quickly found others showing the same ransom message, 
-I immediatly took action stopping all workstation activity, in the meantime, staff reported of difficulty 
+I encountered the first affected workstation and quickly found others showing the same ransom message,
+I immediatly took action stopping all workstation activity, in the meantime, staff reported of difficulty
 accessing LeaseCore, meaning that critical business operations were aleady offline.
 
 ## My role
 
-I stopped device use, isolated external connectivity and the internal environment, shut down business applications, 
-contacted the part-time IT manager scanned the network for immediate threats then briefed the board on next steps. 
-When he arrived, we divided the recovery: he took responsibility for servers and databases, while I took responsibility 
+I stopped device use, isolated external connectivity and the internal environment, shut down business applications,
+contacted the part-time IT manager scanned the network for immediate threats then briefed the board on next steps.
+When he arrived, we divided the recovery: he took responsibility for servers and databases, while I took responsibility
 for the network and end-user devices.
 
 ## What I did
 
 ### Contain and preserve available evidence
 
-Initial containment, network scanning, and evidence preservation steps included keeping company devices onsite 
-and capturing available volatile memory and process information before server restoration began. 
+Initial containment, network scanning, and evidence preservation steps included keeping company devices onsite
+and capturing available volatile memory and process information before server restoration began.
 The IT manager confirmed that protected database backups were available; I did not perform the database recovery myself.
 
 ### Rebuild devices while server restoration proceeded
@@ -39,7 +39,7 @@ After recovery I worked with an external incident-response specialist on the ini
 
 Working in parallel, we restored critical applications and enough clean equipment for business to resume by about 9:00 am the following morning. Lower-priority recovery continued over the next three weeks. Available backups limited the required database reconstruction, but the investigation did not establish every attacker action.
 
-My contribution covered containment, evidence preservation, device and network restoration, and follow-up investigation; 
+My contribution covered containment, evidence preservation, device and network restoration, and follow-up investigation;
 server and database recovery remained with the IT manager.
 
 ## Technology and methods

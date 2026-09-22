@@ -96,14 +96,31 @@ export default {
     },
   ],
   technologies: [
-    { label: "Response", value: "Network isolation, application shutdown, device control, network scanning" },
+    {
+      label: "Response",
+      value:
+        "Network isolation, application shutdown, device control, network scanning",
+    },
     { label: "Network scanning", value: "arp-scan, nmap, wireshark, tcpdump" },
-    { label: "Evidence preservation", value: "Volatile memory capture, process information capture" },
-    { label: "Recovery", value: "Windows reimaging, network device reconfiguration, network-device reset" },
-    { label: "Investigation", value: "Volatile memory capture, external incident-response support" },
+    {
+      label: "Evidence preservation",
+      value: "Volatile memory capture, process information capture",
+    },
+    {
+      label: "Recovery",
+      value:
+        "Windows reimaging, network device reconfiguration, network-device reset",
+    },
+    {
+      label: "Investigation",
+      value: "Volatile memory capture, external incident-response support",
+    },
     { label: "Follow-up", value: "Email controls, staff security workshops" },
   ],
   related: [
-    { label: "LeaseTrack customer portal", href: "/work/customer-finance-portal/" },
+    {
+      label: "LeaseTrack customer portal",
+      href: "/work/customer-finance-portal/",
+    },
   ],
 } satisfies CaseStudy;

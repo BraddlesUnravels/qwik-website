@@ -13,7 +13,10 @@ export const onGet: RequestHandler = async ({ cacheControl }) => {
 
 export default component$(() => {
   return (
-    <div id="layout" class="relative min-h-screen bg-zinc-950 text-zinc-100 antialiased">
+    <div
+      id="layout"
+      class="relative min-h-screen bg-zinc-950 text-zinc-100 antialiased"
+    >
       {/* 
         No negative z-index: #layout doesn't form a stacking context, 
         so -z would paint behind its own bg-zinc-950 fill. 

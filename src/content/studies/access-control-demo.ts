@@ -5,8 +5,10 @@ export default {
   path: "/work/access-control-demo/",
   category: "Inspectable full-stack application",
   title: "Access Control Demo: security you can inspect",
-  description: "I built a small, deployed application so employers can test permissions and follow the enforcement from the interface to the API, database and tests.",
-  introduction: "Most of my professional code lives in proprietary repositories. I built a deliberately small consultation-management application to make my full-stack, security and deployment work reviewable rather than asking employers to take it on trust.",
+  description:
+    "I built a small, deployed application so employers can test permissions and follow the enforcement from the interface to the API, database and tests.",
+  introduction:
+    "Most of my professional code lives in proprietary repositories. I built a deliberately small consultation-management application to make my full-stack, security and deployment work reviewable rather than asking employers to take it on trust.",
   featured: true,
   metrics: [
     { label: "Roles", value: "2 students + 1 admin" },
@@ -64,10 +66,22 @@ export default {
     },
   ],
   technologies: [
-    { label: "Application", value: "Next.js, React, TypeScript, Tailwind CSS, Valibot" },
-    { label: "Data and identity", value: "Supabase Auth, PostgreSQL, row-level security" },
-    { label: "Testing", value: "Route-handler tests, SQL policy tests, container integration" },
-    { label: "Delivery", value: "Docker, GitHub Actions, Bicep, Azure Container Apps, Key Vault" },
+    {
+      label: "Application",
+      value: "Next.js, React, TypeScript, Tailwind CSS, Valibot",
+    },
+    {
+      label: "Data and identity",
+      value: "Supabase Auth, PostgreSQL, row-level security",
+    },
+    {
+      label: "Testing",
+      value: "Route-handler tests, SQL policy tests, container integration",
+    },
+    {
+      label: "Delivery",
+      value: "Docker, GitHub Actions, Bicep, Azure Container Apps, Key Vault",
+    },
   ],
   related: [
     { label: "Step-up authentication", href: "/work/step-up-authentication/" },

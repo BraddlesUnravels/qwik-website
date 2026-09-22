@@ -104,13 +104,22 @@ export default {
     },
   ],
   technologies: [
-    { label: "Authentication", value: "Legacy SHA-1 verification, Argon2, email confirmation, SMS MFA" },
+    {
+      label: "Authentication",
+      value: "Legacy SHA-1 verification, Argon2, email confirmation, SMS MFA",
+    },
     { label: "Application", value: "TypeScript, Node.js, Express.js" },
     { label: "Data", value: "MSSQL, migration scripts" },
-    { label: "Rollout", value: "Internal pilot, redirect, rollback preparation" },
+    {
+      label: "Rollout",
+      value: "Internal pilot, redirect, rollback preparation",
+    },
   ],
   related: [
-    { label: "LeaseTrack customer portal", href: "/work/customer-finance-portal/" },
+    {
+      label: "LeaseTrack customer portal",
+      href: "/work/customer-finance-portal/",
+    },
     { label: "Step-up authentication", href: "/work/step-up-authentication/" },
   ],
 } satisfies CaseStudy;

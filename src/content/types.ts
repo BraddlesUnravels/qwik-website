@@ -39,8 +39,6 @@ export type CaseStudySummary = Pick<
   evidence: [string, string];
 };
 
-export const asStudy = (
-  study: unknown,
-): study is CaseStudy => {
+export const asStudy = (study: unknown): study is CaseStudy => {
   return study !== null && typeof study === "object" && "title" in study;
 };

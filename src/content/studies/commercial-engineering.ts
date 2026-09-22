@@ -5,8 +5,10 @@ export default {
   path: "/about/commercial-engineering/",
   category: "How I work",
   title: "What sales leadership taught me about building software",
-  description: "I use operational questions, workflow mapping and commercial context to work out what software actually needs to change.",
-  introduction: "My earlier sales-management experience helps me distinguish a requested feature from the underlying problem. One CRM reporting project shows why that matters: the dashboards were being asked to report on leads the business had never recorded.",
+  description:
+    "I use operational questions, workflow mapping and commercial context to work out what software actually needs to change.",
+  introduction:
+    "My earlier sales-management experience helps me distinguish a requested feature from the underlying problem. One CRM reporting project shows why that matters: the dashboards were being asked to report on leads the business had never recorded.",
   featured: false,
   metrics: [
     { label: "Initial request", value: "Fix the reports" },
@@ -60,12 +62,24 @@ export default {
     },
   ],
   technologies: [
-    { label: "Systems", value: "PipelineAxis CRM, PackEdge, React, Node.js, MSSQL" },
+    {
+      label: "Systems",
+      value: "PipelineAxis CRM, PackEdge, React, Node.js, MSSQL",
+    },
     { label: "Methods", value: "Stakeholder interviews, workflow mapping" },
-    { label: "Integration", value: "Linked quote hand-off, shared identifiers" },
-    { label: "Business context", value: "Commission visibility, lead attribution, employer matching" },
+    {
+      label: "Integration",
+      value: "Linked quote hand-off, shared identifiers",
+    },
+    {
+      label: "Business context",
+      value: "Commission visibility, lead attribution, employer matching",
+    },
   ],
   related: [
-    { label: "PipelineAxis CRM integration", href: "/work/crm-legacy-integration/" },
+    {
+      label: "PipelineAxis CRM integration",
+      href: "/work/crm-legacy-integration/",
+    },
   ],
 } satisfies CaseStudy;

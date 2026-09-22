@@ -32,17 +32,13 @@ const capabilities = [
 ] as const;
 
 export default component$(() => {
-
   return (
     <main id="main-page-content">
       <section class="relative isolate overflow-hidden">
         <MainPageHeadBanner />
       </section>
 
-      <section
-        id="capabilities"
-        class="bg-canvas-soft/65"
-      >
+      <section id="capabilities" class="bg-canvas-soft/65">
         <div class="mx-auto w-full max-w-7xl px-5 py-10 sm:px-8">
           <Typography variant="eyebrow">What I bring</Typography>
           <Typography as="h2" variant="heading-2" class="mt-5 max-w-6xl">

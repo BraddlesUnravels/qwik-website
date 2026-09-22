@@ -1,4 +1,10 @@
 import { defineConfig } from "cypress";
+import type { ConfigEnv } from "vite";
+
+const componentViteEnv: ConfigEnv = {
+  command: "serve",
+  mode: "development",
+};
 
 export default defineConfig({
   allowCypressEnv: false,
@@ -22,8 +28,9 @@ export default defineConfig({
       bundler: "vite",
       viteConfig: async () => {
         const config = await import("./vite.config");
+
         return typeof config.default === "function"
-          ? config.default()
+          ? config.default(componentViteEnv)
           : config.default;
       },
     },

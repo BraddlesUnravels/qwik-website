@@ -9,9 +9,7 @@ describe("components/ui/technology-carousel", () => {
 
       await render(<TechnologyCarousel />);
 
-      const carousel = screen.querySelector(
-        '[aria-label="Technologies used"]',
-      );
+      const carousel = screen.querySelector('[aria-label="Technologies used"]');
 
       expect(carousel).toBeTruthy();
       expect(screen.outerHTML).toContain("TypeScript");

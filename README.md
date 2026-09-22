@@ -6,17 +6,17 @@ The site currently ships a dark single-page intro with a continuous technology c
 
 ## Stack
 
-| Layer | Choice |
-| --- | --- |
-| Framework | `@builder.io/qwik` / `@builder.io/qwik-city` `1.20.0` |
-| Bundler | Vite 7 |
-| Language | TypeScript 5.9 |
-| Styling | Tailwind CSS v4 via `@tailwindcss/vite` |
-| UI primitives | `@qwik-ui/headless` (available, not wired into the home page yet) |
-| Unit tests | Vitest 5 + `@builder.io/qwik/testing` |
-| Component / e2e | Cypress 15 + `cypress-ct-qwik` |
-| Lint / format | ESLint 9 flat config + `eslint-plugin-qwik`, Prettier + `prettier-plugin-tailwindcss` |
-| Package manager | Bun (`packageManager`: `bun@1.3.12`) |
+| Layer           | Choice                                                                                |
+| --------------- | ------------------------------------------------------------------------------------- |
+| Framework       | `@builder.io/qwik` / `@builder.io/qwik-city` `1.20.0`                                 |
+| Bundler         | Vite 7                                                                                |
+| Language        | TypeScript 5.9                                                                        |
+| Styling         | Tailwind CSS v4 via `@tailwindcss/vite`                                               |
+| UI primitives   | `@qwik-ui/headless` (available, not wired into the home page yet)                     |
+| Unit tests      | Vitest 5 + `@builder.io/qwik/testing`                                                 |
+| Component / e2e | Cypress 15 + `cypress-ct-qwik`                                                        |
+| Lint / format   | ESLint 9 flat config + `eslint-plugin-qwik`, Prettier + `prettier-plugin-tailwindcss` |
+| Package manager | Bun (`packageManager`: `bun@1.3.12`)                                                  |
 
 Node `^18.17.0 || ^20.3.0 || >=21.0.0` or Bun `>=1.1.0`.
 

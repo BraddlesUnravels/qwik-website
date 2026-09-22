@@ -2,8 +2,8 @@
 
 **Legacy modernisation**
 
-Checking one lease balance should not require recalculating every lease in the business. 
-The existing stored procedure ran as a batch, blocked the LeaseCore application for about 
+Checking one lease balance should not require recalculating every lease in the business.
+The existing stored procedure ran as a batch, blocked the LeaseCore application for about
 34 minutes and left displayed balances out of date (stale) between runs.
 
 **At a glance:** Legacy procedure: 12,000+ lines · Old full batch: ~34 minutes · Individual API request: ~30 ms · Required overnight batch: 12–13 minutes
