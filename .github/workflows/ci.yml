@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: Format, lint, types, tests, build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+        env:
+          HUSKY: "0"
+
+      - name: Format
+        run: bun run fmt.check
+
+      - name: Lint
+        run: bun run lint
+
+      - name: Typecheck
+        run: bun run build.types
+
+      - name: Unit tests
+        run: bun run test.unit
+
+      - name: Build
+        run: bun run build
+
+      - name: Component tests
+        uses: cypress-io/github-action@v6
+        with:
+          install: false
+          component: true
+          command: bun run test.ct
+
+      - name: E2E tests
+        uses: cypress-io/github-action@v6
+        with:
+          install: false
+          start: bun run dev
+          wait-on: http://localhost:5173
+          wait-on-timeout: 120
+          command: bunx cypress run --e2e
+
+      - name: Upload Cypress artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-artifacts
+          path: |
+            cypress/screenshots
+            cypress/videos
+          if-no-files-found: ignore

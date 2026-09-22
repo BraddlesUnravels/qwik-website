@@ -25,6 +25,7 @@
     "test.ct": "cypress run --component",
     "test.ct.open": "cypress open --component",
     "test.all": "bun run test.unit && bun run test.ct && bun run test.e2e",
+    "ci": "bun run fmt.check && bun run lint && bun run build.types && bun run test.unit && bun run build && bun run test.ct && bun run test.e2e",
     "cypress.open": "cypress open",
     "cypress.run": "cypress run",
     "qwik": "qwik",

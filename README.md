@@ -57,7 +57,22 @@ bun run test.ct.open      # Cypress component tests (interactive)
 bun run test.e2e          # start dev server, run Cypress e2e headless
 bun run test.e2e.open     # start dev server, open Cypress e2e
 bun run test.all          # unit + component + e2e
+bun run ci                # full CI suite (format, lint, types, unit, build, ct, e2e)
 ```
+
+## Continuous integration
+
+Pull requests and pushes to `main` run `.github/workflows/ci.yml` with Bun:
+
+1. `fmt.check`
+2. `lint`
+3. `build.types`
+4. `test.unit`
+5. `build`
+6. `test.ct`
+7. `test.e2e`
+
+Run the same sequence locally with `bun run ci`.
 
 ## Testing
 
