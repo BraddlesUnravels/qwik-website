@@ -3,85 +3,108 @@ import type { CaseStudy } from "../types";
 export default {
   slug: "lease-balance-calculation",
   path: "/work/lease-balance-calculation/",
-  category: "Performance and financial systems",
-  title: "Replacing a blocking lease-balance batch with on-demand calculation",
-  description:
-    "How I reverse-engineered more than 12,000 lines of financial SQL and made current balances available without locking the system.",
-  introduction:
-    "One customer asking for a current balance depended on a calculation that updated every eligible lease and made the system unavailable for an average of 34 minutes.",
+  category: "Legacy modernisation",
+  title: "Making lease balances available without a 34-minute DB lockout",
+  description: `
+    I untangled a 12,000-line SQL calculation, separated the business rules 
+    and made individual lease balances available on demand.",
+  `,
+  introduction: `
+    Checking one lease balance should not require recalculating every lease in the business. 
+    The existing stored procedure ran as a batch, blocked the LeaseCore application for about 
+    34 minutes and left displayed balances out of date (stale) between runs.
+  `,
   featured: true,
   metrics: [
-    { label: "Before", value: "34 minutes" },
-    { label: "Per lease", value: "~30 ms" },
-    { label: "SQL reviewed", value: "12,000+ lines" },
-    { label: "Deficits found", value: "$528k" },
+    { label: "Legacy procedure", value: "12,000+ lines" },
+    { label: "Old full batch", value: "~34 minutes" },
+    { label: "Individual API request", value: "~30 ms" },
+    { label: "Required overnight batch", value: "12–13 minutes" },
   ],
   sections: [
     {
-      title: "Problem",
+      title: "The problem",
       paragraphs: [
-        "A single poorly documented stored procedure calculated all lease balances, locked the application during its 34-minute run and left figures stale between payroll imports.",
-        "The procedure mixed active vehicle-lease rules with obsolete salary-packaging logic and contained 36 unexplained constants. Financial equivalence had to be proven before performance could be improved safely.",
+        `
+          The original stored procedure combined vehicle-lease calculations with old salary-packaging logic. 
+          It contained large commented-out sections and 36 unexplained constants (magic numbers). 
+          A payroll upload triggered an all-lease calculation and locked the system for roughly 34 minutes. 
+          There was no safe way to improve the performance until I could establish which financial rules were still active.
+        `,
       ],
     },
     {
-      title: "Responsibility",
-      bullets: [
-        "Separate active rules from unreachable historical code.",
-        "Map calculation boundaries and clarify financial constants.",
-        "Preserve results while introducing modular execution.",
-        "Support both individual requests and required overnight batches.",
+      title: "My role",
+      paragraphs: [
+        `
+          I investigated the procedure, confirmed the meaning of its financial inputs with the Head of Accounts, 
+          refactored the calculation and connected on-demand balance requests through the Node.js API. 
+          I also retained the batch process needed for payroll and transaction imports.
+        `,
       ],
     },
     {
-      title: "Solution",
+      title: "How I changed it",
       subsections: [
         {
-          title: "Repeatable investigation",
+          title: "Build a controlled investigation environment",
           paragraphs: [
-            "I built a Docker-based database with 150 active and 50 reconciled ended leases. VS Code database debugging and breakpoints let me trace the procedure repeatedly in seconds rather than waiting for full production-scale runs.",
+            `
+              I created a local LeaseCore SQL Server database using Docker with about 150 active leases and 50 
+              ended leases with complete histories. I stepped through the procedure with database 
+              debugging tools, identified dependencies between calculations and checked undocumented 
+              constants against the business rules.
+            `,
           ],
         },
         {
-          title: "Incremental modularisation",
+          title: "Refactor without silently changing balances",
           paragraphs: [
-            "I isolated FBT, LCA, lease-type, operating-cost and transaction-replay logic. After each change, original and modified procedures ran against the same data and every difference was investigated.",
+            `
+              I removed code that could not be reached by the company’s vehicle-leasing workflows, 
+              then separated tax, lease-type, operating-cost and transaction-replay calculations into smaller units. 
+              After each change, I ran the original and modified procedure against the same leases and investigated 
+              differences before continuing.
+            `,
           ],
         },
         {
-          title: "Separate individual and batch work",
+          title: "Separate single-lease requests from necessary batching",
           paragraphs: [
-            "An individual calculation ran in approximately 20 ms in SQL and 30 ms through the monitored Node.js API. Required full batches fell to 12–13 minutes and moved to a scheduled 1:00 am process.",
+            `
+              A calculation for an individual lease took about 20 ms at the database and around 30 ms through 
+              the monitored Node.js API in testing. I used the API route for on-demand balances because it 
+              provided a clearer place for logging and failure handling. The required full batch still blocked 
+              the application, but its runtime fell to 12–13 minutes and it was scheduled for 1:00 am rather than 
+              during normal business hours.
+            `,
           ],
         },
       ],
     },
     {
-      title: "Outcome",
+      title: "The result",
       paragraphs: [
-        "Customers and staff could request current balances without triggering a database-wide calculation or business-hours lockout.",
-        "The investigation also uncovered approximately $528,000 in negative balances on closed leases. A weekly deficit report and a $2,000 balance limit were introduced, and the accounts team later recovered just over half of the identified total.",
+        `
+          Staff and customers could request an up-to-date individual balance without triggering a database-wide batch. 
+          During the investigation I also found approximately $528,000 in negative balances on closed leases that the 
+          existing deficit reporting had missed. The accounts team introduced a weekly report and later recovered just 
+          over half of that identified amount.
+        `,
+        `
+          The full-batch and individual-lease figures measure different operations: the change removed the need to run 
+          the batch just to display one current balance.
+        `,
       ],
     },
   ],
   technologies: [
-    {
-      label: "Database",
-      value: "MSSQL, stored procedures, functions, debugging",
-    },
-    { label: "Application", value: "TypeScript, Node.js, API orchestration" },
-    { label: "Environment", value: "Docker, representative lease data" },
-    {
-      label: "Validation",
-      value: "Side-by-side output comparison, reconciled balances",
-    },
+    { label: "Database", value: "MSSQL, stored procedures, SQL debugging" },
+    { label: "API", value: "TypeScript, Node.js, Sentry" },
+    { label: "Validation", value: "Parallel old-versus-new calculation comparisons" },
+    { label: "Environment", value: "Docker, local database" },
   ],
-  lesson:
-    "The difficult part was not making SQL faster; it was creating enough evidence to change a financial calculation safely, one verified boundary at a time.",
   related: [
-    {
-      label: "Customer finance portal",
-      href: "/work/customer-finance-portal/",
-    },
+    { label: "LeaseTrack customer portal", href: "/work/customer-finance-portal/" },
   ],
 } satisfies CaseStudy;
