@@ -16,9 +16,10 @@
     "isolatedModules": true,
     "outDir": "tmp",
     "noEmit": true,
+    "types": ["vite/client"],
     "paths": {
       "~/*": ["./src/*"]
     }
   },
-  "include": ["src", "./*.d.ts", "./*.config.ts"]
+  "include": ["src", "test", "./*.d.ts", "./*.config.ts"]
 }

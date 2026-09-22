@@ -3,6 +3,10 @@ dist
 server
 tmp
 build
+coverage
+cypress/videos
+cypress/screenshots
+cypress/downloads
 pnpm-lock.yaml
 package-lock.json
 yarn.lock

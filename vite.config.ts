@@ -2,6 +2,7 @@
  * Base Vite config.
  * Adapter configs load and extend this file during production builds.
  */
+/// <reference types="vitest/config" />
 import { qwikVite } from "@builder.io/qwik/optimizer";
 import { qwikCity } from "@builder.io/qwik-city/vite";
 import tailwindcss from "@tailwindcss/vite";
@@ -47,7 +48,9 @@ errorOnDuplicatesPkgDeps(devDependencies, dependencies);
  * Vite normally starts from index.html, but the qwikCity plugin starts at
  * src/entry.ssr.tsx instead.
  */
-export default defineConfig((): UserConfig => {
+export default defineConfig(({ mode }): UserConfig => {
+  const isTest = mode === "test" || process.env.VITEST === "true";
+
   return {
     envPrefix: ["VITE_", "PUBLIC_"],
     plugins: [
@@ -67,6 +70,29 @@ export default defineConfig((): UserConfig => {
     preview: {
       headers: {
         "Cache-Control": "public, max-age=600",
+      },
+    },
+    define: isTest
+      ? {
+          "globalThis.qTest": true,
+          "globalThis.qDev": true,
+        }
+      : undefined,
+    test: {
+      name: "unit",
+      include: ["test/**/*.{test,spec}.{ts,tsx}"],
+      environment: "node",
+      css: false,
+      coverage: {
+        provider: "v8",
+        reporter: ["text", "html"],
+        include: ["src/**/*.{ts,tsx}"],
+        exclude: [
+          "src/entry.*.tsx",
+          "src/root.tsx",
+          "src/routes/**",
+          "src/**/*.d.ts",
+        ],
       },
     },
   };
