@@ -4,75 +4,106 @@ export default {
   slug: "ransomware-recovery",
   path: "/work/ransomware-recovery/",
   category: "Incident response",
-  title: "Ransomware response and critical-system recovery",
-  description:
-    "My contribution to containing a ransomware incident, restoring end-user systems and investigating how the compromise occurred.",
-  introduction:
-    "I handled initial containment, owned the network and end-user recovery stream and later led the initial investigation with an external specialist. The IT manager owned server and database restoration.",
+  title: "Restoring critical systems after a ransomware incident",
+  description: `
+    I handled initial containment, owned network and workstation restoration, 
+    and worked with an external specialist on the subsequent investigation.
+  `,
+  introduction: `
+    On a Monday morning March 2024, staff began finding ransom messages on their workstations. 
+    Three critical business applications and their databases were affected, and the priority was 
+    to limit further damage and restore a workable environment.
+  `,
   featured: false,
   metrics: [
-    { label: "Containment", value: "Immediate" },
-    { label: "Critical recovery", value: "By 9:00 am" },
-    { label: "Workstreams", value: "Parallel" },
-    { label: "Follow-up", value: "Remediation" },
+    { label: "Initial response", value: "Containment" },
+    { label: "Recovery", value: "Parallel workstreams" },
+    { label: "Critical service", value: "Next morning" },
+    { label: "Further restoration", value: "About 3 weeks" },
   ],
   sections: [
     {
-      title: "Problem",
+      title: "The incident",
       paragraphs: [
-        "Some workstations displayed ransom notices while others were still in use. Three connected applications supporting CRM, quoting and lease management were affected, but the entry point and extent of access were initially unknown.",
+        `
+        I encountered the first affected workstation and quickly found others showing the same ransom message, 
+        I immediatly took action stopping all workstation activity, in the meantime, staff reported of difficulty 
+        accessing LeaseCore, meaning that critical business operations were aleady offline.
+        `,
       ],
     },
     {
-      title: "Responsibility",
+      title: "My role",
       paragraphs: [
-        "As the first technical responder, I stopped system use, isolated the environment, brought in the part-time IT manager and briefed the board. We split recovery so database and server work could proceed in parallel with network and device restoration.",
+        `
+        I stopped device use, isolated external connectivity and the internal environment, shut down business applications, 
+        contacted the part-time IT manager scanned the network for immediate threats then briefed the board on next steps. 
+        When he arrived, we divided the recovery: he took responsibility for servers and databases, while I took responsibility 
+        for the network and end-user devices.
+        `,
       ],
     },
     {
-      title: "Solution",
+      title: "What I did",
       subsections: [
         {
-          title: "Containment and evidence",
+          title: "Contain and preserve available evidence",
           paragraphs: [
-            "I disconnected external connectivity, isolated the internal network, shut down business applications and retained company devices onsite. Before restoration, I captured available volatile memory and process information.",
+            `
+            Initial containment, network scanning, and evidence preservation steps included keeping company devices onsite 
+            and capturing available volatile memory and process information before server restoration began. 
+            The IT manager confirmed that protected database backups were available; I did not perform the database recovery myself.
+            `,
           ],
         },
         {
-          title: "Parallel recovery",
+          title: "Rebuild devices while server restoration proceeded",
           paragraphs: [
-            "I created six clean Windows installation drives and processed workstations in parallel, reinstalling Microsoft 365 and the local quoting client. Network-connected devices were reset before reconnection.",
+            `
+            I prepared six clean Windows installation drives and reimaged machines in parallel, then restored Microsoft 365 
+            and the locally installed quoting client. I also reset affected network-connected equipment as part of preparing 
+            the environment for reconnection.
+            `,
           ],
         },
         {
-          title: "Investigation and prevention",
+          title: "Investigate and improve the follow-up",
           paragraphs: [
-            "The external specialist and I traced the entry point to a malicious attachment from a compromised partner. Email scanning was strengthened and I ran department-specific workshops. Later inspection also exposed plaintext database credentials in a compiled legacy client.",
+            `
+            After recovery I worked with an external incident-response specialist on the initial investigation. 
+            We traced the likely entry route to a malicious attachment from a compromised partner, strengthened 
+            email scanning and I delivered security workshops for business teams. Later, while investigating an 
+            application error, I found plaintext database credentials embedded in a compiled legacy client. That 
+            finding was an additional exposure; it did not prove how the attackers obtained database access.
+            `,
           ],
         },
       ],
     },
     {
-      title: "Outcome",
+      title: "The result",
       paragraphs: [
-        "Critical applications and enough clean equipment were available by 9:00 am the next day. Protected backups limited database loss to changes after the latest backup, while lower-priority restoration continued over three weeks.",
-        "The investigation identified the entry point and a serious credential weakness without claiming a complete reconstruction of every attacker action.",
+        `
+        Working in parallel, we restored critical applications and enough clean equipment for business to resume by about 9:00 am 
+        the following morning. Lower-priority recovery continued over the next three weeks. Available backups limited the required 
+        database reconstruction, but the investigation did not establish every attacker action.
+        `,
+        `
+        My contribution covered containment, evidence preservation, device and network restoration, and follow-up investigation; 
+        server and database recovery remained with the IT manager.
+        `,
       ],
     },
   ],
   technologies: [
-    {
-      label: "Containment",
-      value: "Network isolation, shutdown, device control",
-    },
-    { label: "Evidence", value: "Volatile memory and process capture" },
-    {
-      label: "Recovery",
-      value: "Windows reimaging, Microsoft 365, network resets",
-    },
-    { label: "Follow-up", value: "External IR support, training, remediation" },
+    { label: "Response", value: "Network isolation, application shutdown, device control, network scanning" },
+    { label: "Network scanning", value: "arp-scan, nmap, wireshark, tcpdump" },
+    { label: "Evidence preservation", value: "Volatile memory capture, process information capture" },
+    { label: "Recovery", value: "Windows reimaging, network device reconfiguration, network-device reset" },
+    { label: "Investigation", value: "Volatile memory capture, external incident-response support" },
+    { label: "Follow-up", value: "Email controls, staff security workshops" },
   ],
-  lesson:
-    "Stop the spread, preserve what evidence you can, divide ownership clearly, restore in business-priority order and remain honest about what the evidence does not prove.",
-  related: [],
+  related: [
+    { label: "LeaseTrack customer portal", href: "/work/customer-finance-portal/" },
+  ],
 } satisfies CaseStudy;

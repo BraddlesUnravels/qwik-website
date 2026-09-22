@@ -3,87 +3,69 @@ import type { CaseStudy } from "../types";
 export default {
   slug: "commercial-engineering",
   path: "/about/commercial-engineering/",
-  category: "Commercial engineering",
-  title: "How sales leadership made me a better developer",
-  description:
-    "Why my earlier commercial experience helps me uncover the real workflow problem and build software people will adopt.",
-  introduction:
-    "My earlier sales and leadership experience changed how I approach software: a feature request is evidence to investigate, not necessarily the real requirement.",
+  category: "How I work",
+  title: "What sales leadership taught me about building software",
+  description: "I use operational questions, workflow mapping and commercial context to work out what software actually needs to change.",
+  introduction: "My earlier sales-management experience helps me distinguish a requested feature from the underlying problem. One CRM reporting project shows why that matters: the dashboards were being asked to report on leads the business had never recorded.",
   featured: false,
   metrics: [
-    { label: "Initial request", value: "Fix reports" },
-    { label: "Actual issue", value: "Missing data" },
-    { label: "Stakeholders", value: "4 groups" },
-    { label: "Problems resolved", value: "~98%" },
+    { label: "Initial request", value: "Fix the reports" },
+    { label: "Underlying issue", value: "Missing lead data" },
+    { label: "Focus", value: "Workflow + adoption" },
+    { label: "Teams", value: "Sales and marketing" },
   ],
   sections: [
     {
-      title: "Problem",
+      title: "The request",
       paragraphs: [
-        "Sales and marketing believed their reports were wrong. Marketing needed source, pipeline and client-company visibility; sales needed defensible conversion and commission figures.",
-        "Tracing the inputs showed that leads moved through spreadsheets, email and face-to-face hand-offs. Agents also avoided entering the same customer into both the CRM and quoting application. The reports were being asked to analyse records that often did not exist.",
+        "Sales and marketing believed their reports were incorrect. Marketing wanted to follow a lead to its source, client company and outcome. Sales wanted dependable conversion and commission reporting. It would have been easy to start by editing a dashboard or its calculations.",
       ],
     },
     {
-      title: "Responsibility",
+      title: "What I investigated",
       paragraphs: [
-        "I aligned the groups around the minimum information each needed, determined where it should be captured and designed a workflow staff had a practical reason to follow without exposing commercially sensitive client information.",
+        "I asked marketing how leads reached agents and asked sales what happened after a lead was allocated. Website enquiries already entered the CRM, but social-media and offsite leads often arrived through spreadsheets, email or direct hand-offs. Agents also avoided entering the same customer details into both PipelineAxis and PackEdge.",
+        "I mapped those real workflows with department heads, including where each report obtained its data. The reports were largely showing the records they had; the missing records and unlinked stages were the more important problem.",
       ],
     },
     {
-      title: "Solution",
+      title: "What I changed",
       subsections: [
         {
-          title: "Investigate the real process",
+          title: "Make the required data useful to the people entering it",
           paragraphs: [
-            "I mapped documented and actual behaviour with department heads. Once everyone could see that a dashboard cannot reconstruct data that was never recorded, the discussion moved from blame to shared requirements.",
+            "I made quote and commission information clearer in each agent’s CRM profile, so agents could see why a complete lead origin mattered to their own tracking. I also made it possible to transfer customer details from PipelineAxis into PackEdge instead of retyping them.",
           ],
         },
         {
-          title: "Design for adoption",
+          title: "Resolve a real trade-off between data quality and privacy",
           paragraphs: [
-            "Commission visibility made complete lead origins meaningful to agents, while one-action transfer into the quoting application removed most duplicate entry.",
+            "Marketing needed to identify the customer’s employer, but a public dropdown of all client companies would have exposed a commercially sensitive client list. I requested a work email to support automatic company matching while still accepting personal addresses; the agent supplied an employer when no reliable match was available.",
           ],
         },
         {
-          title: "Balance matching with confidentiality",
+          title: "Make the workflow the default",
           paragraphs: [
-            "Work-email domains provided the strongest automatic employer match without publishing the client list. Personal addresses remained accepted, with a manual fallback before progression.",
-          ],
-        },
-        {
-          title: "Guard the hand-off",
-          paragraphs: [
-            "Leads began in the CRM and manual quote creation outside the linked workflow was disabled. Marketing gained traceability while sales entered core details once.",
+            "I worked with the quoting-system owner so agents created linked quotes from CRM leads rather than opening unconnected records in PackEdge. That helped marketing follow lead outcomes while reducing duplicated work for sales.",
           ],
         },
       ],
     },
     {
-      title: "Outcome",
+      title: "What changed",
       paragraphs: [
-        "The changes resolved approximately 98% of reporting problems related to lead origin and employer matching. Sales stopped duplicating core entry, marketing could track progress and the software, workflow and incentives began supporting the same result.",
+        "Sales could enter the core information once and see a clearer connection between complete records and commission tracking. Marketing gained better visibility of lead origins and associated companies. In your account, the changes addressed roughly 98% of the reporting issues related to lead origin and employer matching; because this is an internally reported estimate rather than an independently measured audit result, I would leave the percentage off the portfolio card.",
+        "The wider lesson is practical: before building the requested fix, find out how people actually perform the work and what would make the improved workflow worth using.",
       ],
     },
   ],
   technologies: [
-    {
-      label: "Systems",
-      value: "React/Redux CRM, Node.js/Express, MSSQL, C# client",
-    },
-    {
-      label: "Integration",
-      value: "Stored-procedure hand-off, linked identifiers",
-    },
-    { label: "Discovery", value: "Interviews, observation, workflow mapping" },
-    {
-      label: "Change",
-      value: "Commission visibility, data rules, reduced duplication",
-    },
+    { label: "Systems", value: "PipelineAxis CRM, PackEdge, React, Node.js, MSSQL" },
+    { label: "Methods", value: "Stakeholder interviews, workflow mapping" },
+    { label: "Integration", value: "Linked quote hand-off, shared identifiers" },
+    { label: "Business context", value: "Commission visibility, lead attribution, employer matching" },
   ],
-  lesson:
-    "I am comfortable challenging a requested feature without dismissing the concern behind it and translating operational evidence into software people will adopt.",
   related: [
-    { label: "CRM legacy integration", href: "/work/crm-legacy-integration/" },
+    { label: "PipelineAxis CRM integration", href: "/work/crm-legacy-integration/" },
   ],
 } satisfies CaseStudy;

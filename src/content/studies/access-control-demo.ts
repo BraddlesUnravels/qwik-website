@@ -3,97 +3,73 @@ import type { CaseStudy } from "../types";
 export default {
   slug: "access-control-demo",
   path: "/work/access-control-demo/",
-  category: "Inspectable portfolio system",
-  title: "Live access-control portfolio application",
-  description:
-    "A focused application that lets employers inspect role, ownership and database enforcement rather than relying only on résumé claims.",
-  introduction:
-    "I built this application so an employer can test an allowed action, see a forbidden action fail and inspect the server check, database policy, denial test and deployment definition behind that behaviour.",
+  category: "Inspectable full-stack application",
+  title: "Access Control Demo: security you can inspect",
+  description: "I built a small, deployed application so employers can test permissions and follow the enforcement from the interface to the API, database and tests.",
+  introduction: "Most of my professional code lives in proprietary repositories. I built a deliberately small consultation-management application to make my full-stack, security and deployment work reviewable rather than asking employers to take it on trust.",
   featured: true,
   metrics: [
-    { label: "Boundaries", value: "3 layers" },
-    { label: "Roles", value: "Student + admin" },
-    { label: "Database", value: "PostgreSQL RLS" },
-    { label: "Delivery", value: "Azure + Bicep" },
+    { label: "Roles", value: "2 students + 1 admin" },
+    { label: "Data boundary", value: "PostgreSQL RLS" },
+    { label: "Test focus", value: "Forbidden requests" },
+    { label: "Deployment", value: "Azure Container Apps" },
   ],
   sections: [
     {
-      title: "Problem",
+      title: "The problem",
       paragraphs: [
-        "Most of my production work is proprietary. Screenshots could show interface work but not authentication, ownership enforcement, database controls, denial testing or deployment architecture.",
+        "A screenshot can demonstrate a user interface, but it cannot prove that one account is prevented from reading another account’s records or that an administrator cannot perform a forbidden write. I wanted an employer to be able to test those rules in a working system and locate the implementation.",
       ],
     },
     {
-      title: "Responsibility",
+      title: "My role",
       paragraphs: [
-        "I designed, built, tested and deployed a deliberately narrow consultation-management application so every security boundary could be understood without first learning a large business domain.",
+        "I designed, implemented, tested and deployed the application independently. I kept the domain small: students manage consultations they own, while an administrator can view consultations across students but cannot change them. Two student demonstration accounts make same-role ownership restrictions visible.",
       ],
     },
     {
-      title: "Solution",
+      title: "How I built it",
       subsections: [
         {
-          title: "Role and ownership model",
+          title: "Make permissions visible without trusting the interface",
           paragraphs: [
-            "Two student accounts demonstrate isolation between users with the same role. Students manage only their own consultations; a read-only administrator can see all consultations but cannot mutate them.",
+            "The interface exposes actions appropriate to each account, but Next.js Route Handlers independently verify the access-gate session, authenticated Supabase user, application role, request data, ownership and permitted status transitions. A student’s record lookup or mutation is scoped to both the consultation ID and their own user ID.",
           ],
         },
         {
-          title: "Defence in depth",
+          title: "Enforce the same rules in the database",
           paragraphs: [
-            "Next.js Route Handlers check the portfolio gate, Supabase identity, application role, validated input, owner and lifecycle transition. PostgreSQL RLS, column grants and triggers repeat critical rules beneath the server boundary.",
+            "PostgreSQL row-level security limits students to their own rows and gives administrators read-only access. Column grants prevent callers from changing ownership or protected lifecycle fields; triggers enforce status rules. Students cancel consultations by changing their status, not deleting records. The database controls are deliberate protection beneath the API checks.",
           ],
         },
         {
-          title: "Controlled reviewer access",
+          title: "Test denial, not just happy paths",
           paragraphs: [
-            "Invitation codes are stored as HMAC-SHA256 digests, redeemed atomically and exchanged for signed HTTP-only cookies. Gate access and application roles remain separate concerns.",
+            "Route tests check unauthenticated, wrong-role and cross-student requests. SQL tests exercise row policies, restricted columns and forbidden lifecycle changes under authenticated database roles. A container-stage harness applies real migrations and exercises the assembled production image.",
           ],
         },
         {
-          title: "Tests that prove denial",
-          bullets: [
-            "Unauthenticated, wrong-role and cross-owner requests fail before mutation.",
-            "Browser-supplied ownership is ignored and invalid lifecycle changes are rejected.",
-            "SQL policy tests prove isolation, administrator immutability and deletion denial.",
-            "A container harness exercises real migrations and the production image.",
-          ],
-        },
-        {
-          title: "Infrastructure is part of the evidence",
+          title: "Make the demo easy to review",
           paragraphs: [
-            "Bicep defines Container Apps, ingress, probes, logging and Key Vault integration. GitHub uses OpenID Connect, the image runs as a non-root user and releases use immutable commit tags.",
+            "A separate invitation gate limits access to the shared demo accounts without granting an application role. The reviewer can choose either student or the read-only administrator, try a permitted action, then see the corresponding forbidden access fail. Docker, GitHub Actions, Bicep, Azure Container Apps and Key Vault-backed secrets make delivery and infrastructure inspectable too.",
           ],
         },
       ],
     },
     {
-      title: "Outcome",
+      title: "The result",
       paragraphs: [
-        "A reviewer can perform an allowed operation and verify that the same data or mutation is unavailable to another owner or role, then trace the behaviour through application tests, database policies and infrastructure code.",
-        "The project demonstrates full-stack TypeScript, authentication, authorisation, RLS, runtime validation, denial testing, containers, CI/CD, infrastructure as code and Azure deployment in one focused system.",
+        "The result is a focused demonstration of working code: an employer can compare what different accounts can see and change, then trace the same rule through the route handler, SQL policy, automated test and deployment configuration. It is a personal demonstration, not a claim of production customer adoption or an externally audited security product.",
       ],
     },
   ],
   technologies: [
-    {
-      label: "Application",
-      value: "Next.js, React, TypeScript, Tailwind, Valibot",
-    },
-    {
-      label: "Identity and data",
-      value: "Supabase Auth, PostgreSQL, RLS, triggers",
-    },
-    {
-      label: "Testing",
-      value: "Route, SQL policy and container integration tests",
-    },
-    {
-      label: "Delivery",
-      value: "Docker, GitHub Actions, Azure, Bicep, OIDC, Key Vault",
-    },
+    { label: "Application", value: "Next.js, React, TypeScript, Tailwind CSS, Valibot" },
+    { label: "Data and identity", value: "Supabase Auth, PostgreSQL, row-level security" },
+    { label: "Testing", value: "Route-handler tests, SQL policy tests, container integration" },
+    { label: "Delivery", value: "Docker, GitHub Actions, Bicep, Azure Container Apps, Key Vault" },
   ],
-  lesson:
-    "For a public customer system I would replace shared demo users with individual MFA accounts, move rate limiting to shared infrastructure and add durable audit logging and formal recovery procedures.",
-  related: [],
+  related: [
+    { label: "Step-up authentication", href: "/work/step-up-authentication/" },
+  ],
 } satisfies CaseStudy;

@@ -4,91 +4,121 @@ export default {
   slug: "step-up-authentication",
   path: "/work/step-up-authentication/",
   category: "Application security",
-  title: "Step-up authentication for sensitive customer actions",
+  title: "Step-up authentication without interrupting routine portal use",
   description:
-    "How I added recent identity assurance around high-risk actions while keeping ordinary portal use straightforward.",
+    "I added fresh identity checks to sensitive customer actions and enforced them at the API, not just in the React interface.",
   introduction:
-    "Signing in with MFA did not mean every later action should be trusted automatically. Sensitive operations required fresh identity evidence while routine portal use remained uninterrupted.",
-  featured: true,
+    `
+    Signing in with MFA establishes a session; it does not guarantee that the same 
+    person is still present when an account holder later downloads sensitive documents or changes recovery details. 
+    I designed a second check for actions where a compromised session would have greater consequences.
+    `,
+  featured: false,
   metrics: [
-    { label: "Approval", value: "5 minutes" },
-    { label: "Enforcement", value: "Server-side" },
-    { label: "Challenge", value: "Email or SMS" },
-    { label: "Default", value: "Fail closed" },
+    { label: "Approval window", value: "5 minutes" },
+    { label: "Challenge", value: "6-digit code" },
+    { label: "Enforcement", value: "Server middleware" },
+    { label: "Client flow", value: "Hold and resume" },
   ],
   sections: [
     {
-      title: "Problem",
+      title: "The problem",
       paragraphs: [
-        "A valid session could remain open after its owner stepped away or be taken from a compromised device. An attacker could then change credentials, replace trusted contact details or download sensitive documents.",
-        "Prompting for MFA on every write would have been frustrating; relying on hidden interface controls would not have protected the API.",
+        `
+        LeaseTrack already had MFA at sign-in. Requiring the same challenge for every routine interaction would have been disruptive, 
+        but trusting a long-lived session for password changes, document downloads and changes to primary contact details would have 
+        left higher-consequence operations exposed to an unattended or compromised session.
+        `,
       ],
     },
     {
-      title: "Responsibility",
-      bullets: [
-        "Protect high-consequence operations without interrupting routine use.",
-        "Enforce the control even when the interface is bypassed.",
-        "Expire approval quickly and fail closed.",
-        "Keep validation secrets and decision-making on the server.",
+      title: "My role",
+      paragraphs: [
+        `
+        I designed and implemented the step-up flow in the React/Redux client and Node.js server, including its route classification, 
+        challenge state, short approval period, and verification of new contact methods before those methods could be trusted.
+        `,
       ],
     },
     {
-      title: "Solution",
+      title: "How it worked",
       subsections: [
         {
-          title: "Risk-based route classification",
+          title: "Classify protected requests on the server",
           paragraphs: [
-            "A central server list matched protected routes and HTTP methods. Password changes, document downloads and primary-contact changes required recent assurance, while low-risk activity did not.",
+            `
+            A central route-and-HTTP-method list identified operations requiring fresh assurance. 
+            The interface could open the challenge in advance, but server middleware independently checked a protected 
+            request before its business handler ran. A direct API call therefore could not rely on a missing button or 
+            a client-side flag to bypass the control.
+            `,
           ],
         },
         {
-          title: "Hold and resume",
+          title: "Hold the action and resume it once",
           paragraphs: [
-            "The React and Redux client retained the original action, opened one application-level verification dialog and replayed the action once after successful verification. Customers did not lose completed form data.",
+            `
+            The React client kept the requested action and its form data in central Redux state, 
+            opened a consistent six-digit verification flow and retried the action after approval. 
+            Routine portal use did not require a repeat challenge, and a successful approval could be 
+            reused for protected operations during its five-minute session-bound window.
+            `,
           ],
         },
         {
-          title: "Server-authoritative approval",
+          title: "Keep the proof on the server",
           paragraphs: [
-            "Middleware ran before protected route handlers. The server retained a secret and derived hash; the browser received only a public identifier and expiry. Missing, expired or mismatched state cleared approval and stopped the business action.",
+            `
+            After verification, the client received a public approval identifier and expiry. 
+            The server session retained a separate secret and derived hash; middleware checked the identifier, 
+            session state and expiry before allowing the operation. Missing, expired or mismatched approval data 
+            stopped the action and cleared the approval state.
+            `,
           ],
         },
         {
-          title: "Denial-path validation",
-          bullets: [
-            "Missing, malformed, expired and valid approvals.",
-            "Direct API requests, replay and cross-session identifiers.",
-            "Cancellation, provider failure and successful held-action replay.",
-            "Verification of proposed email addresses and phone numbers before persistence.",
+          title: "Treat a new contact channel as a separate trust decision",
+          paragraphs: [
+            `
+            Changing an email address or phone number also required proving control of the proposed new destination. 
+            The new contact record was not persisted until the code sent to that destination was verified.
+            `,
           ],
         },
       ],
     },
     {
-      title: "Outcome",
+      title: "The result",
       paragraphs: [
-        "High-consequence actions required recent, same-session identity assurance before their route handlers ran. Customers completed one short challenge and retained the action they had already started.",
-        "The defensible result is the control itself: direct endpoint access could not bypass it, while ordinary portal interactions did not become repeated authentication ceremonies.",
+        `
+        Sensitive operations gained a fresh, server-enforced check while normal use remained uninterrupted.
+        Customers did not need to refill a form after completing the challenge.
+        I validated the intended success and denial paths through structured manual and integration testing. 
+        `,
       ],
     },
   ],
   technologies: [
     { label: "Client", value: "React, Redux, central verification dialog" },
-    { label: "Server", value: "TypeScript, Node.js, Express.js, middleware" },
-    { label: "Identity", value: "Email and SMS MFA, expiring challenges, JWT" },
+    { label: "API", value: "Node.js, Express, route/method middleware" },
     {
-      label: "Controls",
-      value: "Session binding, server-held secrets, expiry, replay protection",
+      label: "Assurance",
+      value: "Email/SMS challenges, session-bound approval",
+    },
+    {
+      label: "Validation",
+      value: "Direct API, expiry, replay and failure-path checks",
+    },
+    {
+      label: "Testing",
+      value: "Indepentant unit tests, staged integration tests",
     },
   ],
-  lesson:
-    "I would now automate the complete route, expiry, replay, session-isolation and hold-and-resume matrix in CI and consider narrower action-category binding.",
   related: [
-    { label: "Customer migration", href: "/work/customer-migration/" },
     {
-      label: "Customer finance portal",
+      label: "LeaseTrack customer portal",
       href: "/work/customer-finance-portal/",
     },
+    { label: "Customer migration", href: "/work/customer-migration/" },
   ],
 } satisfies CaseStudy;

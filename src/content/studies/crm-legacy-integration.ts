@@ -3,90 +3,73 @@ import type { CaseStudy } from "../types";
 export default {
   slug: "crm-legacy-integration",
   path: "/work/crm-legacy-integration/",
-  category: "Legacy integration",
-  title: "Connecting a custom CRM to legacy business systems",
-  description:
-    "How I inherited an undocumented sales CRM and connected lead, quote and lease workflows across three isolated business systems.",
-  introduction:
-    "The reported problem was inaccurate dashboards. The underlying problem was that leads, quotes and lease outcomes moved through three isolated systems with repeated manual hand-offs.",
+  category: "Business systems integration",
+  title: "Connecting the lead-to-lease journey across three systems",
+  description: "I inherited a thinly documented CRM and built practical connections to a desktop quoting tool and a legacy lease-management platform.",
+  introduction: "Customer information started in PipelineAxis CRM, was re-entered into PackEdge to prepare a quote and eventually reached LeaseCore once the lease settled. Each hand-off created another opportunity for lost leads, inconsistent records and incomplete reporting.",
   featured: true,
   metrics: [
-    { label: "Systems", value: "3 connected" },
-    { label: "Retention", value: "~⅓ uplift" },
-    { label: "Reporting", value: "End to end" },
-    { label: "Stack", value: "React + MSSQL" },
+    { label: "Systems", value: "PipelineAxis, PackEdge, LeaseCore" },
+    { label: "Reported conversion", value: "–9 points at first" },
+    { label: "Expiry pipeline", value: "Up to 3 months ahead" },
+    { label: "Approach", value: "Incremental integration" },
   ],
   sections: [
     {
-      title: "Problem",
+      title: "The problem",
       paragraphs: [
-        "I inherited a custom CRM with four vague pages of documentation. It operated beside an installed C# quoting application and a .NET lease-management platform, each backed by a separate database on the same SQL Server.",
-        "Customer details were entered repeatedly, hand-offs occurred through shared inboxes and staff searched multiple systems to reconstruct customer status. Reports reflected incomplete and inconsistently linked data rather than a single observable workflow.",
+        "I inherited PipelineAxis with very little useful documentation. Users across sales, marketing, operations and management depended on three separate systems that shared a SQL Server instance but not a coherent customer workflow. Sales agents re-entered details into PackEdge, teams coordinated hand-offs through shared email inboxes and reports could not reliably follow an enquiry through to a settled lease.",
       ],
     },
     {
-      title: "Responsibility",
+      title: "My role",
       paragraphs: [
-        "I mapped the applications and interviewed users across sales, marketing, operations, accounts, management and the board. I established where data originated, which system should own each stage and where integration could remove duplicate work without destabilising critical applications.",
+        "I traced the actual workflows with staff, mapped where each system stored and changed records, developed the CRM-side integrations and worked with the IT manager, who owned PackEdge, on the quoting-system changes. I did not replace all three platforms; I connected the steps the business needed while leaving their critical existing operations intact.",
       ],
     },
     {
-      title: "Solution",
+      title: "What I changed",
       subsections: [
         {
-          title: "Bring web leads directly into the CRM",
+          title: "Bring website enquiries into the CRM",
           paragraphs: [
-            "I added an authenticated lead endpoint and connected website submissions to workload-aware allocation, replacing inbox-based handling with a visible record.",
+            "I created a lead endpoint in PipelineAxis and connected the then-WordPress website through a custom PHP server action. Website submissions entered PipelineAxis’s existing workload-aware allocation process instead of an inbox. This was an earlier integration, separate from the later Qwik and HubSpot rebuild.",
           ],
         },
         {
-          title: "Create a reliable end-of-lease workflow",
+          title: "Find refinance opportunities from more than one source",
           paragraphs: [
-            "A new CRM module combined lease data with recent quote activity, excluded ended or already-refinanced leases and created opportunities up to three months before expiry.",
+            "I built a PipelineAxis module that combined LeaseCore lease dates and statuses with quote activity in PackEdge. It excluded leases already ended or being refinanced and could assign upcoming opportunities to an agent up to three months before expiry. This avoided modifying an undocumented report inside LeaseCore.",
           ],
         },
         {
-          title: "Link leads to quotes",
+          title: "Create a linked quote without retyping the lead",
           paragraphs: [
-            "A controlled stored-procedure boundary transferred required customer data into the quoting database and returned the new quote identifier to the CRM. Disabling manual quote creation prevented leads from bypassing traceability.",
+            "I mapped customer fields from PipelineAxis to PackEdge and built the CRM-side transfer. The IT manager added the corresponding PackEdge stored procedure, quote reference field and restriction on manual quote creation. An agent could create a quote from a PipelineAxis lead and receive its new quote ID back in the CRM.",
           ],
         },
         {
-          title: "Make reporting honest",
+          title: "Explain the reporting change",
           paragraphs: [
-            "Including previously invisible leads initially reduced reported conversion by nine percentage points. I explained that this was an accuracy correction, not a sudden performance decline, giving leadership reliable data to improve.",
+            "Once leads that previously disappeared before quoting became visible, the reported conversion rate initially fell by nine percentage points. I explained to management that the denominator had changed: the new report included enquiries the previous workflow had not recorded.",
           ],
         },
       ],
     },
     {
-      title: "Outcome",
+      title: "The result",
       paragraphs: [
-        "The integrations created a traceable path from enquiry through quote and settled lease. Duplicate entry fell, attribution improved and sales management could see work that had not progressed.",
-        "The end-of-lease workflow helped increase retention by nearly one-third. Conversion later recovered by more than the initial nine-point drop using the more complete data.",
+        "The business could trace an enquiry through quote creation and into the settled lease workflow with less repeated entry. The refinance process made upcoming customer contacts visible and was associated with a reported increase in retention of nearly one-third.",
+        "The conversion-rate drop was an improvement in measurement coverage, not evidence that sales performance had suddenly deteriorated.",
       ],
     },
   ],
   technologies: [
-    {
-      label: "CRM",
-      value: "TypeScript, React, Redux, Node.js, Express.js, MSSQL",
-    },
-    {
-      label: "Legacy",
-      value: "C# desktop client, .NET application, SQL Server",
-    },
-    {
-      label: "Integration",
-      value: "REST, stored procedures, linked identifiers",
-    },
-    {
-      label: "Delivery",
-      value: "User discovery, staged releases, staff training",
-    },
+    { label: "CRM", value: "React, Redux, Node.js, Express.js, MSSQL" },
+    { label: "Legacy systems", value: "C# desktop quoting client, .NET lease platform" },
+    { label: "Integration", value: "Authenticated endpoint, cross-database stored procedure" },
+    { label: "Discovery", value: "Stakeholder interviews, workflow and reporting mapping" },
   ],
-  lesson:
-    "An inaccurate dashboard can be a data-capture problem wearing a reporting label. The process had to become observable before the report could become trustworthy.",
   related: [
     { label: "Commercial engineering", href: "/about/commercial-engineering/" },
     { label: "Qwik and HubSpot", href: "/work/qwik-hubspot/" },

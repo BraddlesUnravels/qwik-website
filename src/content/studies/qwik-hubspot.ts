@@ -3,75 +3,107 @@ import type { CaseStudy } from "../types";
 export default {
   slug: "qwik-hubspot",
   path: "/work/qwik-hubspot/",
-  category: "Web performance and CRM automation",
-  title: "Replacing WordPress and automating HubSpot leads",
-  description:
-    "How I rebuilt an underperforming website in Qwik and connected enquiries, attribution and ownership directly to HubSpot.",
-  introduction:
-    "The old website was slow, difficult to change and disconnected from the commercial systems that needed its enquiries. The important result was making customer intent traceable from submission onward.",
+  category: "Web development and CRM automation",
+  title: "Rebuilding a WordPress site with HubSpot intergration",
+  description: `
+    I rebuilt the public website in Qwik and implemented a server-side lead flow 
+    that made enquiries and campaign attribution easier to follow.
+  `,
+  introduction: `
+    The WordPress site was slow, difficult for marketing to update and only part of 
+    the route a prospective customer took into sales. The project needed a faster public 
+    website and a more reliable records of what happened after an enquiry.
+  `,
   featured: true,
   metrics: [
     { label: "Delivery", value: "3 months" },
-    { label: "Lighthouse", value: "3 × 100" },
-    { label: "Recorded leads", value: "~⅓ increase" },
-    { label: "Platform", value: "Qwik + Azure" },
+    { label: "Lighthouse", value: "100 in 3 categories" },
+    { label: "Recorded daily leads", value: "Nearly ⅓ more" },
+    { label: "Hosting", value: "Azure" },
   ],
   sections: [
     {
-      title: "Problem",
+      title: "The problem",
       paragraphs: [
-        "The WordPress site scored roughly 50–60 for performance and accessibility and about 40 for SEO. Minor content changes depended on a slow external contractor.",
-        "Lead handling was fragmented across the website, social media, spreadsheets, presentations and email. Marketing and sales therefore lacked a complete record of response, attribution and conversion.",
+        `
+          The previous WordPress site scored roughly 50–60 in Lighthouse Performance and 
+          Accessibility and about 40 in SEO. Even small content changes depended on an external contractor. 
+          Meanwhile, offsite and social-media enquiries could move between spreadsheets, documents and email 
+          without becoming traceable CRM records.
+        `,
+        `
+          An earlier project had already routed WordPress website enquiries into the old PipelineAxis CRM. 
+          This later project replaced the website and moved the lead process into HubSpot.
+        `,
       ],
     },
     {
-      title: "Responsibility",
+      title: "My role",
       paragraphs: [
-        "I selected the framework, rebuilt the main website, implemented the server-side HubSpot integration and deployed it to Azure within three months. A second developer owned the blog, and we integrated structured data, analytics isolation and final SEO work.",
+        `
+          I selected Qwik after considering Next.js and Astro, but niether could out-perform Qwik on the 
+          main requirements of performance and SEO. I rebuilt the main public website, built its server-side HubSpot connection 
+          and deployed the application to Azure. A second developer owned the blog. We worked together on shared SEO, metadata, 
+          structured data and analytics integration across the complete site.
+        `,
       ],
     },
     {
-      title: "Solution",
+      title: "How I approached it",
       subsections: [
         {
-          title: "Qwik for the actual constraint",
+          title: "Prioritise fast, indexable pages",
           paragraphs: [
-            "SEO and initial delivery were the priorities. Qwik provided server-rendered content without a large hydration step, document-head control and Partytown isolation for analytics scripts.",
+            `
+              The decision to use Qwik was based on its support for server-rendered content, its resumability model 
+              and control over page metadata. We used Partytown to move compatible third-party analytics work off 
+              the main thread, and added structured data and page-specific metadata. These choices supported the 
+              performance and discoverability requirements the project demanded.
+            `,
           ],
         },
         {
-          title: "Server-side HubSpot integration",
+          title: "Keep lead creation behind the server",
           paragraphs: [
-            "The backend normalised form data, matched contacts by name, phone and email and created records only when needed. Campaign UTMs, referral codes and form origin travelled with each lead into round-robin ownership.",
+            `
+              On form submission, the backend normalised the data and checked HubSpot for an existing contact 
+              using the available identifying details before creating a record when needed. 
+              It carried campaign UTMs, referral information and form origin into the lead workflow, 
+              where HubSpot handled agent allocation.
+            `,
           ],
         },
         {
-          title: "One visible lead workflow",
+          title: "Account for leads created away from the website",
           paragraphs: [
-            "Offsite and social leads also had to enter HubSpot before progressing, removing spreadsheet and email hand-offs. Website attribution could then be assessed alongside qualified Aircall activity.",
+            `
+              The wider operating process required offsite and social media leads to enter HubSpot before progressing. 
+              This replaced informal hand-offs and gave sales and marketing a more complete record to use 
+              alongside qualified Aircall call data.
+            `,
           ],
         },
       ],
     },
     {
-      title: "Outcome",
+      title: "The result",
       paragraphs: [
-        "The Azure-hosted site achieved Lighthouse scores of 100 for Performance, Accessibility and Best Practices. Technical SEO improved through server rendering, metadata, structured data and isolated analytics.",
-        "Recorded daily leads increased by just under one-third without more campaign activity, exposing demand that had previously been invisible. Complaints from customers who received no response fell to almost none.",
+        `
+          The Azure-hosted site achieved Lighthouse scores of 100 for Performance, Accessibility and Best Practices during 
+          testing and benchmarking including production testing. Recorded daily leads increased by just under one-third 
+          without a corresponding increase in campaign activity, suggesting that more existing demand was being captured and made visible. 
+          Staff also reported substantially fewer complaints about customers not receiving a response.
+        `,
+        "The change improved capture and visibility of leads; it was not measured as a change in site traffic or sales conversion.",
       ],
     },
   ],
   technologies: [
-    { label: "Front end", value: "Qwik, TypeScript, semantic HTML" },
-    {
-      label: "Performance",
-      value: "SSR, resumability, Partytown, structured data",
-    },
-    { label: "CRM", value: "HubSpot APIs, matching, attribution, round robin" },
-    { label: "Delivery", value: "Azure hosting, three-month replacement" },
+    { label: "Website", value: "Qwik, TypeScript, server rendering, structured data" },
+    { label: "Performance", value: "Partytown, Lighthouse" },
+    { label: "CRM", value: "HubSpot API, UTM and referral attribution" },
+    { label: "Delivery", value: "Azure; joint integration with blog developer" },
   ],
-  lesson:
-    "The site scores mattered, but the commercially important change was connecting customer intent to a workflow the business could see, allocate and measure.",
   related: [
     { label: "CRM legacy integration", href: "/work/crm-legacy-integration/" },
   ],

@@ -4,96 +4,85 @@ export default {
   slug: "customer-finance-portal",
   path: "/work/customer-finance-portal/",
   category: "Full-stack product delivery",
-  title: "Secure customer finance portal",
-  description:
-    "How I replaced external access to a vulnerable legacy platform with a secure customer finance portal for more than 5,000 users.",
-  introduction:
-    "I designed and delivered a secure customer finance portal that removed customer-facing access from a vulnerable legacy platform without taking the business-critical lease-management system itself offline.",
+  title: "LeaseTrack: a new portal around a legacy lease platform",
+  description: `
+    I built a customer finance portal that let the business withdraw public access 
+    to an ageing platform without retiring the system it still depended on.
+  `,
+  introduction: `
+    The business needed to take a vulnerable legacy customer portal offline, 
+    but the same platform (LeaseCore) held the lease data and financial processes 
+    staff relied on every day. I owned the delivery of LeaseTrack, a replacement 
+    customer-facing application that kept those internal processes available.
+  `,
   featured: true,
   metrics: [
-    { label: "Customers", value: "5,000+" },
+    { label: "Customers", value: "5,000+ migrated" },
     { label: "Delivery", value: "8 months" },
-    { label: "Responsibility", value: "End to end" },
-    { label: "Platform", value: "React + Node.js" },
+    { label: "Release", value: "November 2024" },
+    { label: "Scope", value: "Full-stack ownership" },
   ],
   sections: [
     {
-      title: "Problem",
+      title: "The problem",
       paragraphs: [
-        "A security review identified vulnerabilities ranging from low to critical in the existing lease-management platform. Thirteen dependencies were deprecated and unsupported, but the application still held customer accounts, financial balances and historical transactions and could not simply be switched off.",
-        "The customer portal was part of the same platform. Removing external access therefore risked taking away lease information, claims, documents and support functions used by thousands of customers.",
-        "The portal also relied on forgettable four-digit identifiers, displayed balances that could remain stale until a batch process ran and forced routine account changes through manual support workflows.",
+        "A security review had identified vulnerabilities in LeaseCore, including unsupported dependencies. The business could not retire LeaseCore immediately: it stored customer accounts, transactions and lease balances, and its public portal still let customers view budgets, submit claims and request support. Simply switching off external access would have removed services customers needed.",
+        "The existing portal also used four-digit usernames, could display balances that had not been recalculated since the last batch, and routed ordinary changes through support staff.",
       ],
     },
     {
-      title: "Responsibility",
+      title: "My role",
       paragraphs: [
-        "I worked with the board to define a first release focused on reducing the external attack surface while preserving the lease platform the business still required. I owned the work from discovery and architecture through implementation, deployment and production support.",
-      ],
-      bullets: [
-        "Mapped legacy database interactions, stored procedures and server calculations.",
-        "Designed the portal data model, REST API and customer journeys.",
-        "Built the React client and Node.js API, including authentication and authorisation.",
-        "Established staging, CI/CD, monitoring and Azure infrastructure.",
+        "I worked with the board to define the first release around two constraints: reduce exposure of the legacy application and preserve the customer journeys already in use. I was responsible for discovery, architecture, database and API work, the React interface, authentication, deployment and production support. A six-month target became an eight-month delivery as we included additional self-service and security work.",
       ],
     },
     {
-      title: "Solution",
+      title: "How I built it",
       subsections: [
         {
-          title: "A controlled boundary around the legacy platform",
+          title: "Keep the existing business data where it belonged",
           paragraphs: [
-            "Approximately 98% of the required data already lived in MSSQL. I added clearly owned tables for portal users, credentials, MFA, preferences, activity and reporting while keeping controlled access to the lease data the business depended on.",
-            "Where legacy stored procedures remained necessary, I treated them as explicit integration boundaries and added targeted indexes for transaction access.",
+            "Most of the information LeaseTrack needed already lived in the LeaseCore MSSQL database. Rather than introduce a third database and another synchronisation problem, I added portal-owned tables for identities, MFA, preferences and activity alongside the existing lease data. The Node.js API exposed controlled operations and reused legacy stored procedures where they remained necessary. This kept the legacy dependency explicit; it did not remove all of its testing limitations.",
           ],
         },
         {
-          title: "Workflows verified before implementation",
+          title: "Design around actual customer and staff behaviour",
           paragraphs: [
-            "I mapped customer and staff workflows, listened to customer calls and moved prototypes through directors, department heads and frontline users. Requests were assessed against the release goal so useful improvements did not turn the project into an unrestricted redesign.",
+            "I mapped the old database and application workflows, listened to customer calls and reviewed prototypes with directors, managers and frontline staff. Feedback shaped the budget breakdown, clearer transactions, downloadable documents and the self-service changes that had previously required manual support. I kept the first release focused on replacing the existing customer journey rather than rebuilding internal lease management.",
           ],
         },
         {
-          title: "Secure self-service",
-          bullets: [
-            "Email-based sign-in and migration from legacy hashes to Argon2.",
-            "JWT invitations, email and SMS MFA, password recovery and step-up authentication.",
-            "Current balances, transactions and budget-allocation visualisations.",
-            "Claims, secure documents, customer messaging and self-service account changes.",
-          ],
-        },
-        {
-          title: "Production delivery",
+          title: "Deliver and operate the replacement",
           paragraphs: [
-            "The release used Docker, GitHub Actions, Azure Bicep, a dedicated staging environment, Sentry and Grafana. Employees who also held leases validated the production journey before public cutover.",
+            "I built the React and TypeScript client and the Express API, implemented email-based sign-in, MFA and authorisation, and prepared the customer migration. Docker, GitHub Actions, Azure Bicep, staging, Sentry and Grafana supported deployment and production troubleshooting. Employees with active leases tested the live journey before customer cutover.",
           ],
         },
       ],
     },
     {
-      title: "Outcome",
+      title: "The result",
       paragraphs: [
-        "The portal entered production in November 2024 and moved more than 5,000 customers. Customers gained current balances, clearer budgets, secure document access and self-service account changes.",
-        "Calls about forgotten four-digit usernames fell to almost none, and staff no longer needed to prepare repeated emails or explain stale figures. Most importantly, the business disabled external access to the vulnerable legacy portal while retaining the internal platform it still needed.",
+        "LeaseTrack went into production on 14 November 2024 and supported the migration of more than 5,000 customers. Customers gained current lease information, more understandable budgets, documents and self-service account changes. Staff reported far fewer calls about forgotten usernames and routine profile updates.",
+        "The key architectural outcome was the separation of public customer access from the older portal while keeping the internal lease-management platform in service.",
       ],
     },
   ],
   technologies: [
-    { label: "Front end", value: "TypeScript, React 19, Redux, Material UI" },
-    { label: "Back end", value: "Node.js, Express.js, REST APIs" },
-    { label: "Data", value: "MSSQL, stored procedures, targeted indexing" },
-    { label: "Security", value: "JWT, MFA, Argon2, step-up authentication" },
+    { label: "Client", value: "React, TypeScript, Redux, Material UI" },
+    { label: "API", value: "Node.js, Express, REST" },
+    {
+      label: "Data",
+      value: "MSSQL, existing stored procedures, targeted indexing",
+    },
+    { label: "Security", value: "MFA, Argon2, step-up authentication" },
     {
       label: "Delivery",
-      value: "Docker, GitHub Actions, Bicep, Azure, Sentry, Grafana",
+      value: "Docker, GitHub Actions, Azure, Bicep, Sentry, Grafana",
     },
   ],
   related: [
     { label: "Customer migration", href: "/work/customer-migration/" },
     { label: "Step-up authentication", href: "/work/step-up-authentication/" },
-    {
-      label: "Lease balance calculation",
-      href: "/work/lease-balance-calculation/",
-    },
+    { label: "On-demand balances", href: "/work/lease-balance-calculation/" },
   ],
 } satisfies CaseStudy;

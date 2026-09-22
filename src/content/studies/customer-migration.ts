@@ -4,90 +4,113 @@ export default {
   slug: "customer-migration",
   path: "/work/customer-migration/",
   category: "Identity and migration",
-  title: "Migrating 5,000 customers without a blanket password reset",
-  description:
-    "How I combined pre-migration with just-in-time credential upgrading to move customers safely from SHA-1 to Argon2.",
-  introduction:
-    "The safest technical option is not always the least disruptive customer option. This migration improved password security without creating thousands of expired links, support calls or inaccessible accounts.",
+  title: "Moving 5,000+ accounts without a disruptive password reset",
+  description: `
+    I pre-migrated eligible customer accounts, then upgraded each password 
+    from a legacy SHA-1 hash to Argon2 when its owner returned.
+  `,
+  introduction: `
+    The old customer portal used four-digit usernames and SHA-1 password hashes. 
+    A forced reset across thousands of infrequent users would have created expired links 
+    and support calls at exactly the point the business needed a stable cutover.
+  `,
   featured: true,
   metrics: [
     { label: "Accounts", value: "5,000+" },
-    { label: "Legacy", value: "SHA-1" },
-    { label: "Replacement", value: "Argon2" },
-    { label: "Cutover", value: "Rollback ready" },
+    { label: "Legacy hash", value: "SHA-1" },
+    { label: "New hash", value: "Argon2" },
+    { label: "Pilot", value: "21 employees" },
   ],
   sections: [
     {
-      title: "Problem",
+      title: "The problem",
       paragraphs: [
-        "Customers used four-digit usernames and SHA-1 password hashes, and many returned only occasionally. A mass password-reset campaign would have produced expired links, missed migration windows and a large support burden.",
-        "Transforming every account and credential in one irreversible operation would also have enlarged the failure surface during cutover.",
+        `
+          LeaseCore’s old portal was poorly documented and used four-digit usernames that 
+          customers often forgot. The migration had to change the customer-facing authentication 
+          system while avoiding a mass password-reset exercise. Because some customers did not 
+          sign in for months, a short-lived reset campaign would have left many people with expired links.
+        `,
       ],
     },
     {
-      title: "Responsibility",
+      title: "My role",
       paragraphs: [
-        "I identified the legacy authentication mechanism, selected the migration strategy, implemented the new login flow, tested partial and failure states and prepared the rollback process.",
+        `
+          I investigated the legacy hash format and login flow, implemented the staged account and credential 
+          migration in LeaseTrack, tested failure paths and prepared a cutover with a rollback option.
+        `,
       ],
     },
     {
-      title: "Solution",
+      title: "How the migration worked",
       subsections: [
         {
-          title: "Verify before building",
+          title: "Confirm the legacy hash rather than guess",
           paragraphs: [
-            "I created approximately 100 test users with known passwords and compared custom SHA-1 output with hashes produced by the legacy application. Consistent matches gave me evidence for the migration logic rather than relying on format recognition alone.",
+            `
+              The stored format suggested SHA-1. I registered about 100 development users with known 
+              passwords and compared the resulting legacy hashes with output from a custom script. 
+              Repeated matches established how the old application handled those passwords.
+            `,
           ],
         },
         {
-          title: "Separate account and credential migration",
+          title: "Separate account records from credential conversion",
           paragraphs: [
-            "Eligible active accounts were created in the new portal before release, but each password moved only when its owner returned and proved knowledge of it.",
+            `
+              Eligible active accounts were created in the new portal in advance. 
+              The password was not converted during that bulk step; each account remained unverified 
+              until its owner successfully signed in. New eligible accounts could still originate 
+              in the legacy staff workflow during the transition.
+            `,
           ],
         },
         {
-          title: "Upgrade on first sign-in",
-          steps: [
-            "Find the unverified migrated account by email.",
-            "Retrieve the linked legacy username and SHA-1 hash.",
-            "Verify the submitted password using the proven legacy algorithm.",
-            "Hash the confirmed password with Argon2.",
-            "Store the new credential and nullify the legacy hash.",
-            "Complete expiring email confirmation and SMS MFA.",
+          title: "Upgrade only after the user proves the password",
+          paragraphs: [
+            `
+              On a first sign-in, LeaseTrack matched the customer’s email to the pre-migrated account, 
+              located the associated legacy hash and verified the submitted password using the confirmed 
+              legacy algorithm. It then stored an Argon2 hash and cleared the legacy hash. 
+              Email confirmation and SMS MFA completed the new-portal verification journey.
+            `,
           ],
         },
         {
-          title: "Controlled cutover",
+          title: "Pilot and retain a rollback path",
           paragraphs: [
-            "Twenty-one employees with active leases completed a production pilot. On release day, traffic redirected to the new portal while a script remained ready to reactivate legacy accounts if a serious exception appeared.",
+            `
+              I simulated successful and failing migrations against development data, then piloted the release 
+              with 21 employees who had active leases. The release-day redirect from the old portal could be 
+              removed and a prepared script could reactivate old portal accounts if a serious migration problem appeared.
+            `,
           ],
         },
       ],
     },
     {
-      title: "Outcome",
+      title: "The result",
       paragraphs: [
-        "More than 5,000 customers moved without a blanket reset. They retained passwords they already knew while the system replaced the underlying credential after successful verification.",
-        "Four-digit usernames disappeared from the customer journey, forgotten-identifier calls fell substantially and external access to the old portal was retired through a reversible migration boundary.",
+        `
+          More than 5,000 customer accounts moved to the new portal without a blanket password reset. 
+          Customers could use the password they already knew for their first login, while the new system 
+          replaced the underlying credential after successful verification. The old four-digit identifier 
+          was removed from their normal sign-in journey, and staff reported a substantial reduction 
+          in forgotten-username calls.
+        `,
+        "This was a hybrid approach: account records moved ahead of release, while credential conversion happened just in time.",
       ],
     },
   ],
   technologies: [
-    { label: "Application", value: "TypeScript, Node.js, Express.js, React" },
-    { label: "Data", value: "MSSQL, scripted account preparation" },
-    { label: "Identity", value: "SHA-1 verification, Argon2, JWT, SMS MFA" },
-    {
-      label: "Controls",
-      value: "Production pilot, redirect cutover, rollback script",
-    },
+    { label: "Authentication", value: "Legacy SHA-1 verification, Argon2, email confirmation, SMS MFA" },
+    { label: "Application", value: "TypeScript, Node.js, Express.js" },
+    { label: "Data", value: "MSSQL, migration scripts" },
+    { label: "Rollout", value: "Internal pilot, redirect, rollback preparation" },
   ],
-  lesson:
-    "Migration strategy should reflect how customers actually use a service. Pre-creating accounts produced a predictable starting point; converting credentials only when customers returned limited disruption.",
   related: [
-    {
-      label: "Customer finance portal",
-      href: "/work/customer-finance-portal/",
-    },
+    { label: "LeaseTrack customer portal", href: "/work/customer-finance-portal/" },
     { label: "Step-up authentication", href: "/work/step-up-authentication/" },
   ],
 } satisfies CaseStudy;
