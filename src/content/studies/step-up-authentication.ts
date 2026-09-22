@@ -7,8 +7,7 @@ export default {
   title: "Step-up authentication without interrupting routine portal use",
   description:
     "I added fresh identity checks to sensitive customer actions and enforced them at the API, not just in the React interface.",
-  introduction:
-    `
+  introduction: `
     Signing in with MFA establishes a session; it does not guarantee that the same 
     person is still present when an account holder later downloads sensitive documents or changes recovery details. 
     I designed a second check for actions where a compromised session would have greater consequences.

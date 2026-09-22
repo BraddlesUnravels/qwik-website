@@ -6,17 +6,17 @@ The site currently ships a dark single-page intro with a continuous technology c
 
 ## Stack
 
-| Layer | Choice |
-| --- | --- |
-| Framework | `@builder.io/qwik` / `@builder.io/qwik-city` `1.20.0` |
-| Bundler | Vite 7 |
-| Language | TypeScript 5.9 |
-| Styling | Tailwind CSS v4 via `@tailwindcss/vite` |
-| UI primitives | `@qwik-ui/headless` (available, not wired into the home page yet) |
-| Unit tests | Vitest 5 + `@builder.io/qwik/testing` |
-| Component / e2e | Cypress 15 + `cypress-ct-qwik` |
-| Lint / format | ESLint 9 flat config + `eslint-plugin-qwik`, Prettier + `prettier-plugin-tailwindcss` |
-| Package manager | Bun (`packageManager`: `bun@1.3.12`) |
+| Layer           | Choice                                                                                |
+| --------------- | ------------------------------------------------------------------------------------- |
+| Framework       | `@builder.io/qwik` / `@builder.io/qwik-city` `1.20.0`                                 |
+| Bundler         | Vite 7                                                                                |
+| Language        | TypeScript 5.9                                                                        |
+| Styling         | Tailwind CSS v4 via `@tailwindcss/vite`                                               |
+| UI primitives   | `@qwik-ui/headless` (available, not wired into the home page yet)                     |
+| Unit tests      | Vitest 5 + `@builder.io/qwik/testing`                                                 |
+| Component / e2e | Cypress 15 + `cypress-ct-qwik`                                                        |
+| Lint / format   | ESLint 9 flat config + `eslint-plugin-qwik`, Prettier + `prettier-plugin-tailwindcss` |
+| Package manager | Bun (`packageManager`: `bun@1.3.12`)                                                  |
 
 Node `^18.17.0 || ^20.3.0 || >=21.0.0` or Bun `>=1.1.0`.
 
@@ -57,7 +57,22 @@ bun run test.ct.open      # Cypress component tests (interactive)
 bun run test.e2e          # start dev server, run Cypress e2e headless
 bun run test.e2e.open     # start dev server, open Cypress e2e
 bun run test.all          # unit + component + e2e
+bun run ci                # full CI suite (format, lint, types, unit, build, ct, e2e)
 ```
+
+## Continuous integration
+
+Pull requests and pushes to `main` run `.github/workflows/ci.yml` with Bun:
+
+1. `fmt.check`
+2. `lint`
+3. `build.types`
+4. `test.unit`
+5. `build`
+6. `test.ct`
+7. `test.e2e`
+
+Run the same sequence locally with `bun run ci`.
 
 ## Testing
 

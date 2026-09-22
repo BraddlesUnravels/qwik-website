@@ -24,14 +24,10 @@ interface TypographyProps {
 }
 
 const variants: Record<TypographyVariant, string> = {
-  display:
-    "text-6xl font-semibold leading-[0.96] tracking-[-0.055em]",
-  "heading-1":
-    "text-5xl font-semibold leading-tight tracking-[-0.04em]",
-  "heading-2":
-    "text-4xl font-semibold leading-tight tracking-[-0.035em]",
-  "heading-3":
-    "text-2xl font-semibold leading-tight tracking-[-0.025em]",
+  display: "text-6xl font-semibold leading-[0.96] tracking-[-0.055em]",
+  "heading-1": "text-5xl font-semibold leading-tight tracking-[-0.04em]",
+  "heading-2": "text-4xl font-semibold leading-tight tracking-[-0.035em]",
+  "heading-3": "text-2xl font-semibold leading-tight tracking-[-0.025em]",
   "body-large": "text-xl leading-8",
   body: "text-base leading-7",
   small: "text-sm leading-6",
@@ -43,7 +39,7 @@ const tones: Record<TypographyTone, string> = {
   muted: "text-zinc-400",
   accent: "text-indigo-300",
   emerald: "text-emerald-400",
-  teal: "text-green-200"
+  teal: "text-green-200",
 };
 
 const defaultElements: Record<TypographyVariant, TypographyElement> = {

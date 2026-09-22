@@ -101,10 +101,16 @@ export default {
   technologies: [
     { label: "Database", value: "MSSQL, stored procedures, SQL debugging" },
     { label: "API", value: "TypeScript, Node.js, Sentry" },
-    { label: "Validation", value: "Parallel old-versus-new calculation comparisons" },
+    {
+      label: "Validation",
+      value: "Parallel old-versus-new calculation comparisons",
+    },
     { label: "Environment", value: "Docker, local database" },
   ],
   related: [
-    { label: "LeaseTrack customer portal", href: "/work/customer-finance-portal/" },
+    {
+      label: "LeaseTrack customer portal",
+      href: "/work/customer-finance-portal/",
+    },
   ],
 } satisfies CaseStudy;

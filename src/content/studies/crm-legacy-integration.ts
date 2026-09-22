@@ -5,8 +5,10 @@ export default {
   path: "/work/crm-legacy-integration/",
   category: "Business systems integration",
   title: "Connecting the lead-to-lease journey across three systems",
-  description: "I inherited a thinly documented CRM and built practical connections to a desktop quoting tool and a legacy lease-management platform.",
-  introduction: "Customer information started in PipelineAxis CRM, was re-entered into PackEdge to prepare a quote and eventually reached LeaseCore once the lease settled. Each hand-off created another opportunity for lost leads, inconsistent records and incomplete reporting.",
+  description:
+    "I inherited a thinly documented CRM and built practical connections to a desktop quoting tool and a legacy lease-management platform.",
+  introduction:
+    "Customer information started in PipelineAxis CRM, was re-entered into PackEdge to prepare a quote and eventually reached LeaseCore once the lease settled. Each hand-off created another opportunity for lost leads, inconsistent records and incomplete reporting.",
   featured: true,
   metrics: [
     { label: "Systems", value: "PipelineAxis, PackEdge, LeaseCore" },
@@ -66,9 +68,18 @@ export default {
   ],
   technologies: [
     { label: "CRM", value: "React, Redux, Node.js, Express.js, MSSQL" },
-    { label: "Legacy systems", value: "C# desktop quoting client, .NET lease platform" },
-    { label: "Integration", value: "Authenticated endpoint, cross-database stored procedure" },
-    { label: "Discovery", value: "Stakeholder interviews, workflow and reporting mapping" },
+    {
+      label: "Legacy systems",
+      value: "C# desktop quoting client, .NET lease platform",
+    },
+    {
+      label: "Integration",
+      value: "Authenticated endpoint, cross-database stored procedure",
+    },
+    {
+      label: "Discovery",
+      value: "Stakeholder interviews, workflow and reporting mapping",
+    },
   ],
   related: [
     { label: "Commercial engineering", href: "/about/commercial-engineering/" },

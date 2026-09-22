@@ -3,7 +3,8 @@
     --font-fira-sans: "Fira Sans", sans-serif;
     --font-sans: var(--font-fira-sans);
     --font-display: var(--font-fira-sans);
-    --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    --font-mono:
+      "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
 
     /* Every Tailwind text utility now scales fluidly with the viewport. */
     --text-xs: clamp(0.72rem, 0.7rem + 0.08vw, 0.78rem);

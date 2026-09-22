@@ -99,10 +99,16 @@ export default {
     },
   ],
   technologies: [
-    { label: "Website", value: "Qwik, TypeScript, server rendering, structured data" },
+    {
+      label: "Website",
+      value: "Qwik, TypeScript, server rendering, structured data",
+    },
     { label: "Performance", value: "Partytown, Lighthouse" },
     { label: "CRM", value: "HubSpot API, UTM and referral attribution" },
-    { label: "Delivery", value: "Azure; joint integration with blog developer" },
+    {
+      label: "Delivery",
+      value: "Azure; joint integration with blog developer",
+    },
   ],
   related: [
     { label: "CRM legacy integration", href: "/work/crm-legacy-integration/" },
