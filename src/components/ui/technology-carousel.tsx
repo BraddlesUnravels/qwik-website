@@ -14,9 +14,9 @@ const technologies = [
 
   // Back-end and runtimes
   { name: "Node.js", icon: "/icon/logo/node-logo.svg" },
-  { name: "Bun", icon: "/icon/logo/bun-logo.svg" },
   { name: "Express.js", icon: "/icon/logo/express-logo.svg" },
   { name: "Elysia.js", icon: "/icon/logo/elysiajs-logo.svg" },
+  { name: "Bun", icon: "/icon/logo/bun-logo.svg" },
   { name: "npm", icon: "/icon/logo/npm-logo.svg" },
 
   // Databases
@@ -76,11 +76,11 @@ export const TechnologyCarousel = component$(() => {
       gap: 2.5rem;
       padding-right: 2.5rem;
       will-change: transform;
-      animation: carousel-scroll 40s linear infinite;
+      animation: carousel-scroll 45s linear infinite;
     }
 
     .carousel-list--duplicate {
-      animation-delay: -20s;
+      animation-delay: -22.5s;
     }
 
     .technology-card {
@@ -124,17 +124,19 @@ export const TechnologyCarousel = component$(() => {
 
   return (
     <div
-      class="carousel relative w-full overflow-hidden py-6"
+      class="carousel relative w-full overflow-hidden py-5"
       aria-label="Technologies used"
     >
       <div
+        id="carousel-left-fade"
         aria-hidden="true"
-        class="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-linear-to-r from-slate-950 to-transparent"
+        class="pointer-events-none absolute inset-y-0 left-0 z-10 w-30 bg-linear-to-r from-[#070a10bb] to-transparent"
       />
 
       <div
+        id="carousel-right-fade"
         aria-hidden="true"
-        class="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-linear-to-l from-slate-950 to-transparent"
+        class="pointer-events-none absolute inset-y-0 right-0 z-10 w-30 bg-linear-to-l from-[#070a10bb] to-transparent"
       />
 
       <div class="carousel-stage">
