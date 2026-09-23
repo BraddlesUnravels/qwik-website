@@ -1,0 +1,412 @@
+name: Publish release image and initiate deployment
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: qwik-website-release-${{ github.event.release.id }}
+  cancel-in-progress: false
+
+env:
+  APPLICATION: qwik-website
+  CONTAINER_REPOSITORY: qwik-website
+  ACR_LOGIN_SERVER: braddlesunravelsacr.azurecr.io
+  IAC_REPOSITORY: BraddlesUnravels/iac
+  RELEASE_TAG_PATTERN: '^v[0-9]+\.[0-9]+\.[0-9]+$'
+  IMAGE_NAME: qwik-website:release-candidate
+
+jobs:
+  verify-test-build-push:
+    name: Verify, test, build and push release image
+    if: ${{ !github.event.release.draft && !github.event.release.prerelease }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    environment: image-publish
+    permissions:
+      contents: read
+      id-token: write
+    outputs:
+      source-commit-sha: ${{ steps.evidence.outputs.source-commit-sha }}
+      image-tag: ${{ steps.evidence.outputs.image-tag }}
+      image-digest: ${{ steps.evidence.outputs.image-digest }}
+      release-id: ${{ steps.evidence.outputs.release-id }}
+      release-tag: ${{ steps.evidence.outputs.release-tag }}
+      source-repository: ${{ steps.evidence.outputs.source-repository }}
+      source-repository-id: ${{ steps.evidence.outputs.source-repository-id }}
+      source-run-id: ${{ steps.evidence.outputs.source-run-id }}
+
+    steps:
+      - name: Checkout released tag
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          ref: refs/tags/${{ github.event.release.tag_name }}
+          fetch-depth: 0
+
+      - name: Validate stable release tag and peeled commit
+        id: release_guard
+        shell: bash
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          RELEASE_DRAFT: ${{ github.event.release.draft }}
+          RELEASE_PRERELEASE: ${{ github.event.release.prerelease }}
+          EVENT_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+
+          if [[ "${RELEASE_DRAFT}" == 'true' || "${RELEASE_PRERELEASE}" == 'true' ]]; then
+            echo 'Draft and prerelease publications are not deployable.' >&2
+            exit 1
+          fi
+
+          if [[ ! "${RELEASE_TAG}" =~ ${RELEASE_TAG_PATTERN} ]]; then
+            echo "Release tag must match ${RELEASE_TAG_PATTERN}: ${RELEASE_TAG}" >&2
+            exit 1
+          fi
+
+          peeled_sha="$(git rev-parse HEAD)"
+          tag_object="$(git rev-parse "refs/tags/${RELEASE_TAG}^{commit}")"
+
+          if [[ ! "${peeled_sha}" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "Peeled commit SHA must be 40 lowercase hex characters: ${peeled_sha}" >&2
+            exit 1
+          fi
+
+          if [[ "${peeled_sha}" != "${tag_object}" ]]; then
+            echo 'Checked-out HEAD does not match the peeled release tag commit.' >&2
+            exit 1
+          fi
+
+          if [[ "${peeled_sha}" != "${EVENT_SHA}" ]]; then
+            echo 'github.sha does not match the peeled release tag commit.' >&2
+            exit 1
+          fi
+
+          echo "source-commit-sha=${peeled_sha}" >> "${GITHUB_OUTPUT}"
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@735343b667d3e6f658f44d0eca948eb6282f2b76 # v2.0.2
+        with:
+          bun-version-file: package.json
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+        env:
+          HUSKY: "0"
+
+      - name: Format
+        run: bun run fmt.check
+
+      - name: Lint
+        run: bun run lint
+
+      - name: Typecheck
+        run: bun run build.types
+
+      - name: Unit tests
+        run: bun run test.unit
+
+      - name: Production client and server build
+        run: bun run build.docker
+
+      - name: Component tests
+        uses: cypress-io/github-action@f88a151c986cab2e339cdbede6a5c4468bb62c17 # v6.7.0
+        with:
+          install: false
+          component: true
+          command: bun run test.ct
+
+      - name: E2E tests
+        uses: cypress-io/github-action@f88a151c986cab2e339cdbede6a5c4468bb62c17 # v6.7.0
+        with:
+          install: false
+          start: bun run dev
+          wait-on: http://localhost:5173
+          wait-on-timeout: 120
+          command: bunx cypress run --e2e
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@b5ca514318bd6ebac0fb2aedd5d36ec1b5c232a2 # v3.10.0
+
+      - name: Build release image
+        run: docker build -f docker/Dockerfile -t "${IMAGE_NAME}" .
+
+      - name: Smoke test the built image
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          container_name="qwik-release-smoke-${GITHUB_RUN_ID}"
+          host_port=18080
+
+          cleanup() {
+            docker rm -f "${container_name}" >/dev/null 2>&1 || true
+          }
+          trap cleanup EXIT
+
+          docker run --rm -d \
+            --name "${container_name}" \
+            -p "${host_port}:3000" \
+            "${IMAGE_NAME}"
+
+          ready=0
+          for _ in $(seq 1 36); do
+            if curl --fail --silent --show-error --max-time 5 \
+              "http://127.0.0.1:${host_port}/health" >/tmp/qwik-health-body; then
+              ready=1
+              break
+            fi
+            sleep 2
+          done
+
+          if [[ "${ready}" -ne 1 ]]; then
+            docker logs "${container_name}" || true
+            echo 'Timed out waiting for /health' >&2
+            exit 1
+          fi
+
+          health_body="$(cat /tmp/qwik-health-body)"
+          if [[ "${health_body}" != 'ok' ]]; then
+            echo "Unexpected /health body: ${health_body}" >&2
+            exit 1
+          fi
+
+          homepage_code="$(curl -sS -o /tmp/qwik-home-body -w '%{http_code}' \
+            "http://127.0.0.1:${host_port}/")"
+          if [[ "${homepage_code}" != '200' ]]; then
+            echo "Homepage expected 200, got ${homepage_code}" >&2
+            docker logs "${container_name}" || true
+            exit 1
+          fi
+
+          if rg -n 'REPLACE-WITH-FINAL-DOMAIN|yoursite\.dev' /tmp/qwik-home-body; then
+            echo 'Homepage HTML contains placeholder origin' >&2
+            exit 1
+          fi
+
+          study_code="$(curl -sS -o /tmp/qwik-study-body -w '%{http_code}' \
+            "http://127.0.0.1:${host_port}/work/access-control-demo")"
+          if [[ "${study_code}" != '200' ]]; then
+            echo "Case study expected 200, got ${study_code}" >&2
+            docker logs "${container_name}" || true
+            exit 1
+          fi
+
+          asset_path="$(rg -o '/build/[^\"[:space:]]+\.(js|css)' /tmp/qwik-home-body | head -n 1 || true)"
+          if [[ -z "${asset_path}" ]]; then
+            echo 'Unable to derive a static asset path from homepage HTML' >&2
+            exit 1
+          fi
+
+          asset_code="$(curl -sS -o /tmp/qwik-asset-body -w '%{http_code}' \
+            "http://127.0.0.1:${host_port}${asset_path}")"
+          if [[ "${asset_code}" != '200' ]]; then
+            echo "Static asset expected 200, got ${asset_code} for ${asset_path}" >&2
+            exit 1
+          fi
+          if [[ ! -s /tmp/qwik-asset-body ]]; then
+            echo "Static asset body is empty for ${asset_path}" >&2
+            exit 1
+          fi
+
+          missing_code="$(curl -sS -o /dev/null -w '%{http_code}' \
+            "http://127.0.0.1:${host_port}/work/does-not-exist-case-study")"
+          if [[ "${missing_code}" != '404' ]]; then
+            echo "Unknown case study expected 404, got ${missing_code}" >&2
+            exit 1
+          fi
+
+      - name: Azure OIDC login as image publisher
+        uses: azure/login@a641126d1b8aa4d1fa005f4f92df94a3a4c4c906 # v3.1.0
+        with:
+          client-id: ${{ vars.AZURE_PUBLISHER_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Log in to ACR with publisher token
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          token="$(az acr login \
+            --name braddlesunravelsacr \
+            --expose-token \
+            --output tsv \
+            --query accessToken)"
+
+          printf '%s' "${token}" | docker login "${ACR_LOGIN_SERVER}" \
+            --username 00000000-0000-0000-0000-000000000000 \
+            --password-stdin
+
+      - name: Tag, push, and resolve immutable digest
+        id: push
+        shell: bash
+        env:
+          SOURCE_SHA: ${{ steps.release_guard.outputs.source-commit-sha }}
+        run: |
+          set -euo pipefail
+
+          remote_tag="${ACR_LOGIN_SERVER}/${CONTAINER_REPOSITORY}:${SOURCE_SHA}"
+          docker tag "${IMAGE_NAME}" "${remote_tag}"
+
+          if az acr repository show \
+            --name braddlesunravelsacr \
+            --image "${CONTAINER_REPOSITORY}:${SOURCE_SHA}" \
+            --output json >/tmp/existing-image.json 2>/dev/null; then
+            existing_digest="$(jq -er '.digest // .manifest.digest // empty' /tmp/existing-image.json)"
+            local_digest="$(docker image inspect "${IMAGE_NAME}" --format '{{index .RepoDigests 0}}' 2>/dev/null || true)"
+            echo "Tag already exists in ACR with digest ${existing_digest:-unknown}" >&2
+            echo "Refusing to overwrite an existing SHA tag. Investigate digest mismatch." >&2
+            exit 1
+          fi
+
+          docker push "${remote_tag}"
+
+          metadata="$(az acr repository show \
+            --name braddlesunravelsacr \
+            --image "${CONTAINER_REPOSITORY}:${SOURCE_SHA}" \
+            --output json)"
+
+          digest="$(jq -er '.digest // .manifest.digest' <<<"${metadata}")"
+          if [[ ! "${digest}" =~ ^sha256:[0-9a-f]{64}$ ]]; then
+            echo "Resolved digest is malformed: ${digest}" >&2
+            exit 1
+          fi
+
+          echo "image-tag=${remote_tag}" >> "${GITHUB_OUTPUT}"
+          echo "image-digest=${digest}" >> "${GITHUB_OUTPUT}"
+
+      - name: Record non-secret release evidence
+        id: evidence
+        shell: bash
+        env:
+          SOURCE_SHA: ${{ steps.release_guard.outputs.source-commit-sha }}
+          IMAGE_TAG: ${{ steps.push.outputs.image-tag }}
+          IMAGE_DIGEST: ${{ steps.push.outputs.image-digest }}
+          RELEASE_ID: ${{ github.event.release.id }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          SOURCE_REPOSITORY: ${{ github.repository }}
+          SOURCE_REPOSITORY_ID: ${{ github.repository_id }}
+          SOURCE_RUN_ID: ${{ github.run_id }}
+        run: |
+          set -euo pipefail
+
+          {
+            echo "source-commit-sha=${SOURCE_SHA}"
+            echo "image-tag=${IMAGE_TAG}"
+            echo "image-digest=${IMAGE_DIGEST}"
+            echo "release-id=${RELEASE_ID}"
+            echo "release-tag=${RELEASE_TAG}"
+            echo "source-repository=${SOURCE_REPOSITORY}"
+            echo "source-repository-id=${SOURCE_REPOSITORY_ID}"
+            echo "source-run-id=${SOURCE_RUN_ID}"
+          } >> "${GITHUB_OUTPUT}"
+
+          {
+            echo '## Release image evidence'
+            echo
+            echo "- Source repository: \`${SOURCE_REPOSITORY}\`"
+            echo "- Release tag: \`${RELEASE_TAG}\`"
+            echo "- Release ID: \`${RELEASE_ID}\`"
+            echo "- Source commit: \`${SOURCE_SHA}\`"
+            echo "- Image tag: \`${IMAGE_TAG}\`"
+            echo "- Image digest: \`${IMAGE_DIGEST}\`"
+            echo "- Source run: \`${SOURCE_RUN_ID}\`"
+          } >> "${GITHUB_STEP_SUMMARY}"
+
+  dispatch-iac:
+    name: Dispatch deployment to IaC repository
+    needs: [verify-test-build-push]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+
+    steps:
+      - name: Create GitHub App installation token for IaC only
+        id: app-token
+        uses: actions/create-github-app-token@3ff1caaa28b64c9cc276ce0a02e2ff584f3900c5 # v2.0.2
+        with:
+          app-id: ${{ vars.IAC_DISPATCH_APP_ID }}
+          private-key: ${{ secrets.IAC_DISPATCH_APP_PRIVATE_KEY }}
+          owner: BraddlesUnravels
+          repositories: iac
+          permission-contents: write
+
+      - name: Post repository_dispatch evidence payload
+        id: dispatch
+        shell: bash
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          SOURCE_REPOSITORY: ${{ needs.verify-test-build-push.outputs.source-repository }}
+          SOURCE_REPOSITORY_ID: ${{ needs.verify-test-build-push.outputs.source-repository-id }}
+          RELEASE_ID: ${{ needs.verify-test-build-push.outputs.release-id }}
+          RELEASE_TAG: ${{ needs.verify-test-build-push.outputs.release-tag }}
+          SOURCE_COMMIT_SHA: ${{ needs.verify-test-build-push.outputs.source-commit-sha }}
+          IMAGE_TAG: ${{ needs.verify-test-build-push.outputs.image-tag }}
+          IMAGE_DIGEST: ${{ needs.verify-test-build-push.outputs.image-digest }}
+          SOURCE_RUN_ID: ${{ needs.verify-test-build-push.outputs.source-run-id }}
+        run: |
+          set -euo pipefail
+
+          payload="$(jq -n \
+            --arg application 'qwik-website' \
+            --arg environment 'production' \
+            --arg sourceRepository "${SOURCE_REPOSITORY}" \
+            --arg sourceRepositoryId "${SOURCE_REPOSITORY_ID}" \
+            --arg releaseId "${RELEASE_ID}" \
+            --arg releaseTag "${RELEASE_TAG}" \
+            --arg sourceCommitSha "${SOURCE_COMMIT_SHA}" \
+            --arg imageTag "${IMAGE_TAG}" \
+            --arg imageDigest "${IMAGE_DIGEST}" \
+            --arg sourceRunId "${SOURCE_RUN_ID}" \
+            '{
+              event_type: "qwik-website-release-v1",
+              client_payload: {
+                schemaVersion: 1,
+                application: $application,
+                environment: $environment,
+                sourceRepository: $sourceRepository,
+                sourceRepositoryId: $sourceRepositoryId,
+                releaseId: $releaseId,
+                releaseTag: $releaseTag,
+                sourceCommitSha: $sourceCommitSha,
+                imageTag: $imageTag,
+                imageDigest: $imageDigest,
+                sourceRunId: $sourceRunId
+              }
+            }')"
+
+          http_code="$(curl --silent --show-error --output /tmp/dispatch-body \
+            --write-out '%{http_code}' \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${IAC_REPOSITORY}/dispatches" \
+            -d "${payload}")"
+
+          if [[ "${http_code}" != '204' ]]; then
+            echo "repository_dispatch was not accepted (HTTP ${http_code})" >&2
+            cat /tmp/dispatch-body >&2 || true
+            exit 1
+          fi
+
+          accepted_at="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          echo "accepted-at=${accepted_at}" >> "${GITHUB_OUTPUT}"
+
+          {
+            echo '## IaC dispatch'
+            echo
+            echo '- Status: **dispatch accepted / deployment pending**'
+            echo "- Accepted at: \`${accepted_at}\`"
+            echo "- IaC repository: \`${IAC_REPOSITORY}\`"
+            echo '- Event type: `qwik-website-release-v1`'
+            echo "- Central workflow: \`https://github.com/${IAC_REPOSITORY}/actions\`"
+            echo
+            echo 'Azure deployment success is owned by the IaC repository workflow,'
+            echo 'not by this source job.'
+          } >> "${GITHUB_STEP_SUMMARY}"

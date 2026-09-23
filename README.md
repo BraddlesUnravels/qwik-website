@@ -28,7 +28,7 @@ Node `^18.17.0 || ^20.3.0 || >=21.0.0` or Bun `>=1.1.0`.
 - **Document head** (`src/components/router-head/router-head.tsx`): title, meta, canonical, viewport
 - **Static assets**: SVG logos under `public/icon/logo/`, web app manifest, robots.txt
 
-No deploy adapter is configured yet. Production builds use the default Qwik City preview path until one is added with `bun run qwik add`.
+Production uses the Bun server adapter (`adapters/bun`) and a release-driven deploy path documented in `docs/deployment.md`. Stable GitHub Releases build/push the image and dispatch the reusable IaC repository; this app repo does not own Azure Bicep.
 
 ## Setup
 
@@ -73,6 +73,12 @@ Pull requests and pushes to `main` run `.github/workflows/ci.yml` with Bun:
 7. `test.e2e`
 
 Run the same sequence locally with `bun run ci`.
+
+Optional PR label `stage` still runs `.github/workflows/integration.yml` container checks. Production releases always rebuild and smoke-test the image in `.github/workflows/release.yml` against the released tag.
+
+## Production deployment
+
+See `docs/deployment.md`. Summary: publish a stable `vX.Y.Z` release → source workflow verifies/tests/pushes `qwik-website:<sha>` → `repository_dispatch` to `BraddlesUnravels/iac` → IaC plans and deploys.
 
 ## Testing
 
@@ -144,8 +150,8 @@ Likely follow-ups as the portfolio grows:
 1. Expand sections beyond the intro (projects, about, contact)
 2. Fill `public/image/` and wire project media
 3. Use `@qwik-ui/headless` where interactive primitives help
-4. Add a deploy adapter when ready: `bun run qwik add`
-5. Tighten SEO (favicon, Open Graph, richer `DocumentHead`)
+4. After a verified custom domain exists, rebuild with `PUBLIC_SITE_URL` and re-enable SSG origin in a reviewed change
+5. Tighten SEO (favicon, Open Graph, richer `DocumentHead`) once the canonical domain is set
 
 ## Bun Server
 

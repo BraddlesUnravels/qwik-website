@@ -17,7 +17,7 @@ permissions:
 env:
   COMPOSE_FILE: docker/docker-compose.yml
   COMPOSE_PROJECT_NAME: qwik-website-integration
-  PORT: "3000"
+  HOST_PORT: "3000"
   ORIGIN: http://localhost:3000
 
 jobs:
@@ -71,6 +71,23 @@ jobs:
         run: |
           set -euo pipefail
 
+          echo "GET ${ORIGIN}/health"
+          health_code="$(curl -sS -o /tmp/qwik-website-probe-body --write-out '%{http_code}' "${ORIGIN}/health")"
+          echo "HTTP ${health_code}"
+          cat /tmp/qwik-website-probe-body || true
+          echo
+
+          if [ "$health_code" != "200" ]; then
+            echo "Expected HTTP 200 from /health, got ${health_code}"
+            docker compose -f "$COMPOSE_FILE" logs website
+            exit 1
+          fi
+
+          if [ "$(cat /tmp/qwik-website-probe-body)" != "ok" ]; then
+            echo "Expected /health body 'ok'"
+            exit 1
+          fi
+
           echo "GET ${ORIGIN}/"
           response_code="$(curl -sS -o /tmp/qwik-website-health-body --write-out '%{http_code}' "${ORIGIN}/")"
           echo "HTTP ${response_code}"
@@ -78,8 +95,13 @@ jobs:
           echo
 
           if [ "$response_code" != "200" ]; then
-            echo "Expected HTTP 200 from container, got ${response_code}"
+            echo "Expected HTTP 200 from container homepage, got ${response_code}"
             docker compose -f "$COMPOSE_FILE" logs website
+            exit 1
+          fi
+
+          if rg -n 'REPLACE-WITH-FINAL-DOMAIN|yoursite\.dev' /tmp/qwik-website-health-body; then
+            echo "Homepage HTML contains placeholder origin"
             exit 1
           fi
 

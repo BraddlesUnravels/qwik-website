@@ -22,11 +22,12 @@ const { router, notFound, staticFile } = createQwikCity({
   },
 });
 
-// Allow for dynamic port
+// Allow for dynamic port and bind address
 const port = Number(Bun.env.PORT ?? 3000);
+const hostname = Bun.env.HOST ?? "0.0.0.0";
 
 // eslint-disable-next-line no-console
-console.log(`Server started: http://localhost:${port}/`);
+console.log(`Server started: http://${hostname}:${port}/`);
 
 // Optional request-aware diagnostics for crashes that escape request boundaries.
 // This does not prevent Bun from crashing, but it does provide better diagnostics.
@@ -62,6 +63,8 @@ process.on("unhandledRejection", (reason) => {
 });
 
 Bun.serve({
+  hostname,
+  port,
   async fetch(request: Request) {
     const staticResponse = await staticFile(request);
     if (staticResponse) {
@@ -77,5 +80,4 @@ Bun.serve({
     // Path not found
     return notFound(request);
   },
-  port,
 });

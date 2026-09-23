@@ -8,17 +8,17 @@ describe("config/site", () => {
       expect(siteConfig.title).toContain("Full Stack Developer");
       expect(siteConfig.email).toContain("@");
     });
+
+    it("should not embed a placeholder production domain", () => {
+      expect(siteConfig.url).toBeUndefined();
+    });
   });
 
   describe("absoluteUrl", () => {
-    it("should resolve a site-relative path against the configured origin", () => {
-      expect(absoluteUrl("/work/access-control-demo")).toBe(
-        new URL("/work/access-control-demo", siteConfig.url).toString(),
+    it("should throw when no verified origin is configured", () => {
+      expect(() => absoluteUrl("/work/access-control-demo")).toThrow(
+        "Site origin is not configured",
       );
-    });
-
-    it("should resolve the site root", () => {
-      expect(absoluteUrl("/")).toBe(new URL("/", siteConfig.url).toString());
     });
   });
 });
