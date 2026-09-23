@@ -2,9 +2,9 @@
 
 **Full-stack product delivery**
 
-The business needed to take a vulnerable legacy customer portal offline, 
-but the same platform (LeaseCore) held the lease data and financial processes 
-staff relied on every day. I owned the delivery of LeaseTrack, a replacement 
+The business needed to take a vulnerable legacy customer portal offline,
+but the same platform (LeaseCore) held the lease data and financial processes
+staff relied on every day. I owned the delivery of LeaseTrack, a replacement
 customer-facing application that kept those internal processes available.
 
 **At a glance:** Customers: 5,000+ migrated · Delivery: 8 months · Release: November 2024 · Scope: Full-stack ownership
@@ -31,16 +31,16 @@ I mapped the old database and application workflows, listened to customer calls 
 
 ### Deliver and operate the replacement
 
-I built the React client and the Express API in TypeScript, 
-implemented email-based sign-in, MFA and authorisation, and prepared the customer migration. 
-Docker, GitHub Actions, Azure Bicep, staging, Sentry and Grafana supported deployment and production 
+I built the React client and the Express API in TypeScript,
+implemented email-based sign-in, MFA and authorisation, and prepared the customer migration.
+Docker, GitHub Actions, Azure Bicep, staging, Sentry and Grafana supported deployment and production
 troubleshooting. Employees with active leases tested the live journey before customer cutover.
 
 ## The result
 
 LeaseTrack went into production on 14 November 2024 and supported the migration of more than 5,000 customers. Customers gained current lease information, more understandable budgets, documents and self-service account changes. Staff reported far fewer calls about forgotten usernames and routine profile updates.
 
-The key architectural outcome was the separation of public customer access from the older portal while keeping 
+The key architectural outcome was the separation of public customer access from the older portal while keeping
 the internal lease-management (LeaseCore) platform in service.
 
 ## Technology and methods

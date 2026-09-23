@@ -2,8 +2,8 @@
 
 **How I work**
 
-My earlier sales-management experience helps me distinguish a requested feature from the underlying problem. 
-One CRM reporting project shows why that matters: the reports & dashboards were being asked to report on 
+My earlier sales-management experience helps me distinguish a requested feature from the underlying problem.
+One CRM reporting project shows why that matters: the reports & dashboards were being asked to report on
 leads the business had never recorded.
 
 **At a glance:** Initial request: Fix the reports · Underlying issue: Missing lead data · Focus: Workflow + adoption · Teams: Sales and marketing
@@ -14,14 +14,14 @@ Sales and marketing believed their reports were incorrect. Marketing wanted to f
 
 ## What I investigated
 
-I asked marketing how leads reached agents and asked sales what happened after a lead was allocated. 
-Website enquiries already entered the CRM, but social-media and offsite leads often arrived through 
-spreadsheets, email, MS Teams or direct hand-offs. Agents also avoided entering the same customer 
+I asked marketing how leads reached agents and asked sales what happened after a lead was allocated.
+Website enquiries already entered the CRM, but social-media and offsite leads often arrived through
+spreadsheets, email, MS Teams or direct hand-offs. Agents also avoided entering the same customer
 details into both PipelineAxis and QuoteCore.
 
-I mapped those real workflows with department heads, including where each report obtained its data. 
+I mapped those real workflows with department heads, including where each report obtained its data.
 Where needed I stepped through the entry fields in each system where data being captured impacted reporting outcomes.
-The reports were largely showing the records they had recorded; the missing records and unlinked 
+The reports were largely showing the records they had recorded; the missing records and unlinked
 stages were the more important problem.
 
 ## What I changed
@@ -32,23 +32,23 @@ I made quote and commission information clearer in each agent’s CRM profile, s
 
 ### Resolve a real trade-off between data quality and privacy
 
-Marketing needed to identify the customer’s employer, but a public dropdown of all 
-client companies would have exposed a commercially sensitive client list or forcing 
-customners to enter thier work email addresses. 
-The balance was between data quality and privacy. I changed the workflow to request a work email 
-to support automatic company matching on domain, while still accepting personal addresses; 
+Marketing needed to identify the customer’s employer, but a public dropdown of all
+client companies would have exposed a commercially sensitive client list or forcing
+customners to enter thier work email addresses.
+The balance was between data quality and privacy. I changed the workflow to request a work email
+to support automatic company matching on domain, while still accepting personal addresses;
 the agent supplied an employer when no reliable match was available.
 
 ### Make the workflow the default
 
-I worked with the QuoteCore system owner so agents could create linked quotes directly from PipelineAxis 
-leads then have the linked QuoteCore record automatically open on thier screen. 
+I worked with the QuoteCore system owner so agents could create linked quotes directly from PipelineAxis
+leads then have the linked QuoteCore record automatically open on thier screen.
 This enabled marketing to follow lead outcomes while reducing duplicated work for sales.
 
 ## What changed
 
-Sales could enter the core information once and see a clearer connection between complete records and commission tracking. 
-Marketing gained better visibility of lead origins and associated companies. These changes addressed roughly 98% of the 
+Sales could enter the core information once and see a clearer connection between complete records and commission tracking.
+Marketing gained better visibility of lead origins and associated companies. These changes addressed roughly 98% of the
 reporting issues related to lead origin and employer matching; this demonstrates the effectiveness of the workflow improvements.
 
 The wider lesson is practical: before building the requested fix, find out how people actually perform the work and what would make the improved workflow worth using.

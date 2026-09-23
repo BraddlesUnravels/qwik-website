@@ -2,8 +2,8 @@
 
 **Inspectable full-stack application**
 
-My professional code lives in proprietary repositories. to address this I built a deliberately 
-small consultation-management application to make my full-stack, security and deployment work 
+My professional code lives in proprietary repositories. to address this I built a deliberately
+small consultation-management application to make my full-stack, security and deployment work
 reviewable rather than asking employers to take it on trust.
 
 **At a glance:** Roles: 2 students + 1 admin · Data boundary: PostgreSQL RLS · Test focus: Forbidden requests · Deployment: Azure Container Apps
