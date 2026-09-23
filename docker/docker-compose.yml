@@ -1,0 +1,21 @@
+name: qwik-website
+
+services:
+  website:
+    image: qwik-website:production
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+
+    restart: unless-stopped
+
+    ports:
+      - "3000:3000"
+
+    environment:
+      NODE_ENV: production
+      PORT: ${PORT:-3000}
+      HOST: 0.0.0.0
+      ORIGIN: ${ORIGIN:-http://localhost:3000}
+
+    init: true

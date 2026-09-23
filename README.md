@@ -146,3 +146,13 @@ Likely follow-ups as the portfolio grows:
 3. Use `@qwik-ui/headless` where interactive primitives help
 4. Add a deploy adapter when ready: `bun run qwik add`
 5. Tighten SEO (favicon, Open Graph, richer `DocumentHead`)
+
+## Bun Server
+
+This app has a minimal [Bun server](https://bun.sh/docs/api/http) implementation. After running a full build, you can preview the build using the command:
+
+```
+bun run serve
+```
+
+Then visit [http://localhost:3000/](http://localhost:3000/)
