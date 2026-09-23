@@ -89,11 +89,14 @@ Do not store ACR admin passwords, long-lived PATs, or Azure client secrets.
 
 ## Local container smoke
 
+Case study routes are trailing-slash canonical (`/work/<slug>/`). Bare paths 301.
+
 ```bash
 docker build -f docker/Dockerfile -t qwik-website:release-test .
 docker run --rm -d --name qwik-release-test -p 3000:3000 qwik-website:release-test
-curl --fail --silent --show-error --max-time 10 http://127.0.0.1:3000/health
-curl --fail --silent --show-error --max-time 10 http://127.0.0.1:3000/
+curl --fail --silent --show-error --max-time 10 http://localhost:3000/health
+curl --fail --silent --show-error --max-time 10 http://localhost:3000/
+curl --fail --silent --show-error --max-time 10 http://localhost:3000/work/access-control-demo/
 docker logs qwik-release-test
 docker rm -f qwik-release-test
 ```

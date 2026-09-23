@@ -141,8 +141,10 @@ jobs:
 
           container_name="qwik-release-smoke-${GITHUB_RUN_ID}"
           host_port=18080
+          base_url="http://127.0.0.1:${host_port}"
 
           cleanup() {
+            docker logs "${container_name}" >/tmp/qwik-smoke-logs 2>&1 || true
             docker rm -f "${container_name}" >/dev/null 2>&1 || true
           }
           trap cleanup EXIT
@@ -153,9 +155,9 @@ jobs:
             "${IMAGE_NAME}"
 
           ready=0
-          for _ in $(seq 1 36); do
-            if curl --fail --silent --show-error --max-time 5 \
-              "http://127.0.0.1:${host_port}/health" >/tmp/qwik-health-body; then
+          for attempt in $(seq 1 60); do
+            if body="$(curl --silent --show-error --max-time 5 \
+              "${base_url}/health" 2>/dev/null)" && [[ "${body}" == 'ok' ]]; then
               ready=1
               break
             fi
@@ -163,46 +165,42 @@ jobs:
           done
 
           if [[ "${ready}" -ne 1 ]]; then
-            docker logs "${container_name}" || true
             echo 'Timed out waiting for /health' >&2
-            exit 1
-          fi
-
-          health_body="$(cat /tmp/qwik-health-body)"
-          if [[ "${health_body}" != 'ok' ]]; then
-            echo "Unexpected /health body: ${health_body}" >&2
+            docker logs "${container_name}" || true
             exit 1
           fi
 
           homepage_code="$(curl -sS -o /tmp/qwik-home-body -w '%{http_code}' \
-            "http://127.0.0.1:${host_port}/")"
+            "${base_url}/")"
           if [[ "${homepage_code}" != '200' ]]; then
             echo "Homepage expected 200, got ${homepage_code}" >&2
             docker logs "${container_name}" || true
             exit 1
           fi
 
-          if rg -n 'REPLACE-WITH-FINAL-DOMAIN|yoursite\.dev' /tmp/qwik-home-body; then
+          # GitHub-hosted runners do not ship ripgrep; use grep -E.
+          if grep -nE 'REPLACE-WITH-FINAL-DOMAIN|yoursite\.dev' /tmp/qwik-home-body; then
             echo 'Homepage HTML contains placeholder origin' >&2
             exit 1
           fi
 
+          # Qwik City canonical routes use trailing slashes (bare paths 301).
           study_code="$(curl -sS -o /tmp/qwik-study-body -w '%{http_code}' \
-            "http://127.0.0.1:${host_port}/work/access-control-demo")"
+            "${base_url}/work/access-control-demo/")"
           if [[ "${study_code}" != '200' ]]; then
             echo "Case study expected 200, got ${study_code}" >&2
             docker logs "${container_name}" || true
             exit 1
           fi
 
-          asset_path="$(rg -o '/build/[^\"[:space:]]+\.(js|css)' /tmp/qwik-home-body | head -n 1 || true)"
+          asset_path="$(grep -oE '/build/[^\"[:space:]]+\.(js|css)' /tmp/qwik-home-body | head -n 1 || true)"
           if [[ -z "${asset_path}" ]]; then
             echo 'Unable to derive a static asset path from homepage HTML' >&2
             exit 1
           fi
 
           asset_code="$(curl -sS -o /tmp/qwik-asset-body -w '%{http_code}' \
-            "http://127.0.0.1:${host_port}${asset_path}")"
+            "${base_url}${asset_path}")"
           if [[ "${asset_code}" != '200' ]]; then
             echo "Static asset expected 200, got ${asset_code} for ${asset_path}" >&2
             exit 1
@@ -213,11 +211,12 @@ jobs:
           fi
 
           missing_code="$(curl -sS -o /dev/null -w '%{http_code}' \
-            "http://127.0.0.1:${host_port}/work/does-not-exist-case-study")"
+            "${base_url}/work/does-not-exist-case-study/")"
           if [[ "${missing_code}" != '404' ]]; then
             echo "Unknown case study expected 404, got ${missing_code}" >&2
             exit 1
           fi
+
 
       - name: Azure OIDC login as image publisher
         uses: azure/login@a641126d1b8aa4d1fa005f4f92df94a3a4c4c906 # v3.1.0

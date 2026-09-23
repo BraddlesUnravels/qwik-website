@@ -100,7 +100,8 @@ jobs:
             exit 1
           fi
 
-          if rg -n 'REPLACE-WITH-FINAL-DOMAIN|yoursite\.dev' /tmp/qwik-website-health-body; then
+          # GitHub-hosted runners do not ship ripgrep; use grep -E instead.
+          if grep -nE 'REPLACE-WITH-FINAL-DOMAIN|yoursite\.dev' /tmp/qwik-website-health-body; then
             echo "Homepage HTML contains placeholder origin"
             exit 1
           fi
