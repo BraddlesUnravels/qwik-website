@@ -10,13 +10,12 @@ services:
     restart: unless-stopped
 
     ports:
-      - "${PORT:-3000}:3000"
+      - "${HOST_PORT:-3000}:3000"
 
     environment:
       NODE_ENV: production
-      PORT: ${PORT:-3000}
-      HOST: 0.0.0.0
-      ORIGIN: ${ORIGIN:-http://localhost:3000}
+      PORT: "3000"
+      HOST: "0.0.0.0"
 
     init: true
 
@@ -26,7 +25,7 @@ services:
           "CMD",
           "bun",
           "-e",
-          "const res = await fetch('http://localhost:3000/'); if (!res.ok) throw new Error(String(res.status));",
+          "const res = await fetch('http://localhost:3000/health'); if (res.status !== 200) throw new Error(String(res.status));",
         ]
       interval: 5s
       timeout: 5s

@@ -1,5 +1,11 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
+const placeholderHostPatterns = [
+  /REPLACE-WITH-FINAL-DOMAIN/i,
+  /yoursite\.dev/i,
+  /example\.invalid/i,
+];
+
 describe("lib/seo", () => {
   describe("createSeoHead", () => {
     afterEach(() => {
@@ -37,6 +43,11 @@ describe("lib/seo", () => {
       expect(head.meta?.some((entry) => entry.property === "og:url")).toBe(
         false,
       );
+
+      const serialized = JSON.stringify(head);
+      for (const pattern of placeholderHostPatterns) {
+        expect(serialized).not.toMatch(pattern);
+      }
     });
 
     it("should include canonical and og url when PUBLIC_SITE_URL is set", async () => {
