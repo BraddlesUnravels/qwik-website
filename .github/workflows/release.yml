@@ -346,10 +346,11 @@ jobs:
           SOURCE_COMMIT_SHA: ${{ needs.verify-test-build-push.outputs.source-commit-sha }}
           IMAGE_TAG: ${{ needs.verify-test-build-push.outputs.image-tag }}
           IMAGE_DIGEST: ${{ needs.verify-test-build-push.outputs.image-digest }}
-          SOURCE_RUN_ID: ${{ needs.verify-test-build-push.outputs.source-run-id }}
         run: |
           set -euo pipefail
 
+          # GitHub repository_dispatch client_payload allows at most 10 properties.
+          # sourceRunId is optional audit metadata and is intentionally omitted here.
           payload="$(jq -n \
             --arg application 'qwik-website' \
             --arg environment 'production' \
@@ -360,7 +361,6 @@ jobs:
             --arg sourceCommitSha "${SOURCE_COMMIT_SHA}" \
             --arg imageTag "${IMAGE_TAG}" \
             --arg imageDigest "${IMAGE_DIGEST}" \
-            --arg sourceRunId "${SOURCE_RUN_ID}" \
             '{
               event_type: "qwik-website-release-v1",
               client_payload: {
@@ -373,8 +373,7 @@ jobs:
                 releaseTag: $releaseTag,
                 sourceCommitSha: $sourceCommitSha,
                 imageTag: $imageTag,
-                imageDigest: $imageDigest,
-                sourceRunId: $sourceRunId
+                imageDigest: $imageDigest
               }
             }')"
 
