@@ -1,4 +1,3 @@
-
 # syntax=docker/dockerfile:1
 
 # Build stage
@@ -6,14 +5,14 @@ FROM oven/bun:1.3.12-slim AS build
 
 WORKDIR /app
 
-COPY ../package.json ../bun.lock ./
+COPY package.json bun.lock ./
 
 RUN HUSKY=0 bun install --frozen-lockfile
 
 COPY . .
 
-RUN bun run build
-
+# App compile only. Lint/types/tests remain CI concerns (see .github/workflows).
+RUN bun run build.docker
 
 # Production stage
 FROM oven/bun:1.3.12-slim AS production

@@ -10,7 +10,7 @@ services:
     restart: unless-stopped
 
     ports:
-      - "3000:3000"
+      - "${PORT:-3000}:3000"
 
     environment:
       NODE_ENV: production
@@ -19,3 +19,16 @@ services:
       ORIGIN: ${ORIGIN:-http://localhost:3000}
 
     init: true
+
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "bun",
+          "-e",
+          "const res = await fetch('http://localhost:3000/'); if (!res.ok) throw new Error(String(res.status));",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 15s

@@ -1,0 +1,92 @@
+name: Integration
+
+# Staged container integration checks.
+# Stage 1 (this workflow): build the production image and verify connection health.
+# Later stages can extend this workflow or add dependent jobs behind the same label gate.
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, labeled, unlabeled]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  COMPOSE_FILE: docker/docker-compose.yml
+  COMPOSE_PROJECT_NAME: qwik-website-integration
+  PORT: "3000"
+  ORIGIN: http://localhost:3000
+
+jobs:
+  container-health:
+    name: Container build and connection health
+    if: contains(github.event.pull_request.labels.*.name, 'stage')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Stage 1 — Build production image
+        run: docker compose -f "$COMPOSE_FILE" build website
+
+      - name: Stage 1 — Start container
+        run: docker compose -f "$COMPOSE_FILE" up -d --no-build website
+
+      - name: Stage 1 — Wait for container health
+        run: |
+          set -euo pipefail
+
+          echo "Waiting for website service to become healthy..."
+          for attempt in $(seq 1 36); do
+            health="$(docker inspect --format '{{if .State.Health}}{{.State.Health.Status}}{{else}}{{.State.Status}}{{end}}' "$(docker compose -f "$COMPOSE_FILE" ps -q website)")"
+
+            echo "Attempt ${attempt}: health=${health:-unknown}"
+
+            if [ "$health" = "healthy" ]; then
+              exit 0
+            fi
+
+            if [ "$health" = "unhealthy" ]; then
+              docker compose -f "$COMPOSE_FILE" logs website
+              exit 1
+            fi
+
+            sleep 5
+          done
+
+          echo "Timed out waiting for healthy container"
+          docker compose -f "$COMPOSE_FILE" ps
+          docker compose -f "$COMPOSE_FILE" logs website
+          exit 1
+
+      - name: Stage 1 — Exercise connection health
+        run: |
+          set -euo pipefail
+
+          echo "GET ${ORIGIN}/"
+          response_code="$(curl -sS -o /tmp/qwik-website-health-body --write-out '%{http_code}' "${ORIGIN}/")"
+          echo "HTTP ${response_code}"
+          head -c 500 /tmp/qwik-website-health-body || true
+          echo
+
+          if [ "$response_code" != "200" ]; then
+            echo "Expected HTTP 200 from container, got ${response_code}"
+            docker compose -f "$COMPOSE_FILE" logs website
+            exit 1
+          fi
+
+      - name: Collect container logs on failure
+        if: failure()
+        run: docker compose -f "$COMPOSE_FILE" logs website || true
+
+      - name: Tear down
+        if: always()
+        run: docker compose -f "$COMPOSE_FILE" down --volumes --remove-orphans || true
