@@ -1,0 +1,53 @@
+# Git and editor
+.git
+.github
+.husky
+.vscode
+.idea
+.history
+.lh
+.DS_Store
+
+# Dependencies and local installs
+node_modules
+
+# Build outputs (rebuilt inside the image)
+dist
+server
+tmp
+build
+tsc-out
+tsconfig.tsbuildinfo
+.cache
+.rollup.cache
+coverage
+
+# Env and secrets
+.env
+.env.*
+!.env.example
+
+# Tests and local tooling (image build does not run lint/tests)
+test
+cypress
+cypress.config.ts
+cypress.d.ts
+**/*.test.ts
+**/*.test.tsx
+**/*.spec.ts
+**/*.spec.tsx
+**/*.cy.ts
+**/*.cy.tsx
+.prettierrc.json
+.prettierignore
+
+# Docs and non-runtime assets
+*.md
+inspiration
+raw-content
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

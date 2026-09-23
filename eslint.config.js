@@ -45,6 +45,9 @@ const ignores = [
   "**/bun.lockb",
   "**/server",
   "eslint.config.js",
+  "docker/Dockerfile",
+  ".dockerignore",
+  "src/entry.bun.ts",
 ];
 
 export default tseslint.config(
