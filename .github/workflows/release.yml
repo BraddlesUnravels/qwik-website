@@ -254,21 +254,19 @@ jobs:
             --name braddlesunravelsacr \
             --image "${CONTAINER_REPOSITORY}:${SOURCE_SHA}" \
             --output json >/tmp/existing-image.json 2>/dev/null; then
-            existing_digest="$(jq -er '.digest // .manifest.digest // empty' /tmp/existing-image.json)"
-            local_digest="$(docker image inspect "${IMAGE_NAME}" --format '{{index .RepoDigests 0}}' 2>/dev/null || true)"
-            echo "Tag already exists in ACR with digest ${existing_digest:-unknown}" >&2
-            echo "Refusing to overwrite an existing SHA tag. Investigate digest mismatch." >&2
-            exit 1
+            digest="$(jq -er '.digest // .manifest.digest // empty' /tmp/existing-image.json)"
+            echo "Tag already exists in ACR with digest ${digest}; reusing immutable image."
+          else
+            docker push "${remote_tag}"
+
+            metadata="$(az acr repository show \
+              --name braddlesunravelsacr \
+              --image "${CONTAINER_REPOSITORY}:${SOURCE_SHA}" \
+              --output json)"
+
+            digest="$(jq -er '.digest // .manifest.digest' <<<"${metadata}")"
           fi
 
-          docker push "${remote_tag}"
-
-          metadata="$(az acr repository show \
-            --name braddlesunravelsacr \
-            --image "${CONTAINER_REPOSITORY}:${SOURCE_SHA}" \
-            --output json)"
-
-          digest="$(jq -er '.digest // .manifest.digest' <<<"${metadata}")"
           if [[ ! "${digest}" =~ ^sha256:[0-9a-f]{64}$ ]]; then
             echo "Resolved digest is malformed: ${digest}" >&2
             exit 1
