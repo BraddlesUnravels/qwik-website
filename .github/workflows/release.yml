@@ -193,6 +193,24 @@ jobs:
             exit 1
           fi
 
+          # Simulate TLS termination without weakening Qwik's CSRF checks.
+          for host in braddlesunravels.online www.braddlesunravels.online; do
+            for origin in "https://${host}" https://attacker.test "http://${host}"; do
+              expected_code=403
+              if [[ "${origin}" == "https://${host}" ]]; then
+                expected_code=200
+              fi
+              action_code="$(curl -sS --max-time 10 \
+                -o /tmp/qwik-origin-body -w '%{http_code}' \
+                -H "Host: ${host}" -H "Origin: ${origin}" \
+                --data '' "${base_url}/work/access-control-demo/")"
+              if [[ "${action_code}" != "${expected_code}" ]]; then
+                echo "POST ${host} from ${origin}: expected ${expected_code}, got ${action_code}" >&2
+                exit 1
+              fi
+            done
+          done
+
           asset_path="$(grep -oE '/build/[^\"[:space:]]+\.(js|css)' /tmp/qwik-home-body | head -n 1 || true)"
           if [[ -z "${asset_path}" ]]; then
             echo 'Unable to derive a static asset path from homepage HTML' >&2
