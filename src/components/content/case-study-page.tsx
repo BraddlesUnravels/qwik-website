@@ -1,4 +1,4 @@
-import { component$ } from "@builder.io/qwik";
+import { Slot, component$ } from "@builder.io/qwik";
 import type { CaseStudy, CaseStudySubsection } from "~/content/types";
 
 type CaseStudyPageProps = {
@@ -80,6 +80,7 @@ export const CaseStudyPage = component$<CaseStudyPageProps>(({ study }) => (
           <p class="text-ink-soft mt-8 max-w-3xl text-xl">
             {study.introduction}
           </p>
+          <Slot name="actions" />
         </div>
 
         <dl class="rounded-card shadow-card mt-14 grid overflow-hidden border border-white/10 bg-white/4 sm:grid-cols-2 lg:grid-cols-4">
@@ -155,7 +156,7 @@ export const CaseStudyPage = component$<CaseStudyPageProps>(({ study }) => (
               <p class="text-brand-bright font-mono text-xs font-semibold tracking-[0.16em] uppercase">
                 Key reflection
               </p>
-              <p class="font-display text-ink mt-4 text-2xl font-medium tracking-[-0.025em]">
+              <p class="font-display text-ink mt-4 text-2xl font-medium tracking-tight">
                 {study.lesson}
               </p>
             </aside>

@@ -1,8 +1,16 @@
 import { component$ } from "@builder.io/qwik";
-import { routeLoader$, type DocumentHead } from "@builder.io/qwik-city";
+import {
+  Form,
+  routeAction$,
+  routeLoader$,
+  type DocumentHead,
+} from "@builder.io/qwik-city";
 import { CaseStudyPage } from "~/components/content/case-study-page";
 import { loadCaseStudy } from "~/content/loader";
+import { resolveAccessLink } from "~/lib/demo-access";
 import { createSeoHead } from "~/lib/seo";
+
+const DEMO_ACCESS_SLUG = "access-control-demo";
 
 export const useCaseStudy = routeLoader$(async ({ params, status }) => {
   const study = await loadCaseStudy(params.slug);
@@ -15,8 +23,32 @@ export const useCaseStudy = routeLoader$(async ({ params, status }) => {
   return study;
 });
 
+// Builds the demo link (with access code) on the server only, then redirects.
+export const useDemoAccessRedirect = routeAction$(
+  (_, { env, fail, params, redirect }) => {
+    if (params.slug !== DEMO_ACCESS_SLUG) {
+      return fail(404, { message: "No live demo is available for this page." });
+    }
+
+    const link = resolveAccessLink("ACA_DEMO_ACCESS_LINK", (key) =>
+      env.get(key),
+    );
+
+    if (!link) {
+      console.error("Demo access link is not configured.");
+      return fail(503, {
+        message:
+          "The live demo is unavailable right now. Please try again later.",
+      });
+    }
+
+    throw redirect(302, link);
+  },
+);
+
 export default component$(() => {
   const study = useCaseStudy().value;
+  const demoAccess = useDemoAccessRedirect();
 
   if (!study) {
     return (
@@ -40,7 +72,32 @@ export default component$(() => {
     );
   }
 
-  return <CaseStudyPage study={study} />;
+  return (
+    <CaseStudyPage study={study}>
+      {study.slug === DEMO_ACCESS_SLUG && (
+        <Form
+          q:slot="actions"
+          action={demoAccess}
+          reloadDocument
+          class="mt-10 flex flex-col items-start gap-3"
+        >
+          <button
+            type="submit"
+            class="bg-ink text-canvas hover:bg-ink/90 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors disabled:opacity-60"
+            disabled={demoAccess.isRunning}
+          >
+            {demoAccess.isRunning ? "Opening demo…" : "Try the live demo"}
+            <span aria-hidden="true">→</span>
+          </button>
+          {demoAccess.value?.failed && (
+            <p role="alert" class="text-sm text-red-300">
+              {demoAccess.value.message}
+            </p>
+          )}
+        </Form>
+      )}
+    </CaseStudyPage>
+  );
 });
 
 export const head: DocumentHead = ({ params, resolveValue }) => {
