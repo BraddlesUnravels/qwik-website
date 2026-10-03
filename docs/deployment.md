@@ -76,6 +76,26 @@ Do not store ACR admin passwords, long-lived PATs, or Azure client secrets.
   chosen in a separate reviewed change.
 - `siteConfig.url` / `absoluteUrl` do not emit placeholder hostnames.
 
+## HTTPS origins behind Azure ingress
+
+Azure terminates TLS before forwarding HTTP to Bun. The application owns the
+trusted production origin array in `src/lib/server-origin.ts`: apex and `www`
+are separate HTTPS origins. The Bun entry point uses `normalizeServerRequest`
+to restore the HTTPS scheme only when the request URL host matches an entry
+exactly. This normalizes the actual `Request.url` because Qwik 1.20's CSRF
+request event does not use the adapter's `getOrigin` result. It preserves the
+request method, headers, body, path, and query, and does not derive the server
+origin from `Origin` or forwarded headers.
+
+Qwik's strict CSRF check remains enabled. Same-host HTTPS actions work on both
+domains; a POST from apex to `www`, from an unrelated origin, or from HTTP to a
+production domain is still rejected. Localhost, the Azure health-check host,
+and other unlisted hosts retain their request URL origin. Do not set a single
+global `ORIGIN` or disable CSRF checks to work around TLS termination.
+
+Origin policy changes require a new application release, not an IaC change.
+The release image smoke test exercises allowed and forbidden POST origins.
+
 ## Recovery when dispatch is accepted but IaC fails
 
 1. Keep the published release and image digest; do not retag or move the tag.

@@ -12,11 +12,13 @@ import { getRequestEvent } from "@builder.io/qwik-city";
 import { createQwikCity } from "@builder.io/qwik-city/middleware/bun";
 import qwikCityPlan from "@qwik-city-plan";
 import render from "./entry.ssr";
+import { normalizeServerRequest } from "./lib/server-origin";
 
 // Create the Qwik City Bun middleware
 const { router, notFound, staticFile } = createQwikCity({
   render,
   qwikCityPlan,
+  checkOrigin: true,
   static: {
     cacheControl: "public, max-age=31536000, immutable",
   },
@@ -72,7 +74,7 @@ Bun.serve({
     }
 
     // Server-side render this request with Qwik City
-    const qwikCityResponse = await router(request);
+    const qwikCityResponse = await router(normalizeServerRequest(request));
     if (qwikCityResponse) {
       return qwikCityResponse;
     }
