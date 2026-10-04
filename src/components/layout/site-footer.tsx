@@ -66,11 +66,7 @@ export default component$(() => {
                     target="_blank"
                     class="flex flex-row items-center text-zinc-400 hover:text-zinc-100"
                   >
-                    {typeof link.icon === "string" ? (
-                      <img src={link.icon} alt={link.label} class="h-5 w-5" />
-                    ) : (
-                      <link.icon class="h-5 w-5" />
-                    )}
+                    <link.icon class="h-5 w-5" />
                     <span class="ml-2">{link.label}</span>
                   </a>
                 </div>
