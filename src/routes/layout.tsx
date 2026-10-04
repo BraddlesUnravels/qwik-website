@@ -2,6 +2,7 @@ import { component$, Slot } from "@builder.io/qwik";
 import type { RequestHandler } from "@builder.io/qwik-city";
 import EdgeLitBackDrop from "~/components/layout/background";
 import SiteHeader from "~/components/layout/site-header";
+import SiteFooter from "~/components/layout/site-footer";
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {
   cacheControl({
@@ -29,6 +30,7 @@ export default component$(() => {
       <div class="relative">
         <SiteHeader />
         <Slot />
+        <SiteFooter />
       </div>
     </div>
   );

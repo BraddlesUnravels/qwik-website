@@ -36,7 +36,7 @@
     animation-name: cursor-blink;
     animation-duration: 1.2s;
     animation-timing-function: steps(1, end);
-    animation-iteration-count: 10;
+    animation-iteration-count: 3;
   }
 
   @media (prefers-reduced-motion: reduce) {

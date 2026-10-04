@@ -10,6 +10,9 @@ export const siteConfig = {
    */
   url: undefined as string | undefined,
   email: "bradley.laskey1990@gmail.com",
+  seek: "https://au.seek.com/profiles/bradley-laskey-V72ygB3RGV",
+  linkedin: "https://www.linkedin.com/in/braddlesunravels",
+  github: "https://github.com/BraddlesUnravels",
   resumePath: "/Bradley_Laskey_Full_Stack_Developer_Resume_2026.pdf",
   socialImagePath: "/social/portfolio-og.jpg",
 } as const;

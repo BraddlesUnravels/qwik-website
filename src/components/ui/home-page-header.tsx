@@ -9,7 +9,7 @@ export const MainPageHeadBanner = component$(() => {
     <div class="display mx-auto flex w-full max-w-7xl flex-col px-5 py-0 2xl:min-h-[calc(100svh-4.5rem)]">
       <div id="header-intro" class="pt-5 lg:pt-10 2xl:pt-12">
         <Typography variant="eyebrow" tone="emerald">
-          Full Stack Developer · Melbourne → Sydney
+          Full Stack Developer · Relocating → Sydney
         </Typography>
         <Typography as="h1" variant="display" class="mt-4 lg:mt-8 2xl:mt-10">
           I think in business problems.
