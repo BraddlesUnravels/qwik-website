@@ -1,6 +1,8 @@
 import { component$ } from "@builder.io/qwik";
 import { Link } from "@builder.io/qwik-city";
 import { Container } from "../ui/container";
+import DesktopNavMenu from "./desktop-nav-menu";
+import MobileNavMenu from "./mobile-nav-menu";
 
 export default component$(() => {
   return (
@@ -14,31 +16,9 @@ export default component$(() => {
             Bradley Laskey
           </Link>
 
-          <nav
-            aria-label="Primary navigation"
-            class="flex items-center gap-5 text-sm"
-          >
-            <Link
-              href="/#selected-work"
-              class="hidden text-zinc-400 hover:text-zinc-100 sm:inline"
-            >
-              Work
-            </Link>
+          <DesktopNavMenu />
 
-            <Link
-              href="/about/commercial-engineering/"
-              class="hidden text-zinc-400 hover:text-zinc-100 sm:inline"
-            >
-              Approach
-            </Link>
-
-            <a
-              href="mailto:bradley.laskey1990@gmail.com"
-              class="rounded-full border border-zinc-700 px-4 py-2 text-zinc-100 hover:border-zinc-500"
-            >
-              Contact
-            </a>
-          </nav>
+          <MobileNavMenu />
         </div>
       </Container>
     </header>

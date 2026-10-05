@@ -54,7 +54,7 @@ export default defineConfig(({ mode }): UserConfig => {
   return {
     envPrefix: ["VITE_", "PUBLIC_"],
     plugins: [
-      qwikCity(),
+      qwikCity({ trailingSlash: false }),
       qwikVite(),
       tsconfigPaths({ root: "." }),
       tailwindcss(),
