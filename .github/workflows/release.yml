@@ -184,9 +184,9 @@ jobs:
             exit 1
           fi
 
-          # Qwik City canonical routes use trailing slashes (bare paths 301).
+          # Qwik City is configured with trailingSlash: false (slash paths 301).
           study_code="$(curl -sS -o /tmp/qwik-study-body -w '%{http_code}' \
-            "${base_url}/work/access-control-demo/")"
+            "${base_url}/work/access-control-demo")"
           if [[ "${study_code}" != '200' ]]; then
             echo "Case study expected 200, got ${study_code}" >&2
             docker logs "${container_name}" || true
@@ -203,7 +203,7 @@ jobs:
               action_code="$(curl -sS --max-time 10 \
                 -o /tmp/qwik-origin-body -w '%{http_code}' \
                 -H "Host: ${host}" -H "Origin: ${origin}" \
-                --data '' "${base_url}/work/access-control-demo/")"
+                --data '' "${base_url}/work/access-control-demo")"
               if [[ "${action_code}" != "${expected_code}" ]]; then
                 echo "POST ${host} from ${origin}: expected ${expected_code}, got ${action_code}" >&2
                 exit 1
@@ -229,7 +229,7 @@ jobs:
           fi
 
           missing_code="$(curl -sS -o /dev/null -w '%{http_code}' \
-            "${base_url}/work/does-not-exist-case-study/")"
+            "${base_url}/work/does-not-exist-case-study")"
           if [[ "${missing_code}" != '404' ]]; then
             echo "Unknown case study expected 404, got ${missing_code}" >&2
             exit 1
