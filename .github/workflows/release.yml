@@ -3,12 +3,13 @@ name: Publish release image and initiate deployment
 on:
   release:
     types: [published]
+  workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: qwik-website-release-${{ github.event.release.id }}
+  group: qwik-website-release-${{ github.event.release.id || github.sha }}
   cancel-in-progress: false
 
 env:
@@ -22,7 +23,12 @@ env:
 jobs:
   verify-test-build-push:
     name: Verify, test, build and push release image
-    if: ${{ !github.event.release.draft && !github.event.release.prerelease }}
+    # Manual runs publish the selected main commit. Release events stay tag-gated.
+    if: >-
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'release' &&
+       !github.event.release.draft &&
+       !github.event.release.prerelease)
     runs-on: ubuntu-latest
     timeout-minutes: 45
     environment: image-publish
@@ -40,52 +46,86 @@ jobs:
       source-run-id: ${{ steps.evidence.outputs.source-run-id }}
 
     steps:
-      - name: Checkout released tag
+      - name: Checkout source commit
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
-          ref: refs/tags/${{ github.event.release.tag_name }}
+          # release: peel the published tag. workflow_dispatch: current main commit.
+          ref: ${{ github.event_name == 'release' && format('refs/tags/{0}', github.event.release.tag_name) || github.sha }}
           fetch-depth: 0
 
-      - name: Validate stable release tag and peeled commit
+      - name: Validate release source
         id: release_guard
         shell: bash
         env:
+          EVENT_NAME: ${{ github.event_name }}
           RELEASE_TAG: ${{ github.event.release.tag_name }}
           RELEASE_DRAFT: ${{ github.event.release.draft }}
           RELEASE_PRERELEASE: ${{ github.event.release.prerelease }}
+          RELEASE_ID: ${{ github.event.release.id }}
           EVENT_SHA: ${{ github.sha }}
+          EVENT_REF: ${{ github.ref }}
+          RUN_ID: ${{ github.run_id }}
         run: |
           set -euo pipefail
 
-          if [[ "${RELEASE_DRAFT}" == 'true' || "${RELEASE_PRERELEASE}" == 'true' ]]; then
-            echo 'Draft and prerelease publications are not deployable.' >&2
+          source_sha="$(git rev-parse HEAD)"
+
+          if [[ ! "${source_sha}" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "Source commit SHA must be 40 lowercase hex characters: ${source_sha}" >&2
             exit 1
           fi
 
-          if [[ ! "${RELEASE_TAG}" =~ ${RELEASE_TAG_PATTERN} ]]; then
-            echo "Release tag must match ${RELEASE_TAG_PATTERN}: ${RELEASE_TAG}" >&2
-            exit 1
+          if [[ "${EVENT_NAME}" == 'workflow_dispatch' ]]; then
+            if [[ "${EVENT_REF}" != 'refs/heads/main' ]]; then
+              echo "Manual releases must run from main (got ${EVENT_REF})." >&2
+              exit 1
+            fi
+
+            if [[ "${source_sha}" != "${EVENT_SHA}" ]]; then
+              echo 'Checked-out HEAD does not match the workflow_dispatch commit.' >&2
+              exit 1
+            fi
+
+            # No GitHub Release is required. Use run metadata for IaC evidence.
+            release_tag="main"
+            release_id="${RUN_ID}"
+          else
+            if [[ "${RELEASE_DRAFT}" == 'true' || "${RELEASE_PRERELEASE}" == 'true' ]]; then
+              echo 'Draft and prerelease publications are not deployable.' >&2
+              exit 1
+            fi
+
+            if [[ ! "${RELEASE_TAG}" =~ ${RELEASE_TAG_PATTERN} ]]; then
+              echo "Release tag must match ${RELEASE_TAG_PATTERN}: ${RELEASE_TAG}" >&2
+              exit 1
+            fi
+
+            tag_object="$(git rev-parse "refs/tags/${RELEASE_TAG}^{commit}")"
+
+            if [[ "${source_sha}" != "${tag_object}" ]]; then
+              echo 'Checked-out HEAD does not match the peeled release tag commit.' >&2
+              exit 1
+            fi
+
+            if [[ "${source_sha}" != "${EVENT_SHA}" ]]; then
+              echo 'github.sha does not match the peeled release tag commit.' >&2
+              exit 1
+            fi
+
+            if [[ ! "${RELEASE_ID}" =~ ^[0-9]+$ ]]; then
+              echo "Release ID must be numeric: ${RELEASE_ID}" >&2
+              exit 1
+            fi
+
+            release_tag="${RELEASE_TAG}"
+            release_id="${RELEASE_ID}"
           fi
 
-          peeled_sha="$(git rev-parse HEAD)"
-          tag_object="$(git rev-parse "refs/tags/${RELEASE_TAG}^{commit}")"
-
-          if [[ ! "${peeled_sha}" =~ ^[0-9a-f]{40}$ ]]; then
-            echo "Peeled commit SHA must be 40 lowercase hex characters: ${peeled_sha}" >&2
-            exit 1
-          fi
-
-          if [[ "${peeled_sha}" != "${tag_object}" ]]; then
-            echo 'Checked-out HEAD does not match the peeled release tag commit.' >&2
-            exit 1
-          fi
-
-          if [[ "${peeled_sha}" != "${EVENT_SHA}" ]]; then
-            echo 'github.sha does not match the peeled release tag commit.' >&2
-            exit 1
-          fi
-
-          echo "source-commit-sha=${peeled_sha}" >> "${GITHUB_OUTPUT}"
+          {
+            echo "source-commit-sha=${source_sha}"
+            echo "release-tag=${release_tag}"
+            echo "release-id=${release_id}"
+          } >> "${GITHUB_OUTPUT}"
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@735343b667d3e6f658f44d0eca948eb6282f2b76 # v2.0.2
@@ -300,8 +340,8 @@ jobs:
           SOURCE_SHA: ${{ steps.release_guard.outputs.source-commit-sha }}
           IMAGE_TAG: ${{ steps.push.outputs.image-tag }}
           IMAGE_DIGEST: ${{ steps.push.outputs.image-digest }}
-          RELEASE_ID: ${{ github.event.release.id }}
-          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          RELEASE_ID: ${{ steps.release_guard.outputs.release-id }}
+          RELEASE_TAG: ${{ steps.release_guard.outputs.release-tag }}
           SOURCE_REPOSITORY: ${{ github.repository }}
           SOURCE_REPOSITORY_ID: ${{ github.repository_id }}
           SOURCE_RUN_ID: ${{ github.run_id }}
