@@ -1,6 +1,6 @@
 {
   "name": "qwik-website",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Portfolio landing page built with Qwik and Qwik City",
   "private": true,
   "type": "module",
@@ -15,7 +15,7 @@
     "ci": "bun run fmt.check && bun run lint && bun run build.types && bun run test.unit && bun run build && bun run test.ct && bun run test.e2e",
     "cypress.open": "cypress open",
     "cypress.run": "cypress run",
-    "dev": "vite --mode ssr",
+    "dev": "vite --mode ssr --host",
     "dev.debug": "node --inspect-brk ./node_modules/vite/bin/vite.js --mode ssr --force",
     "fmt": "prettier --write .",
     "fmt.check": "prettier --check .",
