@@ -418,7 +418,7 @@ jobs:
             --arg imageTag "${IMAGE_TAG}" \
             --arg imageDigest "${IMAGE_DIGEST}" \
             '{
-              event_type: "qwik-website-release-v1",
+              event_type: "single-container-web-release-v1",
               client_payload: {
                 schemaVersion: 1,
                 application: $application,
@@ -457,7 +457,7 @@ jobs:
             echo '- Status: **dispatch accepted / deployment pending**'
             echo "- Accepted at: \`${accepted_at}\`"
             echo "- IaC repository: \`${IAC_REPOSITORY}\`"
-            echo '- Event type: `qwik-website-release-v1`'
+            echo '- Event type: `single-container-web-release-v1`'
             echo "- Central workflow: \`https://github.com/${IAC_REPOSITORY}/actions\`"
             echo
             echo 'Azure deployment success is owned by the IaC repository workflow,'

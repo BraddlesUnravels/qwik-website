@@ -28,7 +28,7 @@ Node `^18.17.0 || ^20.3.0 || >=21.0.0` or Bun `>=1.1.0`.
 - **Document head** (`src/components/router-head/router-head.tsx`): title, meta, canonical, viewport
 - **Static assets**: SVG logos under `public/icon/logo/`, web app manifest, robots.txt
 
-Production uses the Bun server adapter (`adapters/bun`) and a release-driven deploy path documented in `docs/deployment.md`. Stable GitHub Releases build/push the image and dispatch the reusable IaC repository; this app repo does not own Azure Bicep.
+Production uses the Bun server adapter (`adapters/bun`) and a release-driven deploy path documented in `docs/deployment.md`. Version tags or manual `main` dispatch build/push the image to shared ACR and dispatch the central IaC single-container release; this app repo does not own Azure infrastructure.
 
 ## Setup
 
@@ -78,7 +78,7 @@ Optional PR label `stage` still runs `.github/workflows/integration.yml` contain
 
 ## Production deployment
 
-See `docs/deployment.md`. Summary: publish a stable `vX.Y.Z` release → source workflow verifies/tests/pushes `qwik-website:<sha>` → `repository_dispatch` to `BraddlesUnravels/iac` → IaC plans and deploys.
+See `docs/deployment.md`. Summary: publish a stable `vX.Y.Z` release **or** run `workflow_dispatch` on `main` → source workflow verifies/tests/pushes `qwik-website:<sha>` → `repository_dispatch` `single-container-web-release-v1` to `BraddlesUnravels/iac` → IaC plans and deploys into `rg-platform-production`.
 
 ## Testing
 

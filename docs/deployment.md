@@ -1,63 +1,105 @@
 # Deployment
 
-Production deploys are **release-driven**. Publishing a stable GitHub Release in
-this repository is the normal trigger. Azure infrastructure and the final apply
-live in the reusable IaC repository (`BraddlesUnravels/iac`), not here.
+Production deploys are **release-driven**. This repository owns tests, image
+publish to the shared ACR, and `repository_dispatch` evidence. Azure apply lives
+in [BraddlesUnravels/iac](https://github.com/BraddlesUnravels/iac).
+
+Canonical IaC docs:
+
+- `docs/workloads/single-container-web-runbook.md`
+- `docs/workloads/qwik-website-runbook.md`
+
+This repository does **not** contain Bicep, ARM, bootstrap scripts, or an Azure
+apply workflow.
+
+## Release triggers
+
+| Trigger                                               | When                     | `releaseTag` sent to IaC |
+| ----------------------------------------------------- | ------------------------ | ------------------------ |
+| Stable GitHub Release `vX.Y.Z` (not draft/prerelease) | Normal audited release   | `vX.Y.Z`                 |
+| `workflow_dispatch` on `main`                         | Operator hotfix / replay | `main`                   |
+
+Do **not** auto-deploy on every push to `main`.
+
+Both paths publish an immutable 40-character commit SHA image tag. IaC rejects
+`latest` as a deploy identity.
+
+Workflow:
+
+```text
+.github/workflows/release.yml
+```
 
 ## Normal path
 
 ```text
-Stable GitHub Release published (tag vX.Y.Z, not draft/prerelease)
+Stable release published or manual main dispatch
   -> .github/workflows/release.yml
-  -> verify tag commit, run checks, build one production image
-  -> smoke /health, /, case study, static asset
+  -> verify source, run checks, build one production image
+  -> smoke /health, /, case study, static asset, origin/CSRF checks
   -> OIDC publish to braddlesunravelsacr.azurecr.io/qwik-website:<40-char-sha>
   -> GitHub App token scoped to IaC repository
-  -> repository_dispatch event_type=qwik-website-release-v1
-  -> IaC workflow verifies provenance, plans, (optionally) waits for approval, deploys
+  -> repository_dispatch event_type=single-container-web-release-v1
+  -> IaC deploy-single-container-release.yml
+       verifies provenance, plans, (optionally) waits for approval, deploys, verifies HTTP
 ```
-
-This repository does **not** contain application Bicep/ARM or a manual
-production deploy workflow. Do not copy digests into IaC by hand for the normal
-path.
-
-## Source workflow responsibilities
-
-| Step                                | Owner                                        |
-| ----------------------------------- | -------------------------------------------- |
-| Stable release / protected tag      | Maintainers                                  |
-| Tests + Docker smoke                | `release.yml` `verify-test-build-push`       |
-| ACR push (repository-scoped writer) | `image-publish` environment + publisher UAMI |
-| Cross-repo dispatch                 | GitHub App installation token to IaC only    |
-| Azure apply + live verification     | IaC `deploy-qwik-release.yml`                |
 
 Source job success means **dispatch accepted / deployment pending**, not that
 Azure is healthy. Final status is the IaC run.
 
+## Source workflow responsibilities
+
+| Step                                            | Owner                                        |
+| ----------------------------------------------- | -------------------------------------------- |
+| Stable release / protected tag or main dispatch | Maintainers                                  |
+| Tests + Docker smoke                            | `release.yml` `verify-test-build-push`       |
+| ACR push (repository-scoped writer)             | `image-publish` environment + publisher UAMI |
+| Cross-repo dispatch                             | GitHub App installation token to IaC only    |
+| Azure apply + live verification                 | IaC `deploy-single-container-release.yml`    |
+
 ## Required repository settings
 
-Configure before enabling production releases (operator-owned):
-
-| Name                           | Location                | Purpose                                                |
-| ------------------------------ | ----------------------- | ------------------------------------------------------ |
-| `AZURE_PUBLISHER_CLIENT_ID`    | `image-publish` env var | Publisher managed identity client ID                   |
-| `AZURE_TENANT_ID`              | `image-publish` env var | Azure tenant                                           |
-| `AZURE_SUBSCRIPTION_ID`        | `image-publish` env var | Azure subscription                                     |
-| `IAC_DISPATCH_APP_ID`          | repository variable     | GitHub App ID used only to dispatch IaC                |
-| `IAC_DISPATCH_APP_PRIVATE_KEY` | repository secret       | GitHub App private key                                 |
-| Environment `image-publish`    | repository environments | Scopes OIDC subject for publisher federated credential |
+| Name                           | Location                | Purpose                                                            |
+| ------------------------------ | ----------------------- | ------------------------------------------------------------------ |
+| `AZURE_PUBLISHER_CLIENT_ID`    | `image-publish` env var | Publisher managed identity client ID (`id-qwik-website-publisher`) |
+| `AZURE_TENANT_ID`              | `image-publish` env var | Azure tenant                                                       |
+| `AZURE_SUBSCRIPTION_ID`        | `image-publish` env var | Azure subscription                                                 |
+| `IAC_DISPATCH_APP_ID`          | repository variable     | GitHub App ID used only to dispatch IaC                            |
+| `IAC_DISPATCH_APP_PRIVATE_KEY` | repository secret       | GitHub App private key                                             |
+| Environment `image-publish`    | repository environments | Scopes OIDC subject for publisher federated credential             |
 
 Do not store ACR admin passwords, long-lived PATs, or Azure client secrets.
+
+## Runtime configuration (Azure)
+
+| Item                     | Value                                                         |
+| ------------------------ | ------------------------------------------------------------- |
+| Resource group           | `rg-platform-production`                                      |
+| Stack                    | `single-container-web`                                        |
+| ACA environment          | `acae-qwik-website-production`                                |
+| Container app            | `aca-qwik-website-production`                                 |
+| Primary custom domain    | `www.braddlesunravels.online`                                 |
+| Additional custom domain | `braddlesunravels.online` (apex)                              |
+| Default FQDN suffix      | `wonderfulsmoke-320e8626.australiaeast.azurecontainerapps.io` |
+| Runtime / pull identity  | `id-qwik-website-pull`                                        |
+| Key Vault                | `kv-acd-prod-braddles`                                        |
+| Health probe             | `GET /health` (plain body `ok`)                               |
+
+Demo-link non-secrets and the Key Vault-backed general access code are defined
+in the IaC workload contract / catalog, not in this repository.
 
 ## Creating an approved release
 
 1. Land reviewed changes on `main`.
-2. Create an immutable protected tag matching `vMAJOR.MINOR.PATCH`.
-3. Publish a **stable** GitHub Release for that tag (not draft, not prerelease).
+2. Create an immutable protected tag matching `vMAJOR.MINOR.PATCH` **or** run
+   `workflow_dispatch` on `main`.
+3. For the tag path, publish a **stable** GitHub Release (not draft, not
+   prerelease).
 4. Watch `Publish release image and initiate deployment` in this repo.
-5. Open the IaC Actions tab for `Deploy Qwik website from source release` and
+5. Open the IaC Actions tab for **Deploy single-container-web release** and
    approve the protected `production` environment if configured.
-6. Confirm IaC summary: digest, revision, live `/health`, homepage, study.
+6. Confirm IaC summary: digest, deployment name, live URL, `/health`, homepage,
+   case study.
 
 ## Image tags
 
@@ -66,15 +108,15 @@ Do not store ACR admin passwords, long-lived PATs, or Azure client secrets.
 - Runtime reference in Azure is the immutable digest form
   `.../qwik-website@sha256:<64-hex>`.
 - `latest` is never used for deployment.
-- Existing SHA tags are not overwritten; a collision fails the release job.
+- Existing SHA tags are not overwritten; a collision reuses the existing digest
+  when present.
 
-## Health and SEO for first Azure FQDN
+## Health and SEO
 
 - `GET/HEAD /health` returns plain `ok` with `cache-control: no-store`.
-- Bun SSG is disabled until a verified canonical domain exists.
-- `PUBLIC_SITE_URL` is omitted from the release image build until that domain is
-  chosen in a separate reviewed change.
-- `siteConfig.url` / `absoluteUrl` do not emit placeholder hostnames.
+- Bun SSG remains disabled until a separate reviewed change opts into a fixed
+  canonical `PUBLIC_SITE_URL` strategy.
+- `siteConfig.url` / `absoluteUrl` must not emit placeholder hostnames.
 
 ## HTTPS origins behind Azure ingress
 
@@ -109,14 +151,32 @@ The release image smoke test exercises allowed and forbidden POST origins.
 
 ## Local container smoke
 
-Case study routes are trailing-slash canonical (`/work/<slug>/`). Bare paths 301.
+Case study routes use the bare path form (`/work/<slug>`). Slash paths 301 when
+`trailingSlash: false`.
 
 ```bash
 docker build -f docker/Dockerfile -t qwik-website:release-test .
 docker run --rm -d --name qwik-release-test -p 3000:3000 qwik-website:release-test
 curl --fail --silent --show-error --max-time 10 http://localhost:3000/health
 curl --fail --silent --show-error --max-time 10 http://localhost:3000/
-curl --fail --silent --show-error --max-time 10 http://localhost:3000/work/access-control-demo/
+curl --fail --silent --show-error --max-time 10 http://localhost:3000/work/access-control-demo
 docker logs qwik-release-test
 docker rm -f qwik-release-test
+```
+
+## Deployment boundary
+
+```text
+GitHub Actions (this repo)  --OIDC publisher--> shared ACR
+      |
+      | repository_dispatch single-container-web-release-v1
+      v
+IaC deploy-single-container-release.yml
+      |
+      | planner / deployer OIDC
+      v
+stacks/single-container-web (rg-platform-production)
+      |
+      v
+Container App (www + apex SNI) --> Bun / Qwik
 ```
