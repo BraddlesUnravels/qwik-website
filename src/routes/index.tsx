@@ -38,26 +38,6 @@ export default component$(() => {
         <MainPageHeadBanner />
       </section>
 
-      <section id="capabilities" class="bg-canvas-soft/65">
-        <div class="mx-auto w-full max-w-7xl px-5 py-10 sm:px-8">
-          <Typography variant="eyebrow">What I bring</Typography>
-          <Typography as="h2" variant="heading-2" class="mt-5 max-w-6xl">
-            Technical depth tied to operational outcomes.
-          </Typography>
-          <div class="rounded-card mt-12 grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
-            {capabilities.map(([number, title, description]) => (
-              <article key={number} class="bg-canvas-soft p-6 sm:p-8">
-                <span class="text-brand font-mono text-xs">{number}</span>
-                <h3 class="font-display text-ink mt-8 text-2xl font-semibold tracking-[-0.03em]">
-                  {title}
-                </h3>
-                <p class="text-ink-muted mt-4 text-sm">{description}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section id="selected-work" class="scroll-mt-24">
         <div class="mx-auto w-full max-w-7xl px-5 py-20 sm:px-8 lg:px-10 lg:py-32">
           <div class="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
@@ -80,6 +60,26 @@ export default component$(() => {
               study={commercialEngineeringSummary}
               index={caseStudySummaries.length}
             />
+          </div>
+        </div>
+      </section>
+
+      <section id="capabilities" class="bg-canvas-soft/65">
+        <div class="mx-auto w-full max-w-7xl px-5 py-10 sm:px-8">
+          <Typography variant="eyebrow">What I bring</Typography>
+          <Typography as="h2" variant="heading-2" class="mt-5 max-w-6xl">
+            Technical depth tied to operational outcomes.
+          </Typography>
+          <div class="rounded-card mt-12 grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
+            {capabilities.map(([number, title, description]) => (
+              <article key={number} class="bg-canvas-soft p-6 sm:p-8">
+                <span class="text-brand font-mono text-xs">{number}</span>
+                <h3 class="font-display text-ink mt-8 text-2xl font-semibold tracking-[-0.03em]">
+                  {title}
+                </h3>
+                <p class="text-ink-muted mt-4 text-sm">{description}</p>
+              </article>
+            ))}
           </div>
         </div>
       </section>

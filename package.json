@@ -1,6 +1,6 @@
 {
   "name": "qwik-website",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Portfolio landing page built with Qwik and Qwik City",
   "private": true,
   "type": "module",
