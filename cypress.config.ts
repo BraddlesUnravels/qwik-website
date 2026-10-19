@@ -3,7 +3,9 @@ import type { ConfigEnv } from "vite";
 
 const componentViteEnv: ConfigEnv = {
   command: "serve",
-  mode: "development",
+  // Not "development": avoids qwikCity route SSR during isolated CT mounts.
+  // vite.config treats mode "test" like Vitest and skips qwikCity.
+  mode: "test",
 };
 
 export default defineConfig({
