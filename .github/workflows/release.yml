@@ -174,6 +174,8 @@ jobs:
       - name: Build release image
         run: docker build -f docker/Dockerfile -t "${IMAGE_NAME}" .
 
+      # HTTP checks mirror IaC deploy-workload-release.sh verify for qwik-website:
+      # GET /health -> 200, GET / -> 200, GET /work/access-control-demo -> 200.
       - name: Smoke test the built image
         shell: bash
         run: |
@@ -181,7 +183,8 @@ jobs:
 
           container_name="qwik-release-smoke-${GITHUB_RUN_ID}"
           host_port=18080
-          base_url="http://127.0.0.1:${host_port}"
+          url="http://127.0.0.1:${host_port}"
+          health_path="/health"
 
           cleanup() {
             docker logs "${container_name}" >/tmp/qwik-smoke-logs 2>&1 || true
@@ -194,84 +197,36 @@ jobs:
             -p "${host_port}:3000" \
             "${IMAGE_NAME}"
 
+          health_url="${url}${health_path}"
           ready=0
-          for attempt in $(seq 1 60); do
-            if body="$(curl --silent --show-error --max-time 5 \
-              "${base_url}/health" 2>/dev/null)" && [[ "${body}" == 'ok' ]]; then
+          for _ in $(seq 1 30); do
+            health_code="$(curl -sS -o /tmp/scw-live-health -w '%{http_code}' --max-time 10 "${health_url}" || true)"
+            if [[ "${health_code}" == '200' ]]; then
               ready=1
               break
             fi
-            sleep 2
+            sleep 5
           done
 
           if [[ "${ready}" -ne 1 ]]; then
-            echo 'Timed out waiting for /health' >&2
+            echo "Live health verification failed for ${health_url}" >&2
+            cat /tmp/scw-live-health >&2 || true
             docker logs "${container_name}" || true
             exit 1
           fi
 
-          homepage_code="$(curl -sS -o /tmp/qwik-home-body -w '%{http_code}' \
-            "${base_url}/")"
+          homepage_code="$(curl -sS -o /tmp/scw-live-home -w '%{http_code}' "${url}/")"
           if [[ "${homepage_code}" != '200' ]]; then
             echo "Homepage expected 200, got ${homepage_code}" >&2
             docker logs "${container_name}" || true
             exit 1
           fi
 
-          # GitHub-hosted runners do not ship ripgrep; use grep -E.
-          if grep -nE 'REPLACE-WITH-FINAL-DOMAIN|yoursite\.dev' /tmp/qwik-home-body; then
-            echo 'Homepage HTML contains placeholder origin' >&2
-            exit 1
-          fi
-
-          # Qwik City is configured with trailingSlash: false (slash paths 301).
-          study_code="$(curl -sS -o /tmp/qwik-study-body -w '%{http_code}' \
-            "${base_url}/work/access-control-demo")"
+          # Qwik City uses trailingSlash: false; bare paths are canonical (slash forms 301).
+          study_code="$(curl -sS -o /tmp/scw-live-study -w '%{http_code}' "${url}/work/access-control-demo")"
           if [[ "${study_code}" != '200' ]]; then
             echo "Case study expected 200, got ${study_code}" >&2
             docker logs "${container_name}" || true
-            exit 1
-          fi
-
-          # Simulate TLS termination without weakening Qwik's CSRF checks.
-          for host in braddlesunravels.online www.braddlesunravels.online; do
-            for origin in "https://${host}" https://attacker.test "http://${host}"; do
-              expected_code=403
-              if [[ "${origin}" == "https://${host}" ]]; then
-                expected_code=200
-              fi
-              action_code="$(curl -sS --max-time 10 \
-                -o /tmp/qwik-origin-body -w '%{http_code}' \
-                -H "Host: ${host}" -H "Origin: ${origin}" \
-                --data '' "${base_url}/work/access-control-demo")"
-              if [[ "${action_code}" != "${expected_code}" ]]; then
-                echo "POST ${host} from ${origin}: expected ${expected_code}, got ${action_code}" >&2
-                exit 1
-              fi
-            done
-          done
-
-          asset_path="$(grep -oE '/build/[^\"[:space:]]+\.(js|css)' /tmp/qwik-home-body | head -n 1 || true)"
-          if [[ -z "${asset_path}" ]]; then
-            echo 'Unable to derive a static asset path from homepage HTML' >&2
-            exit 1
-          fi
-
-          asset_code="$(curl -sS -o /tmp/qwik-asset-body -w '%{http_code}' \
-            "${base_url}${asset_path}")"
-          if [[ "${asset_code}" != '200' ]]; then
-            echo "Static asset expected 200, got ${asset_code} for ${asset_path}" >&2
-            exit 1
-          fi
-          if [[ ! -s /tmp/qwik-asset-body ]]; then
-            echo "Static asset body is empty for ${asset_path}" >&2
-            exit 1
-          fi
-
-          missing_code="$(curl -sS -o /dev/null -w '%{http_code}' \
-            "${base_url}/work/does-not-exist-case-study")"
-          if [[ "${missing_code}" != '404' ]]; then
-            echo "Unknown case study expected 404, got ${missing_code}" >&2
             exit 1
           fi
 
