@@ -136,7 +136,6 @@ and other unlisted hosts retain their request URL origin. Do not set a single
 global `ORIGIN` or disable CSRF checks to work around TLS termination.
 
 Origin policy changes require a new application release, not an IaC change.
-The release image smoke test exercises allowed and forbidden POST origins.
 
 ## Recovery when dispatch is accepted but IaC fails
 
@@ -151,15 +150,27 @@ The release image smoke test exercises allowed and forbidden POST origins.
 
 ## Local container smoke
 
-Case study routes use the bare path form (`/work/<slug>`). Slash paths 301 when
+Container HTTP smoke matches IaC live verify for `qwik-website`: `GET /health`,
+`GET /`, and `GET /work/access-control-demo` must each return 200. Case study
+routes use the bare path form (`/work/<slug>`); slash paths 301 when
 `trailingSlash: false`.
 
 ```bash
 docker build -f docker/Dockerfile -t qwik-website:release-test .
 docker run --rm -d --name qwik-release-test -p 3000:3000 qwik-website:release-test
-curl --fail --silent --show-error --max-time 10 http://localhost:3000/health
-curl --fail --silent --show-error --max-time 10 http://localhost:3000/
-curl --fail --silent --show-error --max-time 10 http://localhost:3000/work/access-control-demo
+url=http://127.0.0.1:3000
+health_url="${url}/health"
+ready=0
+for _ in $(seq 1 30); do
+  health_code="$(curl -sS -o /tmp/scw-live-health -w '%{http_code}' --max-time 10 "${health_url}" || true)"
+  if [[ "${health_code}" == '200' ]]; then ready=1; break; fi
+  sleep 5
+done
+[[ "${ready}" -eq 1 ]] || { echo "Live health verification failed for ${health_url}" >&2; exit 1; }
+homepage_code="$(curl -sS -o /tmp/scw-live-home -w '%{http_code}' "${url}/")"
+[[ "${homepage_code}" == '200' ]] || { echo "Homepage expected 200, got ${homepage_code}" >&2; exit 1; }
+study_code="$(curl -sS -o /tmp/scw-live-study -w '%{http_code}' "${url}/work/access-control-demo")"
+[[ "${study_code}" == '200' ]] || { echo "Case study expected 200, got ${study_code}" >&2; exit 1; }
 docker logs qwik-release-test
 docker rm -f qwik-release-test
 ```
