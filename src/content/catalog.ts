@@ -29,7 +29,7 @@ export const caseStudySummaries: CaseStudySummary[] = [
     title: "Making lease balances available without a 34-minute lockout",
     description:
       "I untangled a 12,000-line SQL calculation, separated the business rules and made individual lease balances available on demand.",
-    featured: true,
+    featured: false,
     evidence: ["12,000+ lines", "~34 minutes"],
   },
   {
@@ -39,7 +39,7 @@ export const caseStudySummaries: CaseStudySummary[] = [
     title: "Connecting the lead-to-lease journey across three systems",
     description:
       "I inherited a thinly documented CRM and built practical connections to a desktop quoting tool and a legacy lease-management platform.",
-    featured: true,
+    featured: false,
     evidence: ["PipelineAxis, PackEdge, LeaseCore", "–9 points at first"],
   },
   {
@@ -81,6 +81,16 @@ export const caseStudySummaries: CaseStudySummary[] = [
       "I handled initial containment, owned network and workstation restoration, and worked with an external specialist on the subsequent investigation.",
     featured: false,
     evidence: ["Containment", "Parallel workstreams"],
+  },
+  {
+    slug: "commercial-engineering",
+    path: "/about/commercial-engineering/",
+    category: "How I work",
+    title: "What sales leadership taught me about building software",
+    description:
+      "I use operational questions, workflow mapping and commercial context to work out what software actually needs to change.",
+    featured: false,
+    evidence: ["Fix the reports", "Missing lead data"],
   },
 ];
 
