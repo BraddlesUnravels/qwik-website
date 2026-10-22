@@ -48,14 +48,16 @@ jobs:
         run: bun run build
 
       - name: Component tests
-        uses: cypress-io/github-action@v6
+        # v7.4.4+ retries ERR_SOCKET_CLOSED_BEFORE_CONNECTION (Node >=24.20)
+        # so wait-on no longer fails before the dev server can bind.
+        uses: cypress-io/github-action@v7.4.6
         with:
           install: false
           component: true
           command: bun run test.ct
 
       - name: E2E tests
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v7.4.6
         with:
           install: false
           start: bun run dev
