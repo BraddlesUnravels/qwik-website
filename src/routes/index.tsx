@@ -1,35 +1,20 @@
 import { component$ } from "@builder.io/qwik";
-import { ProjectCard } from "~/components/content/project-card";
+import {
+  FeaturedProjectCard,
+  SupportingProjectCard,
+} from "~/components/content/project-card";
 import { MainPageHeadBanner } from "~/components/ui/home-page-header";
 import { Typography } from "~/components/ui/typography";
-import {
-  caseStudySummaries,
-  commercialEngineeringSummary,
-} from "~/content/catalog";
+import { caseStudySummaries } from "~/content/catalog";
 import { createSeoHead } from "~/lib/seo";
 
-const capabilities = [
-  [
-    "01",
-    "Full-stack delivery",
-    "Production interfaces, APIs, data models and deployment pipelines carried from discovery through support.",
-  ],
-  [
-    "02",
-    "Legacy modernisation",
-    "Careful boundaries around systems that cannot be switched off, backed by repeatable validation and rollback.",
-  ],
-  [
-    "03",
-    "Security and identity",
-    "MFA, migration, step-up authentication, RBAC, ownership controls and database-enforced access.",
-  ],
-  [
-    "04",
-    "Commercial systems",
-    "Workflow discovery and integrations that make sales, marketing and operational data genuinely observable.",
-  ],
-] as const;
+const featuredStudies = caseStudySummaries
+  .filter(({ featured }) => featured)
+  .map((study, index) => ({ study, index }));
+
+const supportingStudies = caseStudySummaries
+  .filter(({ featured }) => !featured)
+  .map((study, index) => ({ study, index }));
 
 export default component$(() => {
   return (
@@ -38,9 +23,12 @@ export default component$(() => {
         <MainPageHeadBanner />
       </section>
 
-      <section id="selected-work" class="scroll-mt-24">
+      <section>
         <div class="mx-auto w-full max-w-7xl px-5 py-20 sm:px-8 lg:px-10 lg:py-32">
-          <div class="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+          <div
+            id="selected-work"
+            class="flex scroll-mt-24 flex-col gap-5 sm:flex-row sm:items-end sm:justify-between"
+          >
             <div>
               <Typography variant="eyebrow">Selected work</Typography>
               <Typography as="h2" variant="heading-2" class="mt-5">
@@ -52,34 +40,26 @@ export default component$(() => {
               evidence behind them.
             </Typography>
           </div>
-          <div class="mt-12 grid gap-5 lg:grid-cols-2">
-            {caseStudySummaries.map((study, index) => (
-              <ProjectCard key={study.slug} study={study} index={index} />
+          <div class="mt-3 grid items-start gap-6 md:grid-cols-2">
+            {featuredStudies.map(({ study, index }) => (
+              <FeaturedProjectCard
+                key={study.path}
+                study={study}
+                index={index}
+              />
             ))}
-            <ProjectCard
-              study={commercialEngineeringSummary}
-              index={caseStudySummaries.length}
-            />
           </div>
-        </div>
-      </section>
-
-      <section id="capabilities" class="bg-canvas-soft/65">
-        <div class="mx-auto w-full max-w-7xl px-5 py-10 sm:px-8">
-          <Typography variant="eyebrow">What I bring</Typography>
-          <Typography as="h2" variant="heading-2" class="mt-5 max-w-6xl">
-            Technical depth tied to operational outcomes.
-          </Typography>
-          <div class="rounded-card mt-12 grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
-            {capabilities.map(([number, title, description]) => (
-              <article key={number} class="bg-canvas-soft p-6 sm:p-8">
-                <span class="text-brand font-mono text-xs">{number}</span>
-                <h3 class="font-display text-ink mt-8 text-2xl font-semibold tracking-[-0.03em]">
-                  {title}
-                </h3>
-                <p class="text-ink-muted mt-4 text-sm">{description}</p>
-              </article>
-            ))}
+          <div class="mt-10">
+            <Typography variant="eyebrow">Supporting work</Typography>
+            <div class="mt-3 grid items-start gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {supportingStudies.map(({ study, index }) => (
+                <SupportingProjectCard
+                  key={study.path}
+                  study={study}
+                  index={index}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>

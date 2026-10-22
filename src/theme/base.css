@@ -1,4 +1,9 @@
 @layer base {
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
   html {
     scroll-behavior: smooth;
     color-scheme: dark;

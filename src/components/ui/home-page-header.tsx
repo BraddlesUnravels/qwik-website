@@ -9,7 +9,7 @@ export const MainPageHeadBanner = component$(() => {
     <div class="display mx-auto flex w-full max-w-7xl flex-col px-5 py-0 2xl:min-h-[calc(100svh-4.5rem)]">
       <div id="header-intro" class="pt-5 lg:pt-10 2xl:pt-12">
         <Typography variant="eyebrow" tone="emerald">
-          Full Stack Developer
+          Bradley Laskey · Full Stack Developer
         </Typography>
         <Typography as="h1" variant="display" class="mt-4 lg:mt-8 2xl:mt-10">
           I think in business problems.
@@ -58,6 +58,14 @@ export const MainPageHeadBanner = component$(() => {
           <TechnologyCarousel />
         </div>
       </section>
+
+      <a
+        href="#selected-work"
+        class="absolute bottom-5 left-1/2 inline-flex -translate-x-1/2 items-center gap-2 rounded-full border border-emerald-400/30 bg-slate-950/90 px-5 py-3 text-sm font-medium text-emerald-300 shadow-lg transition-colors hover:bg-emerald-950"
+      >
+        View projects
+        <span aria-hidden="true">&darr;</span>
+      </a>
     </div>
   );
 });
