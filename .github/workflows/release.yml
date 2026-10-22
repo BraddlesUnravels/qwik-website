@@ -153,20 +153,21 @@ jobs:
         run: bun run build.docker
 
       - name: Component tests
-        uses: cypress-io/github-action@f88a151c986cab2e339cdbede6a5c4468bb62c17 # v6.7.0
+        # v7.4.4+ is required on runners with Node >=24.20 (got v11 socket bug).
+        uses: cypress-io/github-action@c541a95ea92d9239347a2355f2e895cd4b3f8060 # v7.4.6
         with:
           install: false
           component: true
           command: bun run test.ct
 
+      # Do not use the action start/wait-on inputs. Their built-in ping uses got and
+      # can fail immediately with ERR_SOCKET_CLOSED_BEFORE_CONNECTION on Node >=24.20
+      # before Vite binds. bun run test.e2e uses start-server-and-test + wait-on (axios).
       - name: E2E tests
-        uses: cypress-io/github-action@f88a151c986cab2e339cdbede6a5c4468bb62c17 # v6.7.0
+        uses: cypress-io/github-action@c541a95ea92d9239347a2355f2e895cd4b3f8060 # v7.4.6
         with:
           install: false
-          start: bun run dev
-          wait-on: http://localhost:5173
-          wait-on-timeout: 120
-          command: bunx cypress run --e2e
+          command: bun run test.e2e
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@b5ca514318bd6ebac0fb2aedd5d36ec1b5c232a2 # v3.10.0
