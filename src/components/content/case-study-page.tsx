@@ -1,6 +1,7 @@
 import { Slot, component$ } from "@builder.io/qwik";
 import type { CaseStudy, CaseStudySubsection } from "~/content/types";
 import { GithubRepoButton } from "../ui/github-repo-button";
+import { CardRow } from "../ui/stat-card";
 
 type CaseStudyPageProps = {
   study: CaseStudy;
@@ -88,21 +89,7 @@ export const CaseStudyPage = component$<CaseStudyPageProps>(({ study }) => (
           <Slot name="actions" />
         </div>
 
-        <dl class="rounded-card shadow-card mt-14 grid overflow-hidden border border-white/10 bg-white/4 sm:grid-cols-2 lg:grid-cols-4">
-          {study.metrics.map((metric) => (
-            <div
-              key={metric.label}
-              class="border-b border-white/8 p-5 last:border-0 sm:border-r sm:p-6 lg:border-b-0"
-            >
-              <dt class="text-ink-muted text-xs font-semibold tracking-[0.13em] uppercase">
-                {metric.label}
-              </dt>
-              <dd class="font-display text-ink mt-2 text-2xl font-semibold tracking-[-0.03em]">
-                {metric.value}
-              </dd>
-            </div>
-          ))}
-        </dl>
+        <CardRow metrics={study.metrics} />
       </header>
 
       <div class="mx-auto grid w-full max-w-7xl gap-12 px-5 pb-24 sm:px-8 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-20 lg:px-10 lg:pb-32">
