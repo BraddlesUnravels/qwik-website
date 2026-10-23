@@ -120,6 +120,7 @@ export default {
       value: "Docker, GitHub Actions, Bicep, Azure Container Apps, Key Vault",
     },
   ],
+  repoUrl: "https://github.com/BraddlesUnravels/access-control-demo",
   related: [
     { label: "Step-up authentication", href: "/work/step-up-authentication/" },
   ],

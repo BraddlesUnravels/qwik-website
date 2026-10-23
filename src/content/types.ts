@@ -29,6 +29,7 @@ export type CaseStudy = {
   sections: CaseStudySection[];
   technologies: CaseStudyMetric[];
   lesson?: string;
+  repoUrl?: string;
   related: Array<{ label: string; href: string }>;
 };
 

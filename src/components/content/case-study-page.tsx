@@ -1,5 +1,6 @@
 import { Slot, component$ } from "@builder.io/qwik";
 import type { CaseStudy, CaseStudySubsection } from "~/content/types";
+import { GithubRepoButton } from "../ui/github-repo-button";
 
 type CaseStudyPageProps = {
   study: CaseStudy;
@@ -57,18 +58,22 @@ export const CaseStudyPage = component$<CaseStudyPageProps>(({ study }) => (
 
     <article>
       <header class="mx-auto w-full max-w-7xl px-5 pt-16 pb-16 sm:px-8 sm:pt-24 sm:pb-24 lg:px-10">
-        <a
-          href="/#selected-work"
-          class="group text-ink-muted hover:text-ink inline-flex items-center gap-2 text-sm font-semibold transition-colors"
-        >
-          <span
-            aria-hidden="true"
-            class="transition-transform group-hover:-translate-x-1"
+        <div class="flex justify-between">
+          <a
+            href="/#selected-work"
+            class="group text-ink-muted hover:text-ink inline-flex items-center gap-2 text-sm font-semibold transition-colors"
           >
-            ←
-          </span>
-          Selected work
-        </a>
+            <span
+              aria-hidden="true"
+              class="transition-transform group-hover:-translate-x-1"
+            >
+              ←
+            </span>
+            Selected work
+          </a>
+
+          <GithubRepoButton url={study.repoUrl} />
+        </div>
 
         <div class="mt-12 max-w-5xl">
           <p class="text-brand-bright font-mono text-xs font-semibold tracking-[0.18em] uppercase">
