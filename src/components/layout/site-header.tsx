@@ -13,7 +13,7 @@ export default component$(() => {
       <Container>
         <div class="flex min-h-20 items-center justify-between gap-6">
           <Link href="/" class="font-semibold tracking-tight text-zinc-100">
-            Bradley Laskey
+            BL
           </Link>
 
           <DesktopNavMenu />
