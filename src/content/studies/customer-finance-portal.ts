@@ -4,7 +4,7 @@ export default {
   slug: "customer-finance-portal",
   path: "/work/customer-finance-portal/",
   category: "Full-stack product delivery",
-  title: "LeaseTrack: a new portal around a legacy lease platform",
+  title: "AutoDash: a new portal around a legacy lease platform",
   description: `
     I built a customer finance portal that let the business withdraw public access 
     to an ageing platform without retiring the system it still depended on.
@@ -12,15 +12,23 @@ export default {
   introduction: `
     The business needed to take a vulnerable legacy customer portal offline, 
     but the same platform (LeaseCore) held the lease data and financial processes 
-    staff relied on every day. I owned the delivery of LeaseTrack, a replacement 
+    staff relied on every day. I owned the delivery of AutoDash, a replacement 
     customer-facing application that kept those internal processes available.
   `,
   featured: true,
   metrics: [
-    { label: "Customers", value: "5,000+ migrated" },
-    { label: "Delivery", value: "8 months" },
-    { label: "Release", value: "November 2024" },
-    { label: "Scope", value: "Full-stack ownership" },
+    {
+      label: "Customers",
+      value: "5,000+ migrated",
+      description: "No business disruption",
+    },
+    { label: "Delivery", value: "8 months", description: "Delayed 2 months" },
+    { label: "Release", value: "November 2024", description: "First release" },
+    {
+      label: "Scope",
+      value: "Full-stack ownership",
+      description: "End-to-end",
+    },
   ],
   sections: [
     {
@@ -57,7 +65,7 @@ export default {
           title: "Keep the existing business data where it belonged",
           paragraphs: [
             `
-              Most of the information LeaseTrack needed already lived in the LeaseCore MSSQL database. 
+              Most of the information AutoDash needed already lived in the LeaseCore MSSQL database. 
               Rather than introduce a third database and another synchronisation problem, I added portal-owned 
               tables for identities, MFA, preferences and activity alongside the existing lease data. 
               The Node.js API exposed controlled operations and reused legacy stored procedures where they remained necessary. 
@@ -94,7 +102,7 @@ export default {
       title: "The result",
       paragraphs: [
         `
-          LeaseTrack went into production on 14 November 2024 and supported the migration of more than 5,000 customers. 
+          AutoDash went into production on 14 November 2024 and supported the migration of more than 5,000 customers. 
           Customers gained current lease information, more understandable budgets, documents and self-service account changes. 
           Staff reported far fewer calls about forgotten usernames and routine profile updates.
         `,
