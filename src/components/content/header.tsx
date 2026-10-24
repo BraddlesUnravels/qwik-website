@@ -2,18 +2,18 @@ import { Slot, component$ } from "@builder.io/qwik";
 import type { CaseStudy } from "~/content/types";
 import { GithubRepoButton } from "../ui/github-repo-button";
 import { CardRow } from "../ui/stat-card";
-import { Typography } from "../ui/typography";
+import { CaseStudyImages } from "~/components/ui/image-list";
 
 type HeaderProps = {
   study: Pick<
     CaseStudy,
-    "category" | "title" | "introduction" | "repoUrl" | "metrics"
+    "category" | "title" | "introduction" | "repoUrl" | "metrics" | "images"
   >;
 };
 
 export const CaseStudyHeader = component$<HeaderProps>(({ study }) => (
-  <header class="mx-auto w-full max-w-7xl px-5 pt-16 pb-16 sm:px-8 sm:pt-24 sm:pb-24 lg:px-10">
-    <div class="flex justify-between">
+  <header class="mx-auto w-full max-w-6xl px-5 pt-10 pb-12 sm:px-8 sm:pt-16 sm:pb-16 lg:px-10">
+    <div class="flex flex-wrap items-center justify-between gap-4">
       <a
         href="/#selected-work"
         class="group text-ink-muted hover:text-ink inline-flex items-center gap-2 text-sm font-semibold transition-colors"
@@ -26,33 +26,26 @@ export const CaseStudyHeader = component$<HeaderProps>(({ study }) => (
         </span>
         Selected work
       </a>
-
       <GithubRepoButton url={study.repoUrl} />
     </div>
 
-    <div class="mt-12 max-w-5xl">
-      <Typography
-        as="p"
-        class="text-brand-bright font-mono text-xs font-semibold tracking-[0.18em] uppercase"
-      >
+    <div class="mt-10 max-w-4xl sm:mt-12">
+      <p class="text-brand-bright font-mono text-xs font-semibold tracking-[0.18em] uppercase">
         {study.category}
-      </Typography>
-
-      <Typography
-        as="h1"
-        class="font-display text-ink mt-6 max-w-5xl text-6xl font-semibold tracking-[-0.055em] text-balance"
-      >
+      </p>
+      <h1 class="font-display text-ink mt-5 text-[clamp(2.25rem,5vw,4rem)] leading-[1.08] font-semibold tracking-[-0.045em] text-balance">
         {study.title}
-      </Typography>
-
-      <Typography as="p" class="text-ink-soft mt-8 max-w-3xl text-xl">
+      </h1>
+      <p class="text-ink-soft mt-6 max-w-3xl text-lg leading-relaxed sm:text-xl">
         {study.introduction}
-      </Typography>
-
+      </p>
       <Slot name="actions" />
     </div>
 
-    <Slot name="hero" />
     <CardRow metrics={study.metrics} />
+    <CaseStudyImages
+      images={study.images}
+      sizes="(min-width: 1152px) 1072px, (min-width: 640px) calc(100vw - 64px), calc(100vw - 40px)"
+    />
   </header>
 ));

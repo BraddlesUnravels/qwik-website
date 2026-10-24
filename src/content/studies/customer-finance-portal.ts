@@ -1,10 +1,13 @@
 import type { CaseStudy } from "../types";
+import ReimbursementDesktop from "~/media/autodash/Reimb_Page_Desktop(redacted).png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
+import ReimbursementMobile from "~/media/autodash/Reimb_Page_Mobile(redacted).png?w=240;400&format=webp&quality=80&withoutEnlargement&as=img";
+import DocumentsDesktop from "~/media/autodash/Lease_Docx_Page_Desktop(redacted).png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
 
 export default {
   slug: "customer-finance-portal",
   path: "/work/customer-finance-portal/",
   category: "Full-stack product delivery",
-  title: "AutoDash: a new portal around a legacy lease platform",
+  title: "LeaseTrack: a new portal around a legacy lease platform",
   description: `
     I built a customer finance portal that let the business withdraw public access 
     to an ageing platform without retiring the system it still depended on.
@@ -12,23 +15,23 @@ export default {
   introduction: `
     The business needed to take a vulnerable legacy customer portal offline, 
     but the same platform (LeaseCore) held the lease data and financial processes 
-    staff relied on every day. I owned the delivery of AutoDash, a replacement 
+    staff relied on every day. I owned the delivery of LeaseTrack, a replacement 
     customer-facing application that kept those internal processes available.
   `,
   featured: true,
+  images: [
+    {
+      ...ReimbursementDesktop,
+      alt: "Desktop reimbursement page with a claim form and supporting-file upload area.",
+      caption:
+        "The reimbursement journey brings the claim form and supporting-file upload together.",
+    },
+  ],
   metrics: [
-    {
-      label: "Customers",
-      value: "5,000+ migrated",
-      description: "No business disruption",
-    },
-    { label: "Delivery", value: "8 months", description: "Delayed 2 months" },
-    { label: "Release", value: "November 2024", description: "First release" },
-    {
-      label: "Scope",
-      value: "Full-stack ownership",
-      description: "End-to-end",
-    },
+    { label: "Customers", value: "5,000+ migrated" },
+    { label: "Delivery", value: "8 months" },
+    { label: "Release", value: "November 2024" },
+    { label: "Scope", value: "Full-stack ownership" },
   ],
   sections: [
     {
@@ -60,12 +63,26 @@ export default {
     },
     {
       title: "How I built it",
+      images: [
+        {
+          ...ReimbursementMobile,
+          alt: "Mobile reimbursement page with the claim form and bottom navigation.",
+          caption:
+            "The same claim form adapts to a narrow screen, with customer navigation kept within reach.",
+        },
+        {
+          ...DocumentsDesktop,
+          alt: "Desktop lease documents page with document groups and download controls.",
+          caption:
+            "Customers can find lease documents by type and download them directly from the portal.",
+        },
+      ],
       subsections: [
         {
           title: "Keep the existing business data where it belonged",
           paragraphs: [
             `
-              Most of the information AutoDash needed already lived in the LeaseCore MSSQL database. 
+              Most of the information LeaseTrack needed already lived in the LeaseCore MSSQL database. 
               Rather than introduce a third database and another synchronisation problem, I added portal-owned 
               tables for identities, MFA, preferences and activity alongside the existing lease data. 
               The Node.js API exposed controlled operations and reused legacy stored procedures where they remained necessary. 
@@ -102,7 +119,7 @@ export default {
       title: "The result",
       paragraphs: [
         `
-          AutoDash went into production on 14 November 2024 and supported the migration of more than 5,000 customers. 
+          LeaseTrack went into production on 14 November 2024 and supported the migration of more than 5,000 customers. 
           Customers gained current lease information, more understandable budgets, documents and self-service account changes. 
           Staff reported far fewer calls about forgotten usernames and routine profile updates.
         `,

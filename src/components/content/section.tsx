@@ -1,5 +1,5 @@
-import { Slot, component$ } from "@builder.io/qwik";
-import { Typography } from "../ui/typography";
+import { component$ } from "@builder.io/qwik";
+import { CaseStudyImages } from "~/components/ui/image-list";
 import type {
   CaseStudySection as SectionData,
   CaseStudySubsection as SubsectionData,
@@ -8,19 +8,14 @@ import type {
 const Subsection = component$<{ subsection: SubsectionData }>(
   ({ subsection }) => (
     <section class="border-brand/35 border-l pl-5 sm:pl-7">
-      <Typography
-        as="h3"
-        class="font-display text-ink text-xl font-semibold tracking-[-0.02em]"
-      >
+      <h3 class="font-display text-ink text-xl font-semibold tracking-[-0.02em]">
         {subsection.title}
-      </Typography>
-
+      </h3>
       {subsection.paragraphs?.map((paragraph) => (
-        <Typography as="p" key={paragraph} class="text-ink-soft mt-4 text-base">
+        <p key={paragraph} class="text-ink-soft mt-4 text-base">
           {paragraph}
-        </Typography>
+        </p>
       ))}
-
       {subsection.bullets?.length ? (
         <ul class="mt-5 grid gap-3">
           {subsection.bullets.map((item) => (
@@ -34,7 +29,6 @@ const Subsection = component$<{ subsection: SubsectionData }>(
           ))}
         </ul>
       ) : null}
-
       {subsection.steps?.length ? (
         <ol class="mt-6 grid gap-4">
           {subsection.steps.map((item, index) => (
@@ -60,24 +54,15 @@ export const CaseStudySection = component$<{
       <span class="text-brand font-mono text-xs">
         {String(index + 1).padStart(2, "0")}
       </span>
-      <Typography
-        as="h2"
-        class="font-display text-ink text-3xl font-semibold tracking-[-0.035em]"
-      >
+      <h2 class="font-display text-ink text-2xl leading-tight font-semibold tracking-[-0.035em] sm:text-3xl">
         {section.title}
-      </Typography>
+      </h2>
     </div>
-
     {section.paragraphs?.map((paragraph) => (
-      <Typography
-        as="p"
-        key={paragraph}
-        class="text-ink-soft mt-5 text-base first:mt-0"
-      >
+      <p key={paragraph} class="text-ink-soft mt-5 text-base first:mt-0">
         {paragraph}
-      </Typography>
+      </p>
     ))}
-
     {section.bullets?.length ? (
       <ul class="mt-7 grid gap-3 sm:grid-cols-2">
         {section.bullets.map((item) => (
@@ -89,16 +74,17 @@ export const CaseStudySection = component$<{
           </li>
         ))}
       </ul>
-    ) : undefined}
-
+    ) : null}
     {section.subsections?.length ? (
       <div class="mt-9 grid gap-10">
         {section.subsections.map((subsection) => (
           <Subsection key={subsection.title} subsection={subsection} />
         ))}
       </div>
-    ) : undefined}
-
-    <Slot />
+    ) : null}
+    <CaseStudyImages
+      images={section.images}
+      sizes="(min-width: 1152px) 768px, (min-width: 1024px) calc(100vw - 384px), (min-width: 640px) calc(100vw - 64px), calc(100vw - 40px)"
+    />
   </section>
 ));
