@@ -17,9 +17,17 @@ export default {
   featured: true,
   metrics: [
     { label: "Accounts", value: "5,000+" },
-    { label: "Legacy hash", value: "SHA-1" },
-    { label: "New hash", value: "Argon2" },
-    { label: "Pilot", value: "21 employees" },
+    { label: "Legacy hash", value: "SHA-1", description: "JIT conversion" },
+    {
+      label: "New hash",
+      value: "Argon2",
+      description: "Stored on first login",
+    },
+    {
+      label: "Pilot",
+      value: "21 Participants",
+      description: "Internal staff with leases",
+    },
   ],
   sections: [
     {

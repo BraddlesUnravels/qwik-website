@@ -1,4 +1,7 @@
 import type { CaseStudy } from "../types";
+import ReimbursementDesktop from "~/media/autodash/Reimb_Page_Desktop(redacted).png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
+import ReimbursementMobile from "~/media/autodash/Reimb_Page_Mobile(redacted).png?w=240;400&format=webp&quality=80&withoutEnlargement&as=img";
+import DocumentsDesktop from "~/media/autodash/Lease_Docx_Page_Desktop(redacted).png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
 
 export default {
   slug: "customer-finance-portal",
@@ -16,6 +19,14 @@ export default {
     customer-facing application that kept those internal processes available.
   `,
   featured: true,
+  images: [
+    {
+      ...ReimbursementDesktop,
+      alt: "Desktop reimbursement page with a claim form and supporting-file upload area.",
+      caption:
+        "The reimbursement journey brings the claim form and supporting-file upload together.",
+    },
+  ],
   metrics: [
     { label: "Customers", value: "5,000+ migrated" },
     { label: "Delivery", value: "8 months" },
@@ -52,6 +63,20 @@ export default {
     },
     {
       title: "How I built it",
+      images: [
+        {
+          ...ReimbursementMobile,
+          alt: "Mobile reimbursement page with the claim form and bottom navigation.",
+          caption:
+            "The same claim form adapts to a narrow screen, with customer navigation kept within reach.",
+        },
+        {
+          ...DocumentsDesktop,
+          alt: "Desktop lease documents page with document groups and download controls.",
+          caption:
+            "Customers can find lease documents by type and download them directly from the portal.",
+        },
+      ],
       subsections: [
         {
           title: "Keep the existing business data where it belonged",

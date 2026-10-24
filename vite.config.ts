@@ -9,6 +9,7 @@ import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, type UserConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import pkg from "./package.json";
+import { ssrAssets } from "./src/config/ssr-assets";
 
 type PkgDep = Record<string, string>;
 
@@ -66,6 +67,7 @@ export default defineConfig(({ mode }): UserConfig => {
     plugins: [
       ...(useQwikCity ? [qwikCity({ trailingSlash: false })] : []),
       qwikVite(),
+      ssrAssets(),
       tsconfigPaths({ root: "." }),
       tailwindcss(),
     ],
