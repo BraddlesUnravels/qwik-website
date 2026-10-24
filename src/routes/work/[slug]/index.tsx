@@ -12,6 +12,17 @@ import { createSeoHead } from "~/lib/seo";
 
 const DEMO_ACCESS_SLUG = "access-control-demo";
 
+const twButton = [
+  "inline-flex items-center justify-center gap-2 rounded-lg",
+  "border border-gray-300 bg-gray-200 px-5 py-2",
+  "text-base font-semibold text-black shadow-md",
+  "transition duration-200 hover:-translate-y-0.5 hover:bg-white",
+  "focus-visible:outline-none focus-visible:ring-2",
+  "focus-visible:ring-white focus-visible:ring-offset-2",
+  "focus-visible:ring-offset-gray-950",
+  "motion-reduce:transform-none motion-reduce:transition-none",
+];
+
 export const useCaseStudy = routeLoader$(async ({ params, status }) => {
   const study = await loadCaseStudy(params.slug);
 
@@ -76,14 +87,16 @@ export default component$(() => {
     <CaseStudyPage study={study}>
       {study.slug === DEMO_ACCESS_SLUG && (
         <Form
+          id="demo-access"
           q:slot="actions"
           action={demoAccess}
           reloadDocument
           class="mt-10 flex flex-col items-start gap-3"
         >
           <button
+            aria-label="Try demo"
             type="submit"
-            class="bg-ink text-canvas hover:bg-ink/90 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors disabled:opacity-60"
+            class={twButton}
             disabled={demoAccess.isRunning}
           >
             {demoAccess.isRunning ? "Opening demo…" : "Try the live demo"}

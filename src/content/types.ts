@@ -1,6 +1,7 @@
 export type CaseStudyMetric = {
   label: string;
   value: string;
+  description?: string;
 };
 
 export type CaseStudySubsection = {
@@ -29,6 +30,7 @@ export type CaseStudy = {
   sections: CaseStudySection[];
   technologies: CaseStudyMetric[];
   lesson?: string;
+  repoUrl?: string;
   related: Array<{ label: string; href: string }>;
 };
 
