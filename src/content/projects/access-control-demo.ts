@@ -1,51 +1,53 @@
 import type { CaseStudy } from "../types";
-import ReimbursementDesktop from "~/media/autodash/Reimb_Page_Desktop(redacted).png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
-import ReimbursementMobile from "~/media/autodash/Reimb_Page_Mobile(redacted).png?w=240;400&format=webp&quality=80&withoutEnlargement&as=img";
-import DocumentsDesktop from "~/media/autodash/Lease_Docx_Page_Desktop(redacted).png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
+import DemoAuthorization from "~/media/diagrams/demo-authorization.svg?url&no-inline";
 
 export default {
-  slug: "customer-finance-portal",
-  path: "/projects/customer-finance-portal",
-  category: "Full-stack product delivery",
-  title: "AutoDash: a new portal around a legacy lease platform",
+  slug: "access-control-demo",
+  path: "/projects/access-control-demo",
+  category: "Inspectable full-stack application",
+  title: "Access Control Demo: security you can inspect",
   description: `
-    I built a customer finance portal that let the business withdraw public access 
-    to an ageing platform without retiring the system it still depended on.
-  `,
+      I built a small, deployed application so employers can test permissions and follow
+      the enforcement from the interface to the API, database and tests.
+    `,
   introduction: `
-    The business needed to take a vulnerable legacy customer portal offline, 
-    but the same platform (LeaseCore) held the lease data and financial processes 
-    staff relied on every day. I owned the delivery of AutoDash, a replacement 
-    customer-facing application that kept those internal processes available.
-  `,
+      My professional code lives in proprietary repositories. To address this, I built a deliberately
+      small consultation-management application to make my full-stack, security and deployment work
+      reviewable rather than asking employers to take it on trust.
+    `,
   featured: true,
-  images: [
-    {
-      ...ReimbursementDesktop,
-      alt: "Desktop reimbursement page with a claim form and supporting-file upload area.",
-      caption:
-        "The reimbursement journey brings the claim form and supporting-file upload together.",
-    },
-  ],
   metrics: [
-    { label: "Customers", value: "5,000+ migrated" },
-    { label: "Delivery", value: "8 months" },
-    { label: "Release", value: "November 2024" },
-    { label: "Scope", value: "Full-stack ownership" },
+    {
+      label: "Roles",
+      value: "2 students + 1 admin",
+      description:
+        "Compare account ownership and read-only administrator access.",
+    },
+    {
+      label: "Data boundary",
+      value: "PostgreSQL RLS",
+      description: "Database policies enforce access beneath the API checks.",
+    },
+    {
+      label: "Test focus",
+      value: "Forbidden requests",
+      description:
+        "Tests cover unauthenticated, wrong-role and cross-student access.",
+    },
+    {
+      label: "Deployment",
+      value: "Azure Container Apps",
+      description: "Containerised delivery with GitHub Actions and Bicep.",
+    },
   ],
   sections: [
     {
       title: "The problem",
       paragraphs: [
         `
-          A security review had identified vulnerabilities in LeaseCore, including unsupported dependencies. 
-          The business could not retire LeaseCore immediately: it stored customer accounts, transactions 
-          and lease balances, and its public portal still let customers view budgets, submit claims and request support. 
-          Simply switching off external access would have removed services customers needed.
-        `,
-        `
-          The existing portal also used four-digit usernames, could display balances that had not been 
-          recalculated since the last batch, and routed ordinary changes through support staff.
+          A screenshot can demonstrate a user interface, but it cannot prove that one account is
+          prevented from reading another account’s records or that an administrator cannot perform a forbidden write.
+          I wanted an employer to be able to test those rules in a working system and locate the implementation.
         `,
       ],
     },
@@ -53,11 +55,9 @@ export default {
       title: "My role",
       paragraphs: [
         `
-          I worked with the board to define the first release around two constraints: 
-          reduce exposure of the legacy application and preserve the customer journeys 
-          already in use. I was responsible for discovery, architecture, database and API work, 
-          the React interface, authentication, deployment and production support. A six-month 
-          target became an eight-month delivery as we included additional self-service and security work.
+          I designed, implemented, tested and deployed the application independently. I kept the domain small:
+          students manage consultations they own, while an administrator can view consultations across students
+          but cannot change them. Two student demonstration accounts make same-role ownership restrictions visible.
         `,
       ],
     },
@@ -65,51 +65,55 @@ export default {
       title: "How I built it",
       images: [
         {
-          ...ReimbursementMobile,
-          alt: "Mobile reimbursement page with the claim form and bottom navigation.",
+          src: DemoAuthorization,
+          w: 854,
+          h: 1055,
+          alt: "Consultation requests pass through the visitor gate, role and ownership checks, then PostgreSQL row-level security and column grants.",
           caption:
-            "The same claim form adapts to a narrow screen, with customer navigation kept within reach.",
-        },
-        {
-          ...DocumentsDesktop,
-          alt: "Desktop lease documents page with document groups and download controls.",
-          caption:
-            "Customers can find lease documents by type and download them directly from the portal.",
+            "Requests pass through the visitor gate, role and ownership checks, and database policies. The visitor gate does not grant an application role.",
         },
       ],
       subsections: [
         {
-          title: "Keep the existing business data where it belonged",
+          title: "Make permissions visible without trusting the interface",
           paragraphs: [
             `
-              Most of the information AutoDash needed already lived in the LeaseCore MSSQL database. 
-              Rather than introduce a third database and another synchronisation problem, I added portal-owned 
-              tables for identities, MFA, preferences and activity alongside the existing lease data. 
-              The Node.js API exposed controlled operations and reused legacy stored procedures where they remained necessary. 
-              This kept the legacy dependency explicit; it did not remove all of its testing limitations.
+              The interface exposes actions appropriate to each account, but Next.js Route Handlers
+              independently verify the access-gate session, authenticated Supabase user, application role,
+              request data, ownership and permitted status transitions. A student’s record lookup or
+              mutation is scoped to both the consultation ID and their own user ID.
             `,
           ],
         },
         {
-          title: "Design around actual customer and staff behaviour",
+          title: "Enforce the same rules in the database",
           paragraphs: [
             `
-              I mapped the old database and application workflows, listened to customer calls and reviewed prototypes 
-              with directors, managers and frontline staff. Feedback shaped the budget breakdown, clearer transactions, 
-              downloadable documents and the self-service changes that had previously required manual support. 
-              I kept the first release focused on replacing the existing customer journey rather than rebuilding 
-              internal lease management.
+              PostgreSQL row-level security limits students to their own rows and gives administrators read-only access.
+              Column grants prevent callers from changing ownership or protected lifecycle fields;
+              triggers enforce status rules. Students cancel consultations by changing their status, not deleting records.
+              The database controls are deliberate protection beneath the API checks.
             `,
           ],
         },
         {
-          title: "Deliver and operate the replacement",
+          title: "Test denial, not just happy paths",
           paragraphs: [
             `
-              I built the React client and the Express API in TypeScript, 
-              implemented email-based sign-in, MFA and authorisation, and prepared the customer migration. 
-              Docker, GitHub Actions, Azure Bicep, staging, Sentry and Grafana supported deployment and production 
-              troubleshooting. Employees with active leases tested the live journey before customer cutover.
+              Route tests check unauthenticated, wrong-role and cross-student requests. SQL tests exercise row policies,
+              restricted columns and forbidden lifecycle changes under authenticated database roles.
+              A container-stage harness applies real migrations and exercises the assembled production image.
+            `,
+          ],
+        },
+        {
+          title: "Make the demo easy to review",
+          paragraphs: [
+            `
+              A separate invitation gate limits access to the shared demo accounts without granting an application role.
+              The reviewer can choose either student or the read-only administrator, try a permitted action,
+              then see the corresponding forbidden access fail. Docker, GitHub Actions, Bicep, Azure Container Apps
+              and Key Vault-backed secrets make delivery and infrastructure inspectable too.
             `,
           ],
         },
@@ -119,39 +123,37 @@ export default {
       title: "The result",
       paragraphs: [
         `
-          AutoDash went into production on 14 November 2024 and supported the migration of more than 5,000 customers. 
-          Customers gained current lease information, more understandable budgets, documents and self-service account changes. 
-          Staff reported far fewer calls about forgotten usernames and routine profile updates.
-        `,
-        `
-          The key architectural outcome was the separation of public customer access from the older portal while keeping 
-          the internal lease-management (LeaseCore) platform in service.
+          The result is a focused demonstration of working code: an employer can compare what different accounts
+          can see and change, then trace the same rule through the route handler, SQL policy, automated test and
+          deployment configuration. It is a personal demonstration, not a claim of production customer adoption
+          or an externally audited security product.
         `,
       ],
     },
   ],
   technologies: [
-    { label: "Client", value: "React, TypeScript, Redux, Material UI" },
-    { label: "API", value: "Node.js, TypeScript, Express, REST" },
     {
-      label: "Data",
-      value: "MSSQL, existing stored procedures, targeted indexing",
+      label: "Application",
+      value: "Next.js, React, TypeScript, Tailwind CSS, Valibot",
     },
-    { label: "Security", value: "MFA, Argon2, step-up authentication" },
+    {
+      label: "Data and identity",
+      value: "Supabase Auth, PostgreSQL, row-level security",
+    },
+    {
+      label: "Testing",
+      value: "Route-handler tests, SQL policy tests, container integration",
+    },
     {
       label: "Delivery",
-      value: "Docker, GitHub Actions, Azure, Bicep, Sentry, Grafana",
+      value: "Docker, GitHub Actions, Bicep, Azure Container Apps, Key Vault",
     },
   ],
+  repoUrl: "https://github.com/BraddlesUnravels/access-control-demo",
   related: [
-    { label: "Customer migration", href: "/projects/customer-migration/" },
     {
       label: "Step-up authentication",
       href: "/projects/step-up-authentication/",
-    },
-    {
-      label: "On-demand balances",
-      href: "/projects/lease-balance-calculation/",
     },
   ],
 } satisfies CaseStudy;

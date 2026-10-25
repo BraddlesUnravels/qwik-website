@@ -68,7 +68,7 @@ jobs:
           exit 1
 
       # HTTP checks mirror IaC deploy-workload-release.sh verify for qwik-website:
-      # GET /health -> 200, GET / -> 200, GET /work/access-control-demo -> 200.
+      # GET /health -> 200, GET / -> 200, GET /projects/access-control-demo -> 200.
       - name: Stage 1 — Smoke test the container
         run: |
           set -euo pipefail
@@ -102,7 +102,7 @@ jobs:
           fi
 
           # Qwik City uses trailingSlash: false; bare paths are canonical (slash forms 301).
-          study_code="$(curl -sS -o /tmp/scw-live-study -w '%{http_code}' "${url}/work/access-control-demo")"
+          study_code="$(curl -sS -o /tmp/scw-live-study -w '%{http_code}' "${url}/projects/access-control-demo")"
           if [[ "${study_code}" != '200' ]]; then
             echo "Case study expected 200, got ${study_code}" >&2
             docker compose -f "$COMPOSE_FILE" logs website
