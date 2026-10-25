@@ -1,5 +1,5 @@
-<svg viewBox="0 0 68 68" width="20" height="20" xmlns="http://www.w3.org/2000/svg" class="logoseek" role="img" aria-label="Seek Logo">
-	<path fill="currentColor" class="logoseek" 
+<svg viewBox="0 0 68 68" height="100%" xmlns="http://www.w3.org/2000/svg" class="logoseek">
+	<path fill="#a1a1aa" class="logoseek" 
 		d="M34.015,1.51c-17.952,0-32.506,14.552-32.506,32.507c0,17.952,14.554,32.505,32.506,32.505
 		c17.958,0,32.508-14.553,32.508-32.505C66.523,16.062,51.972,1.51,34.015,1.51z M8.262,41.733c-0.281,0-0.511-0.226-0.511-0.504
 		c0-0.281,0.229-0.511,0.511-0.511c0.278,0,0.504,0.229,0.504,0.511C8.766,41.508,8.541,41.733,8.262,41.733z M8.262,34.907
