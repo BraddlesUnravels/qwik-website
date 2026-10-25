@@ -19,12 +19,12 @@ export const navLinks: NavLink[] = [
   },
   {
     label: "Projects",
-    href: "/#selected-work",
-    type: "link",
+    href: "/#selected-projects",
+    type: "anchor",
   },
   {
     label: "Approach",
-    href: "/about/commercial-engineering",
+    href: "/about/approach",
     type: "link",
   },
   {

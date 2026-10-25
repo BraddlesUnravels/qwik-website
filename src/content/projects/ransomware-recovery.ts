@@ -2,7 +2,7 @@ import type { CaseStudy } from "../types";
 
 export default {
   slug: "ransomware-recovery",
-  path: "/work/ransomware-recovery/",
+  path: "/projects/ransomware-recovery",
   category: "Incident response",
   title: "Restoring critical systems after a ransomware incident",
   description: `
@@ -179,7 +179,7 @@ export default {
   related: [
     {
       label: "LeaseTrack customer portal",
-      href: "/work/customer-finance-portal/",
+      href: "/projects/customer-finance-portal/",
     },
   ],
 } satisfies CaseStudy;

@@ -4,8 +4,8 @@ import LeaseCalculator from "~/media/site-rebuild/company-website-lease-calculat
 import EmployeeEnquiry from "~/media/site-rebuild/company-contact-form-employee.png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
 
 export default {
-  slug: "qwik-hubspot",
-  path: "/work/qwik-hubspot/",
+  slug: "site-rebuild-with-intergration-hubspot",
+  path: "/projects/site-rebuild-with-intergration-hubspot",
   category: "Web development and CRM automation",
   title: "Rebuilding a WordPress site with HubSpot intergration",
   description: `
@@ -136,6 +136,9 @@ export default {
     },
   ],
   related: [
-    { label: "CRM legacy integration", href: "/work/crm-legacy-integration/" },
+    {
+      label: "CRM legacy integration",
+      href: "/projects/crm-legacy-integration/",
+    },
   ],
 } satisfies CaseStudy;

@@ -2,7 +2,7 @@ import type { CaseStudy } from "../types";
 
 export default {
   slug: "crm-legacy-integration",
-  path: "/work/crm-legacy-integration/",
+  path: "/projects/crm-legacy-integration/",
   category: "Business systems integration",
   title: "Connecting the lead-to-lease journey across three systems",
   description: `
@@ -129,6 +129,6 @@ export default {
   ],
   related: [
     { label: "Commercial engineering", href: "/about/commercial-engineering/" },
-    { label: "Qwik and HubSpot", href: "/work/qwik-hubspot/" },
+    { label: "Qwik and HubSpot", href: "/projects/qwik-hubspot/" },
   ],
 } satisfies CaseStudy;

@@ -5,8 +5,8 @@ type StudyModule = { default: CaseStudy };
 type StudyLoader = () => Promise<StudyModule>;
 
 const studyModules = import.meta.glob<StudyModule>([
-  "./studies/*.ts",
-  "!./studies/commercial-engineering.ts",
+  "./projects/*.ts",
+  "!./about/approach.ts",
 ]);
 
 const loadersBySlug = Object.fromEntries(

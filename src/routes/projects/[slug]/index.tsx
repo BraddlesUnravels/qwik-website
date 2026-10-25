@@ -126,6 +126,6 @@ export const head: DocumentHead = ({ params, resolveValue }) => {
     : createSeoHead({
         title: "Case study not found",
         description: "The requested portfolio case study could not be found.",
-        path: `/work/${params.slug}/`,
+        path: `/projects/${params.slug}/`,
       });
 };

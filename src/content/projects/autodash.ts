@@ -4,8 +4,8 @@ import ReimbursementMobile from "~/media/autodash/Reimb_Page_Mobile(redacted).pn
 import DocumentsDesktop from "~/media/autodash/Lease_Docx_Page_Desktop(redacted).png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
 
 export default {
-  slug: "customer-finance-portal",
-  path: "/work/customer-finance-portal/",
+  slug: "autodash",
+  path: "/projects/autodash",
   category: "Full-stack product delivery",
   title: "AutoDash: a new portal around a legacy lease platform",
   description: `
@@ -24,7 +24,7 @@ export default {
       ...ReimbursementDesktop,
       alt: "Desktop reimbursement page with a claim form and supporting-file upload area.",
       caption:
-        "The reimbursement journey brings the claim form and supporting-file upload together.",
+        "Reimbursements brings the claim form and supporting-file upload together.",
     },
   ],
   metrics: [

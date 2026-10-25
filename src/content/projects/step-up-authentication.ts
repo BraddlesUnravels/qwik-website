@@ -2,7 +2,7 @@ import type { CaseStudy } from "../types";
 
 export default {
   slug: "step-up-authentication",
-  path: "/work/step-up-authentication/",
+  path: "/projects/step-up-authentication",
   category: "Application security",
   title: "Step-up authentication without interrupting routine portal use",
   description:
@@ -116,8 +116,8 @@ export default {
   related: [
     {
       label: "LeaseTrack customer portal",
-      href: "/work/customer-finance-portal/",
+      href: "/projects/customer-finance-portal",
     },
-    { label: "Customer migration", href: "/work/customer-migration/" },
+    { label: "Customer migration", href: "/projects/customer-migration/" },
   ],
 } satisfies CaseStudy;

@@ -4,7 +4,7 @@ import { navLinks } from "~/lib/site-link-sets";
 
 const anchorContact =
   "rounded-full border border-zinc-700 px-4 py-2 text-zinc-100 hover:border-zinc-500";
-const anchorDownload =
+const anchorlink =
   "hidden items-center gap-1 text-zinc-400 hover:text-zinc-100 sm:flex sm:flex-row";
 
 export default component$(() => (
@@ -15,14 +15,18 @@ export default component$(() => (
   >
     {navLinks.map((link) => {
       const Icon = link.icon;
-      const isAnchor = link.type === "anchor";
-      return isAnchor || link.download ? (
+      const isContactButton =
+        link.type === "anchor" && link.label === "Contact";
+      const isResumeDownload = link.download && link.label === "Résumé";
+      const projectsLink = link.href === "/#selected-projects";
+
+      return isContactButton || isResumeDownload || projectsLink ? (
         <a
           aria-label={link.label}
           key={link.href}
           href={link.href}
           download={link.download}
-          class={isAnchor && !link.download ? anchorContact : anchorDownload}
+          class={isContactButton ? anchorContact : anchorlink}
         >
           <span>{link.label}</span>
           {Icon && <Icon class="h-4 w-4" aria-hidden="true" />}

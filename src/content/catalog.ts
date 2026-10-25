@@ -3,8 +3,8 @@ import type { CaseStudySummary } from "./types";
 // Order reflects the recommended work-page reading path.
 export const caseStudySummaries: CaseStudySummary[] = [
   {
-    slug: "customer-finance-portal",
-    path: "/work/customer-finance-portal/",
+    slug: "autodash",
+    path: "/projects/autodash",
     category: "Full-stack product delivery",
     title: "LeaseTrack: a new portal around a legacy lease platform",
     description:
@@ -14,7 +14,7 @@ export const caseStudySummaries: CaseStudySummary[] = [
   },
   {
     slug: "access-control-demo",
-    path: "/work/access-control-demo/",
+    path: "/projects/access-control-demo",
     category: "Inspectable full-stack application",
     title: "Access Control Demo: security you can inspect",
     description:
@@ -24,7 +24,7 @@ export const caseStudySummaries: CaseStudySummary[] = [
   },
   {
     slug: "lease-balance-calculation",
-    path: "/work/lease-balance-calculation/",
+    path: "/projects/lease-balance-calculation",
     category: "Legacy modernisation",
     title: "Making lease balances available without a 34-minute lockout",
     description:
@@ -34,7 +34,7 @@ export const caseStudySummaries: CaseStudySummary[] = [
   },
   {
     slug: "crm-legacy-integration",
-    path: "/work/crm-legacy-integration/",
+    path: "/projects/crm-legacy-integration",
     category: "Business systems integration",
     title: "Connecting the lead-to-lease journey across three systems",
     description:
@@ -43,8 +43,8 @@ export const caseStudySummaries: CaseStudySummary[] = [
     evidence: ["PipelineAxis, PackEdge, LeaseCore", "–9 points at first"],
   },
   {
-    slug: "qwik-hubspot",
-    path: "/work/qwik-hubspot/",
+    slug: "site-rebuild",
+    path: "/projects/site-rebuild",
     category: "Web development and CRM automation",
     title: "Rebuilding a WordPress site and connecting leads to HubSpot",
     description:
@@ -53,8 +53,8 @@ export const caseStudySummaries: CaseStudySummary[] = [
     evidence: ["3 months", "100 in 3 categories"],
   },
   {
-    slug: "customer-migration",
-    path: "/work/customer-migration/",
+    slug: "autodash-migration",
+    path: "/projects/autodash-migration",
     category: "Identity and migration",
     title: "Moving 5,000+ accounts without a blanket password reset",
     description:
@@ -64,7 +64,7 @@ export const caseStudySummaries: CaseStudySummary[] = [
   },
   {
     slug: "step-up-authentication",
-    path: "/work/step-up-authentication/",
+    path: "/projects/step-up-authentication",
     category: "Application security",
     title: "Step-up authentication without interrupting routine portal use",
     description:
@@ -74,7 +74,7 @@ export const caseStudySummaries: CaseStudySummary[] = [
   },
   {
     slug: "ransomware-recovery",
-    path: "/work/ransomware-recovery/",
+    path: "/projects/ransomware-recovery",
     category: "Incident response",
     title: "Helping restore critical systems after a ransomware incident",
     description:
@@ -83,8 +83,8 @@ export const caseStudySummaries: CaseStudySummary[] = [
     evidence: ["Containment", "Parallel workstreams"],
   },
   {
-    slug: "commercial-engineering",
-    path: "/about/commercial-engineering/",
+    slug: "/about-approach",
+    path: "/about/about-approach",
     category: "How I work",
     title: "What sales leadership taught me about building software",
     description:
@@ -95,8 +95,8 @@ export const caseStudySummaries: CaseStudySummary[] = [
 ];
 
 export const commercialEngineeringSummary: CaseStudySummary = {
-  slug: "commercial-engineering",
-  path: "/about/commercial-engineering/",
+  slug: "/about-approach",
+  path: "/about/about-approach",
   category: "How I work",
   title: "What sales leadership taught me about building software",
   description:

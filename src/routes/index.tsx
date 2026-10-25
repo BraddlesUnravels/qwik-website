@@ -26,7 +26,7 @@ export default component$(() => {
       <section>
         <div class="mx-auto w-full max-w-7xl px-5 py-20 sm:px-8 lg:px-10 lg:py-32">
           <div
-            id="selected-work"
+            id="selected-projects"
             class="flex scroll-mt-24 flex-col gap-5 sm:flex-row sm:items-end sm:justify-between"
           >
             <div>

@@ -5,9 +5,9 @@ import DocumentsDesktop from "~/media/autodash/Lease_Docx_Page_Desktop(redacted)
 
 export default {
   slug: "customer-finance-portal",
-  path: "/work/customer-finance-portal/",
+  path: "/projects/customer-finance-portal",
   category: "Full-stack product delivery",
-  title: "LeaseTrack: a new portal around a legacy lease platform",
+  title: "AutoDash: a new portal around a legacy lease platform",
   description: `
     I built a customer finance portal that let the business withdraw public access 
     to an ageing platform without retiring the system it still depended on.
@@ -15,7 +15,7 @@ export default {
   introduction: `
     The business needed to take a vulnerable legacy customer portal offline, 
     but the same platform (LeaseCore) held the lease data and financial processes 
-    staff relied on every day. I owned the delivery of LeaseTrack, a replacement 
+    staff relied on every day. I owned the delivery of AutoDash, a replacement 
     customer-facing application that kept those internal processes available.
   `,
   featured: true,
@@ -82,7 +82,7 @@ export default {
           title: "Keep the existing business data where it belonged",
           paragraphs: [
             `
-              Most of the information LeaseTrack needed already lived in the LeaseCore MSSQL database. 
+              Most of the information AutoDash needed already lived in the LeaseCore MSSQL database. 
               Rather than introduce a third database and another synchronisation problem, I added portal-owned 
               tables for identities, MFA, preferences and activity alongside the existing lease data. 
               The Node.js API exposed controlled operations and reused legacy stored procedures where they remained necessary. 
@@ -119,7 +119,7 @@ export default {
       title: "The result",
       paragraphs: [
         `
-          LeaseTrack went into production on 14 November 2024 and supported the migration of more than 5,000 customers. 
+          AutoDash went into production on 14 November 2024 and supported the migration of more than 5,000 customers. 
           Customers gained current lease information, more understandable budgets, documents and self-service account changes. 
           Staff reported far fewer calls about forgotten usernames and routine profile updates.
         `,
@@ -144,8 +144,14 @@ export default {
     },
   ],
   related: [
-    { label: "Customer migration", href: "/work/customer-migration/" },
-    { label: "Step-up authentication", href: "/work/step-up-authentication/" },
-    { label: "On-demand balances", href: "/work/lease-balance-calculation/" },
+    { label: "Customer migration", href: "/projects/customer-migration/" },
+    {
+      label: "Step-up authentication",
+      href: "/projects/step-up-authentication/",
+    },
+    {
+      label: "On-demand balances",
+      href: "/projects/lease-balance-calculation/",
+    },
   ],
 } satisfies CaseStudy;

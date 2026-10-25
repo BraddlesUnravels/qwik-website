@@ -1,5 +1,4 @@
 import { component$ } from "@builder.io/qwik";
-import { Typography } from "./typography";
 import type { CaseStudyImage } from "~/content/types";
 
 type ImageWrapperProps = {
@@ -28,8 +27,8 @@ export const ImageWrapper = component$<ImageWrapperProps>(
           class="bg-canvas-soft block h-auto max-w-full rounded-xl border border-white/10"
         />
       </div>
-      <figcaption class="text-ink-muted mt-3 max-w-prose text-[0.875rem] leading-relaxed">
-        <Typography variant="small">{image.caption}</Typography>{" "}
+      <figcaption class="text-ink-muted mt-3 max-w-prose text-sm leading-tight">
+        {image.caption}{" "}
         <a
           href={image.src}
           target="_blank"
@@ -37,8 +36,7 @@ export const ImageWrapper = component$<ImageWrapperProps>(
           class="text-ink-soft whitespace-nowrap underline decoration-white/25 underline-offset-4 hover:decoration-current"
           aria-label={`View full-size image: ${image.alt} (opens in a new tab)`}
         >
-          <Typography variant="small">View full size</Typography>
-          <span aria-hidden="true">↗</span>
+          View full size <span>↗</span>
         </a>
       </figcaption>
     </figure>

@@ -1,8 +1,8 @@
 import type { CaseStudy } from "../types";
 
 export default {
-  slug: "customer-migration",
-  path: "/work/customer-migration/",
+  slug: "autodash-migration",
+  path: "/projects/autodash-migration",
   category: "Identity and migration",
   title: "Moving 5,000+ accounts without a disruptive password reset",
   description: `
@@ -126,8 +126,11 @@ export default {
   related: [
     {
       label: "LeaseTrack customer portal",
-      href: "/work/customer-finance-portal/",
+      href: "/projects/customer-finance-portal/",
     },
-    { label: "Step-up authentication", href: "/work/step-up-authentication/" },
+    {
+      label: "Step-up authentication",
+      href: "/projects/step-up-authentication/",
+    },
   ],
 } satisfies CaseStudy;
