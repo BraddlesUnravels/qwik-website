@@ -1,4 +1,4 @@
-import type { CaseStudy } from "../types";
+import type { Project } from "../types";
 
 export default {
   slug: "ransomware-recovery",
@@ -182,4 +182,4 @@ export default {
       href: "/projects/customer-finance-portal/",
     },
   ],
-} satisfies CaseStudy;
+} satisfies Project;

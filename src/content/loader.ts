@@ -1,25 +1,25 @@
-import type { CaseStudy } from "./types";
-import { caseStudySummaries } from "./catalog";
+import type { Project } from "./types";
+import { projectSummaries } from "./catalog";
 
-type StudyModule = { default: CaseStudy };
-type StudyLoader = () => Promise<StudyModule>;
+type ProjectModule = { default: Project };
+type ProjectLoader = () => Promise<ProjectModule>;
 
-const studyModules = import.meta.glob<StudyModule>([
+const projectModules = import.meta.glob<ProjectModule>([
   "./projects/*.ts",
   "!./about/approach.ts",
 ]);
 
 const loadersBySlug = Object.fromEntries(
-  Object.entries(studyModules).map(([path, loader]) => {
+  Object.entries(projectModules).map(([path, loader]) => {
     const filename = path.split("/").at(-1) ?? "";
-    return [filename.replace(/\.ts$/, ""), loader as StudyLoader];
+    return [filename.replace(/\.ts$/, ""), loader];
   }),
-) as Record<string, StudyLoader>;
+) as Record<string, ProjectLoader>;
 
-const workSlugs = new Set(caseStudySummaries.map(({ slug }) => slug));
+const workSlugs = new Set(projectSummaries.map(({ slug }) => slug));
 
-export const loadCaseStudy = async (slug: string) => {
-  if (!workSlugs.has(slug)) return undefined;
+export const loadProject = async (slug: string) => {
+  if (!workSlugs.has(slug)) return;
   const loader = loadersBySlug[slug];
   return loader ? (await loader()).default : undefined;
 };

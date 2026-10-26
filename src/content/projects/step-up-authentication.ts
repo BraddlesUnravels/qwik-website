@@ -1,4 +1,6 @@
-import type { CaseStudy } from "../types";
+import type { Project } from "../types";
+import BankingDesktop from "~/media/autodash/Bank_Account_Page_Desktop(redacted).png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
+import StepUpFlow from "~/media/diagrams/step-up-selected-action.svg?url&no-inline";
 
 export default {
   slug: "step-up-authentication",
@@ -13,6 +15,14 @@ export default {
     I designed a second check for actions where a compromised session would have greater consequences.
     `,
   featured: false,
+  images: [
+    {
+      ...BankingDesktop,
+      alt: "AutoDash bank-account page with account details and update controls.",
+      caption:
+        "Bank-account changes are one of the portal actions covered by fresh verification. This capture shows the account page, not the verification dialog.",
+    },
+  ],
   metrics: [
     { label: "Approval window", value: "5 minutes" },
     { label: "Challenge", value: "6-digit code" },
@@ -41,6 +51,17 @@ export default {
     },
     {
       title: "How it worked",
+      images: [
+        {
+          src: StepUpFlow,
+          w: 700,
+          h: 1732,
+          tone: "diagram",
+          alt: "Selected profile or banking action held for a six-digit challenge, followed by server checks before the business handler.",
+          caption:
+            "The selected profile and banking flow holds the action during verification. The server checks route coverage, session proof and expiry before the business handler runs.",
+        },
+      ],
       subsections: [
         {
           title: "Classify protected requests on the server",
@@ -115,9 +136,9 @@ export default {
   ],
   related: [
     {
-      label: "LeaseTrack customer portal",
-      href: "/projects/customer-finance-portal",
+      label: "AutoDash customer portal",
+      href: "/projects/autodash",
     },
-    { label: "Customer migration", href: "/projects/customer-migration/" },
+    { label: "Customer migration", href: "/projects/autodash-migration/" },
   ],
-} satisfies CaseStudy;
+} satisfies Project;

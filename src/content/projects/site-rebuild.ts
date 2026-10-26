@@ -1,4 +1,4 @@
-import type { CaseStudy } from "../types";
+import type { Project } from "../types";
 import WebsiteLanding from "~/media/site-rebuild/company-website-landing.png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
 import LeaseCalculator from "~/media/site-rebuild/company-website-lease-calculator-monthly.png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
 import EmployeeEnquiry from "~/media/site-rebuild/company-contact-form-employee.png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
@@ -141,4 +141,4 @@ export default {
       href: "/projects/crm-legacy-integration/",
     },
   ],
-} satisfies CaseStudy;
+} satisfies Project;

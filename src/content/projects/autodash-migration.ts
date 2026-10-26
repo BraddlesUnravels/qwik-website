@@ -1,4 +1,5 @@
-import type { CaseStudy } from "../types";
+import type { Project } from "../types";
+import MigrationVersions from "~/media/diagrams/migration-versions.svg?url&no-inline";
 
 export default {
   slug: "autodash-migration",
@@ -52,6 +53,17 @@ export default {
     },
     {
       title: "How the migration worked",
+      images: [
+        {
+          src: MigrationVersions,
+          w: 1077,
+          h: 762,
+          tone: "diagram",
+          alt: "Comparison of authentication paths in the 28 October 2024 and 28 January 2025 source snapshots.",
+          caption:
+            "The two dated source snapshots show different authentication paths. This comparison preserves their version differences; it does not establish which path ran at customer cutover.",
+        },
+      ],
       subsections: [
         {
           title: "Confirm the legacy hash rather than guess",
@@ -125,12 +137,12 @@ export default {
   ],
   related: [
     {
-      label: "LeaseTrack customer portal",
-      href: "/projects/customer-finance-portal/",
+      label: "AutoDash customer portal",
+      href: "/projects/autodash/",
     },
     {
       label: "Step-up authentication",
       href: "/projects/step-up-authentication/",
     },
   ],
-} satisfies CaseStudy;
+} satisfies Project;

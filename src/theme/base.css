@@ -26,6 +26,40 @@
 }
 
 @layer utilities {
+  .project-image[data-tone="dark"] {
+    filter: brightness(1.35) contrast(1);
+    border-color: color-mix(
+      in oklab,
+      var(--color-emerald-400) 25%,
+      transparent
+    );
+  }
+
+  .project-image[data-tone="diagram"] {
+    border-color: color-mix(
+      in oklab,
+      var(--color-emerald-400) 25%,
+      transparent
+    );
+    background-color: rgb(7 10 16 / 0.5);
+  }
+
+  .card-bg {
+    background: oklab(14.4273% -0.00196 -0.014133 / 0.5);
+  }
+
+  .emerald-text {
+    color: var(--color-emerald-400);
+  }
+
+  .emerald-border {
+    border-color: color-mix(
+      in oklab,
+      var(--color-emerald-400) 25%,
+      transparent
+    );
+  }
+
   @keyframes cursor-blink {
     0%,
     49% {

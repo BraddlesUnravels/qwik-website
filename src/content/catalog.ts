@@ -1,7 +1,7 @@
-import type { CaseStudySummary } from "./types";
+import type { ProjectSummary } from "./types";
 
 // Order reflects the recommended work-page reading path.
-export const caseStudySummaries: CaseStudySummary[] = [
+export const projectSummaries: ProjectSummary[] = [
   {
     slug: "autodash",
     path: "/projects/autodash",
@@ -82,21 +82,11 @@ export const caseStudySummaries: CaseStudySummary[] = [
     featured: false,
     evidence: ["Containment", "Parallel workstreams"],
   },
-  {
-    slug: "/about-approach",
-    path: "/about/about-approach",
-    category: "How I work",
-    title: "What sales leadership taught me about building software",
-    description:
-      "I use operational questions, workflow mapping and commercial context to work out what software actually needs to change.",
-    featured: false,
-    evidence: ["Fix the reports", "Missing lead data"],
-  },
 ];
 
-export const commercialEngineeringSummary: CaseStudySummary = {
-  slug: "/about-approach",
-  path: "/about/about-approach",
+export const engineeringApproach: ProjectSummary = {
+  slug: "about-approach",
+  path: "/about/approach",
   category: "How I work",
   title: "What sales leadership taught me about building software",
   description:

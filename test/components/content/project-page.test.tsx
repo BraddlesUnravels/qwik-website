@@ -1,16 +1,16 @@
 import { createDOM } from "@builder.io/qwik/testing";
 import { renderToString } from "@builder.io/qwik/server";
 import { describe, expect, it } from "vitest";
-import { CaseStudyPage } from "~/components/content/case-study-page";
-import { CaseStudyRelatedLinks } from "~/components/content/related-links";
-import { CaseStudySection } from "~/components/content/section";
+import { ProjectPage } from "~/components/content/project-page";
+import { ProjectRelatedLinks } from "~/components/content/related-links";
+import { ProjectSection } from "~/components/content/section";
 import type {
-  CaseStudy,
-  CaseStudyImage,
-  CaseStudySection as SectionData,
+  Project,
+  ProjectImage,
+  ProjectSection as SectionData,
 } from "~/content/types";
 
-const leadImage: CaseStudyImage = {
+const leadImage: ProjectImage = {
   src: "/lead-1200.webp",
   srcset: "/lead-600.webp 600w, /lead-1200.webp 1200w",
   w: 1200,
@@ -18,7 +18,7 @@ const leadImage: CaseStudyImage = {
   alt: "Lead screenshot",
   caption: "A lead screenshot caption.",
 };
-const supportingImage: CaseStudyImage = {
+const supportingImage: ProjectImage = {
   src: "/supporting.webp",
   w: 400,
   h: 850,
@@ -26,9 +26,9 @@ const supportingImage: CaseStudyImage = {
   caption: "A supporting screenshot caption.",
 };
 
-const study: CaseStudy = {
+const project: Project = {
   slug: "fixture",
-  path: "/work/fixture/",
+  path: "/projects/fixture/",
   category: "Engineering",
   title: "Fixture study",
   description: "Fixture description",
@@ -45,11 +45,11 @@ const study: CaseStudy = {
   related: [],
 };
 
-describe("CaseStudySection", () => {
+describe("ProjectSection", () => {
   it("renders nested content with headings, bullets and ordered steps", async () => {
     const { screen, render } = await createDOM();
     await render(
-      <CaseStudySection
+      <ProjectSection
         index={2}
         section={{
           title: "Implementation",
@@ -86,30 +86,30 @@ describe("CaseStudySection", () => {
             subsections: [],
           }
         : { title: "Optional content" };
-    await render(<CaseStudySection section={section} index={0} />);
+    await render(<ProjectSection section={section} index={0} />);
     expect(screen.querySelectorAll("ul")).toHaveLength(0);
     expect(screen.querySelectorAll("ol")).toHaveLength(0);
     expect(screen.querySelectorAll("h3")).toHaveLength(0);
   });
 });
 
-describe("CaseStudyRelatedLinks", () => {
+describe("ProjectRelatedLinks", () => {
   it.each([
     {
       links: [],
-      expectedHref: "/#selected-work",
-      expectedLabel: "View all case studies",
+      expectedHref: "/#selected-projects",
+      expectedLabel: "View all projects",
     },
     {
-      links: [{ label: "Migration", href: "/work/customer-migration/" }],
-      expectedHref: "/work/customer-migration/",
+      links: [{ label: "Migration", href: "/projects/customer-migration/" }],
+      expectedHref: "/projects/customer-migration/",
       expectedLabel: "Migration",
     },
   ])(
     "renders the appropriate destination: $expectedLabel",
     async ({ links, expectedHref, expectedLabel }) => {
       const { screen, render } = await createDOM();
-      await render(<CaseStudyRelatedLinks links={links} />);
+      await render(<ProjectRelatedLinks links={links} />);
       expect(screen.querySelectorAll("a")).toHaveLength(1);
       expect(screen.querySelector("a")?.getAttribute("href")).toBe(
         expectedHref,
@@ -119,14 +119,14 @@ describe("CaseStudyRelatedLinks", () => {
   );
 });
 
-describe("CaseStudyPage", () => {
+describe("ProjectPage", () => {
   it("server-renders image metadata and the forwarded action in the header", async () => {
     const { html } = await renderToString(
-      <CaseStudyPage study={study}>
+      <ProjectPage project={project}>
         <button id="server-action" q:slot="actions">
           Open demo
         </button>
-      </CaseStudyPage>,
+      </ProjectPage>,
       { containerTagName: "div" },
     );
     const header = html.slice(
@@ -140,7 +140,7 @@ describe("CaseStudyPage", () => {
 
   it("places images with their owning content and preserves responsive metadata", async () => {
     const { screen, render } = await createDOM();
-    await render(<CaseStudyPage study={study} />);
+    await render(<ProjectPage project={project} />);
     const header = screen.querySelector("header");
     const lead = header?.querySelector("figure img");
     expect(lead?.getAttribute("srcset")).toBe(leadImage.srcset);
@@ -167,8 +167,12 @@ describe("CaseStudyPage", () => {
   it("renders a text-only study without media or empty lists", async () => {
     const { screen, render } = await createDOM();
     await render(
-      <CaseStudyPage
-        study={{ ...study, images: undefined, sections: [{ title: "Text" }] }}
+      <ProjectPage
+        project={{
+          ...project,
+          images: undefined,
+          sections: [{ title: "Text" }],
+        }}
       />,
     );
     expect(screen.querySelectorAll("figure")).toHaveLength(0);

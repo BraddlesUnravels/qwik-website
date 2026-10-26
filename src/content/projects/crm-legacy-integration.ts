@@ -1,4 +1,4 @@
-import type { CaseStudy } from "../types";
+import type { Project } from "../types";
 
 export default {
   slug: "crm-legacy-integration",
@@ -131,4 +131,4 @@ export default {
     { label: "Commercial engineering", href: "/about/commercial-engineering/" },
     { label: "Qwik and HubSpot", href: "/projects/qwik-hubspot/" },
   ],
-} satisfies CaseStudy;
+} satisfies Project;

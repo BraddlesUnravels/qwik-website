@@ -5,8 +5,8 @@ import {
   routeLoader$,
   type DocumentHead,
 } from "@builder.io/qwik-city";
-import { CaseStudyPage } from "~/components/content/case-study-page";
-import { loadCaseStudy } from "~/content/loader";
+import { ProjectPage } from "~/components/content/project-page";
+import { loadProject } from "~/content/loader";
 import { resolveAccessLink } from "~/lib/demo-access";
 import { createSeoHead } from "~/lib/seo";
 
@@ -23,15 +23,15 @@ const twButton = [
   "motion-reduce:transform-none motion-reduce:transition-none",
 ];
 
-export const useCaseStudy = routeLoader$(async ({ params, status }) => {
-  const study = await loadCaseStudy(params.slug);
+export const useProject = routeLoader$(async ({ params, status }) => {
+  const project = await loadProject(params.slug);
 
-  if (!study) {
+  if (!project) {
     status(404);
     return null;
   }
 
-  return study;
+  return project;
 });
 
 // Builds the demo link (with access code) on the server only, then redirects.
@@ -58,24 +58,24 @@ export const useDemoAccessRedirect = routeAction$(
 );
 
 export default component$(() => {
-  const study = useCaseStudy().value;
+  const project = useProject().value;
   const demoAccess = useDemoAccessRedirect();
 
-  if (!study) {
+  if (!project) {
     return (
       <main class="mx-auto flex min-h-[65vh] w-full max-w-3xl flex-col justify-center px-5 py-20 sm:px-8">
         <p class="text-brand-bright font-mono text-xs font-semibold tracking-[0.16em] uppercase">
           404
         </p>
         <h1 class="font-display text-ink mt-5 text-5xl font-semibold tracking-tighter">
-          Case study not found
+          Project not found
         </h1>
         <p class="text-ink-soft mt-5 text-lg">
-          The requested case study does not exist or has moved.
+          The requested project does not exist or has moved.
         </p>
         <a
           class="bg-ink text-canvas mt-8 w-fit rounded-full px-5 py-3 text-sm font-semibold"
-          href="/#selected-work"
+          href="/#selected-projects"
         >
           Return to selected work
         </a>
@@ -84,8 +84,8 @@ export default component$(() => {
   }
 
   return (
-    <CaseStudyPage study={study}>
-      {study.slug === DEMO_ACCESS_SLUG && (
+    <ProjectPage project={project}>
+      {project.slug === DEMO_ACCESS_SLUG && (
         <Form
           id="demo-access"
           q:slot="actions"
@@ -109,23 +109,23 @@ export default component$(() => {
           )}
         </Form>
       )}
-    </CaseStudyPage>
+    </ProjectPage>
   );
 });
 
 export const head: DocumentHead = ({ params, resolveValue }) => {
-  const study = resolveValue(useCaseStudy);
+  const project = resolveValue(useProject);
 
-  return study
+  return project
     ? createSeoHead({
-        title: study.title,
-        description: study.description,
-        path: study.path,
+        title: project.title,
+        description: project.description,
+        path: project.path,
         type: "article",
       })
     : createSeoHead({
-        title: "Case study not found",
-        description: "The requested portfolio case study could not be found.",
+        title: "Project not found",
+        description: "The requested portfolio project could not be found.",
         path: `/projects/${params.slug}/`,
       });
 };

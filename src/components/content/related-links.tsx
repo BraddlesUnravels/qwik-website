@@ -1,11 +1,11 @@
 import { component$ } from "@builder.io/qwik";
 import { Typography } from "../ui/typography";
-import type { CaseStudy } from "~/content/types";
+import type { Project } from "~/content/types";
 
-const fallback = [{ label: "View all case studies", href: "/#selected-work" }];
+const fallback = [{ label: "View all projects", href: "/#selected-projects" }];
 
-export const CaseStudyRelatedLinks = component$<{
-  links: CaseStudy["related"];
+export const ProjectRelatedLinks = component$<{
+  links: Project["related"];
 }>(({ links }) => (
   <footer class="bg-canvas-soft/70 border-t border-white/8">
     <div class="mx-auto w-full max-w-7xl px-5 py-16 sm:px-8 lg:px-10">
