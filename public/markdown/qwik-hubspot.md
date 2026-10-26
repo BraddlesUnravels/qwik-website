@@ -55,6 +55,6 @@ The change improved capture and visibility of leads; it was not measured as a ch
 - **CRM:** HubSpot API, UTM and referral attribution
 - **Delivery:** Azure; joint integration with blog developer
 
-## Related case studies
+## Related projects
 
-- [CRM legacy integration](/work/crm-legacy-integration/)
+- [CRM legacy integration](/projects/crm-legacy-integration/)

@@ -60,6 +60,6 @@ My contribution covered initial containment, evidence preservation, network and 
 - **Investigation:** Volatile memory capture, external incident-response support, 8Base / Phobos identification, examination of a compiled client
 - **Follow-up:** Remediation request for bundled credentials; Microsoft email scanning and detection request; employee and onboarding training; suspicious-email reporting inbox; authority to begin Azure migration
 
-## Related case studies
+## Related projects
 
-- [LeaseTrack customer portal](/work/customer-finance-portal/)
+- [AutoDash customer portal](/projects/autodash/)

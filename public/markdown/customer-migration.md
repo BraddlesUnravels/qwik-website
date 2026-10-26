@@ -45,7 +45,7 @@ This was a hybrid approach: account records moved ahead of release, while creden
 - **Data:** MSSQL, migration scripts
 - **Rollout:** Internal pilot, redirect, rollback preparation
 
-## Related case studies
+## Related projects
 
-- [LeaseTrack customer portal](/work/customer-finance-portal/)
-- [Step-up authentication](/work/step-up-authentication/)
+- [AutoDash customer portal](/projects/autodash/)
+- [Step-up authentication](/projects/step-up-authentication/)

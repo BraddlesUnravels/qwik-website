@@ -1,4 +1,4 @@
-import type { CaseStudy } from "../types";
+import type { Project } from "../types";
 
 export default {
   slug: "about-approach",
@@ -121,7 +121,7 @@ export default {
   related: [
     {
       label: "PipelineAxis CRM integration",
-      href: "/work/crm-legacy-integration/",
+      href: "/projects/crm-legacy-integration/",
     },
   ],
-} satisfies CaseStudy;
+} satisfies Project;

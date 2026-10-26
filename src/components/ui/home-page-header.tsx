@@ -2,11 +2,32 @@ import { component$, useSignal } from "@builder.io/qwik";
 import { TechnologyCarousel } from "~/components/ui/technology-carousel";
 import { Typography } from "~/components/ui/typography";
 
-export const MainPageHeadBanner = component$(() => {
+const twHeader = [
+  "relative display mx-auto flex w-full max-w-7xl flex-col px-5",
+  "py-0 max-lg:min-h-[calc(100svh-4.5rem)]",
+  "2xl:min-h-[calc(100svh-4.5rem)]",
+].join(" ");
+
+const twViewProjects = [
+  "pointer-events-auto absolute bottom-0 left-1/2",
+  "inline-flex -translate-x-1/2 items-center gap-2",
+  "rounded-full border border-emerald-400/30",
+  "bg-slate-950/90 px-5 py-3 text-sm font-medium text-emerald-300",
+  "shadow-lg transition-colors hover:bg-emerald-950",
+  "lg:bottom-5",
+].join(" ");
+
+// const twStickyAnchor = [
+//   "bottom-[calc(1.25rem_+_env(safe-area-inset-bottom,0px))]",
+//   // "sticky bottom-[calc(2.25rem+env(safe-area-inset-bottom,0px))]",
+//   "z-40 mt-auto h-0 shrink-0 lg:static lg:contents",
+// ].join(" ");
+
+export default component$(() => {
   const cursorDone = useSignal(false);
 
   return (
-    <div class="display mx-auto flex w-full max-w-7xl flex-col px-5 py-0 2xl:min-h-[calc(100svh-4.5rem)]">
+    <header class={twHeader}>
       <div id="header-intro" class="pt-5 lg:pt-10 2xl:pt-12">
         <Typography variant="eyebrow" tone="emerald">
           Bradley Laskey · Full Stack Developer
@@ -59,13 +80,30 @@ export const MainPageHeadBanner = component$(() => {
         </div>
       </section>
 
-      <a
-        href="#selected-projects"
-        class="absolute bottom-5 left-1/2 inline-flex -translate-x-1/2 items-center gap-2 rounded-full border border-emerald-400/30 bg-slate-950/90 px-5 py-3 text-sm font-medium text-emerald-300 shadow-lg transition-colors hover:bg-emerald-950"
+      <div
+        class={[
+          "pointer-events-none absolute inset-x-0 top-0 z-40",
+          "bottom-[calc(1.25rem+env(safe-area-inset-bottom,0px))]",
+          "lg:static lg:contents",
+        ].join(" ")}
       >
-        View projects
-        <span aria-hidden="true">&darr;</span>
-      </a>
-    </div>
+        <div
+          class={[
+            "sticky h-0 w-full",
+            "top-[calc(100dvh-1.25rem-env(safe-area-inset-bottom,0px))]",
+            "lg:static lg:contents",
+          ].join(" ")}
+        >
+          <a
+            id="view-projects-button"
+            href="#selected-projects"
+            class={twViewProjects}
+          >
+            View projects
+            <span aria-hidden="true">&darr;</span>
+          </a>
+        </div>
+      </div>
+    </header>
   );
 });

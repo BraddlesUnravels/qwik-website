@@ -1,4 +1,5 @@
 import { component$ } from "@builder.io/qwik";
+import { Link } from "@builder.io/qwik-city";
 import { Container } from "../ui/container";
 import DesktopNavMenu from "./desktop-nav-menu";
 import MobileNavMenu from "./mobile-nav-menu";
@@ -11,9 +12,12 @@ export default component$(() => {
     >
       <Container>
         <div class="flex min-h-20 items-center justify-between gap-6">
-          <a href="/" class="font-semibold tracking-tight text-zinc-100">
+          <Link
+            href="/"
+            class="font-semibold tracking-tight text-zinc-100 hover:text-emerald-400"
+          >
             BL
-          </a>
+          </Link>
 
           <DesktopNavMenu />
 

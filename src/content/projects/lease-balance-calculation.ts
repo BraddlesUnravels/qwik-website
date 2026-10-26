@@ -1,4 +1,7 @@
-import type { CaseStudy } from "../types";
+import type { Project } from "../types";
+import BalanceDesktop from "~/media/autodash/Lease_Detail_Page_Desktop(redacted).png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
+import BalanceMobile from "~/media/autodash/Lease_Detail_Page_Mobile(redacted).png?w=240;400&format=webp&quality=80&withoutEnlargement&as=img";
+import BalanceBoundary from "~/media/diagrams/balance-source-boundary.svg?url&no-inline";
 
 export default {
   slug: "lease-balance-calculation",
@@ -7,7 +10,7 @@ export default {
   title: "Making lease balances available without a 34-minute DB lockout",
   description: `
     I untangled a 12,000-line SQL calculation, separated the business rules 
-    and made individual lease balances available on demand.",
+    and made individual lease balances available on demand.
   `,
   introduction: `
     Checking one lease balance should not require recalculating every lease in the business. 
@@ -15,6 +18,14 @@ export default {
     34 minutes and left displayed balances out of date (stale) between runs.
   `,
   featured: true,
+  images: [
+    {
+      ...BalanceDesktop,
+      alt: "AutoDash lease-details page with a balance breakdown, budget indicators and transaction history.",
+      caption:
+        "The lease-details interface brings balances, budgets and transaction history into one view. The screenshot illustrates the interface, not calculation timing.",
+    },
+  ],
   metrics: [
     { label: "Legacy procedure", value: "12,000+ lines" },
     { label: "Old full batch", value: "~34 minutes" },
@@ -45,6 +56,16 @@ export default {
     },
     {
       title: "How I changed it",
+      images: [
+        {
+          src: BalanceBoundary,
+          w: 1017,
+          h: 358,
+          alt: "React lease-detail requests mapped to stored-procedure calls, with unavailable SQL bodies marked as an evidence boundary.",
+          caption:
+            "The diagram maps the application calls visible in the reviewed source. The stored-procedure bodies were unavailable in that source snapshot, so it does not verify the SQL refactor or timings described here.",
+        },
+      ],
       subsections: [
         {
           title: "Build a controlled investigation environment",
@@ -84,6 +105,14 @@ export default {
     },
     {
       title: "The result",
+      images: [
+        {
+          ...BalanceMobile,
+          alt: "Mobile AutoDash lease-details page showing the balance breakdown and budget indicators.",
+          caption:
+            "The mobile lease view presents the balance breakdown and budget indicators in a single column.",
+        },
+      ],
       paragraphs: [
         `
           Staff and customers could request an up-to-date individual balance without triggering a database-wide batch. 
@@ -109,8 +138,8 @@ export default {
   ],
   related: [
     {
-      label: "LeaseTrack customer portal",
-      href: "/projects/customer-finance-portal/",
+      label: "AutoDash customer portal",
+      href: "/projects/autodash/",
     },
   ],
-} satisfies CaseStudy;
+} satisfies Project;

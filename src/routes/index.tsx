@@ -3,25 +3,24 @@ import {
   FeaturedProjectCard,
   SupportingProjectCard,
 } from "~/components/content/project-card";
-import { MainPageHeadBanner } from "~/components/ui/home-page-header";
+import PageHeader from "~/components/ui/home-page-header";
 import { Typography } from "~/components/ui/typography";
-import { caseStudySummaries } from "~/content/catalog";
+import { projectSummaries } from "~/content/catalog";
 import { createSeoHead } from "~/lib/seo";
+import { MobileBackToTop } from "~/components/ui/mobile-back-to-top-button";
 
-const featuredStudies = caseStudySummaries
+const featuredProjects = projectSummaries
   .filter(({ featured }) => featured)
-  .map((study, index) => ({ study, index }));
+  .map((project, index) => ({ project, index }));
 
-const supportingStudies = caseStudySummaries
+const supportingProjects = projectSummaries
   .filter(({ featured }) => !featured)
-  .map((study, index) => ({ study, index }));
+  .map((project, index) => ({ project, index }));
 
 export default component$(() => {
   return (
     <main id="main-page-content">
-      <section class="relative isolate overflow-hidden">
-        <MainPageHeadBanner />
-      </section>
+      <PageHeader />
 
       <section>
         <div class="mx-auto w-full max-w-7xl px-5 py-20 sm:px-8 lg:px-10 lg:py-32">
@@ -41,10 +40,10 @@ export default component$(() => {
             </Typography>
           </div>
           <div class="mt-3 grid items-start gap-6 md:grid-cols-2">
-            {featuredStudies.map(({ study, index }) => (
+            {featuredProjects.map(({ project, index }) => (
               <FeaturedProjectCard
-                key={study.path}
-                study={study}
+                key={project.path}
+                project={project}
                 index={index}
               />
             ))}
@@ -52,10 +51,10 @@ export default component$(() => {
           <div class="mt-10">
             <Typography variant="eyebrow">Supporting work</Typography>
             <div class="mt-3 grid items-start gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {supportingStudies.map(({ study, index }) => (
+              {supportingProjects.map(({ project, index }) => (
                 <SupportingProjectCard
-                  key={study.path}
-                  study={study}
+                  key={project.path}
+                  project={project}
                   index={index}
                 />
               ))}
@@ -91,6 +90,7 @@ export default component$(() => {
           </div>
         </div>
       </section>
+      <MobileBackToTop />
     </main>
   );
 });

@@ -1,4 +1,4 @@
-export type CaseStudyMetric = {
+export type ProjectMetric = {
   label: string;
   value: string;
   description?: string;
@@ -13,27 +13,28 @@ export type OptimizedImage = {
   h: number;
 };
 
-export type CaseStudyImage = OptimizedImage & {
+export type ProjectImage = OptimizedImage & {
   alt: string;
   caption: string;
+  tone?: "dark" | "diagram";
 };
 
-export type CaseStudySubsection = {
+export type ProjectSubsection = {
   title: string;
   paragraphs?: string[];
   bullets?: string[];
   steps?: string[];
 };
 
-export type CaseStudySection = {
+export type ProjectSection = {
   title: string;
   paragraphs?: string[];
   bullets?: string[];
-  subsections?: CaseStudySubsection[];
-  images?: CaseStudyImage[];
+  subsections?: ProjectSubsection[];
+  images?: ProjectImage[];
 };
 
-export type CaseStudy = {
+export type Project = {
   slug: string;
   path: string;
   category: string;
@@ -41,22 +42,22 @@ export type CaseStudy = {
   description: string;
   introduction: string;
   featured: boolean;
-  metrics: CaseStudyMetric[];
-  images?: CaseStudyImage[];
-  sections: CaseStudySection[];
-  technologies: CaseStudyMetric[];
+  metrics: ProjectMetric[];
+  images?: ProjectImage[];
+  sections: ProjectSection[];
+  technologies: ProjectMetric[];
   lesson?: string;
   repoUrl?: string;
   related: Array<{ label: string; href: string }>;
 };
 
-export type CaseStudySummary = Pick<
-  CaseStudy,
+export type ProjectSummary = Pick<
+  Project,
   "slug" | "path" | "category" | "title" | "description" | "featured"
 > & {
   evidence: [string, string];
 };
 
-export const asStudy = (study: unknown): study is CaseStudy => {
-  return study !== null && typeof study === "object" && "title" in study;
+export const isProject = (value: unknown): value is Project => {
+  return value !== null && typeof value === "object" && "title" in value;
 };

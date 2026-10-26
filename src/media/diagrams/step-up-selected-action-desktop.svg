@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" id="lt-step-up-selected-action" width="1460" height="650" viewBox="0 0 1460 650" class="flowchart" role="img" aria-roledescription="flowchart-v2" aria-labelledby="lt-step-up-selected-action-title lt-step-up-selected-action-desc" style="max-width:100%;height:auto;">
+<title id="lt-step-up-selected-action-title">Selected-action step-up authentication</title>
+<desc id="lt-step-up-selected-action-desc">Reconstructed from source, E0001–E0004. Selected-action mechanism and normal flow. Uncovered routes retain ordinary session authentication. No exactly-once guarantee is implied.</desc>
+<style>#lt-step-up-selected-action{font-family:Arial,Helvetica,sans-serif;font-size:16px;fill:#63371d;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#lt-step-up-selected-action .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#lt-step-up-selected-action .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#lt-step-up-selected-action .error-icon{fill:#d99b6b;}#lt-step-up-selected-action .error-text{fill:#587405;stroke:#587405;}#lt-step-up-selected-action .edge-thickness-normal{stroke-width:1px;}#lt-step-up-selected-action .edge-thickness-thick{stroke-width:3.5px;}#lt-step-up-selected-action .edge-pattern-solid{stroke-dasharray:0;}#lt-step-up-selected-action .edge-thickness-invisible{stroke-width:0;fill:none;}#lt-step-up-selected-action .edge-pattern-dashed{stroke-dasharray:3;}#lt-step-up-selected-action .edge-pattern-dotted{stroke-dasharray:2;}#lt-step-up-selected-action .marker{fill:#8a7566;stroke:#8a7566;}#lt-step-up-selected-action .marker.cross{stroke:#8a7566;}#lt-step-up-selected-action svg{font-family:Arial,Helvetica,sans-serif;font-size:16px;}#lt-step-up-selected-action p{margin:0;}#lt-step-up-selected-action .label{font-family:Arial,Helvetica,sans-serif;color:#63371d;}#lt-step-up-selected-action .cluster-label text{fill:#587405;}#lt-step-up-selected-action .cluster-label span{color:#587405;}#lt-step-up-selected-action .cluster-label span p{background-color:transparent;}#lt-step-up-selected-action .label text,#lt-step-up-selected-action span{fill:#63371d;color:#63371d;}#lt-step-up-selected-action .node rect,#lt-step-up-selected-action .node circle,#lt-step-up-selected-action .node ellipse,#lt-step-up-selected-action .node polygon,#lt-step-up-selected-action .node path{fill:#d99b6b;stroke:#9c673f;stroke-width:1px;}#lt-step-up-selected-action .rough-node .label text,#lt-step-up-selected-action .node .label text,#lt-step-up-selected-action .image-shape .label,#lt-step-up-selected-action .icon-shape .label{text-anchor:middle;}#lt-step-up-selected-action .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#lt-step-up-selected-action .rough-node .label,#lt-step-up-selected-action .node .label,#lt-step-up-selected-action .image-shape .label,#lt-step-up-selected-action .icon-shape .label{text-align:center;}#lt-step-up-selected-action .node.clickable{cursor:pointer;}#lt-step-up-selected-action .root .anchor path{fill:#8a7566!important;stroke-width:0;stroke:#8a7566;}#lt-step-up-selected-action .arrowheadPath{fill:#0b0b0b;}#lt-step-up-selected-action .edgePaths .path{stroke:#8a7566;stroke-width:1px;}#lt-step-up-selected-action .flowchart-link{stroke:#8a7566;fill:none;}#lt-step-up-selected-action .edgeLabel{background-color:#ffffff;text-align:center;}#lt-step-up-selected-action .edgeLabel p{background-color:#ffffff;}#lt-step-up-selected-action .edgeLabel rect{opacity:0.5;background-color:#ffffff;fill:#ffffff;}#lt-step-up-selected-action .labelBkg{background-color:rgba(255, 255, 255, 0.5);}#lt-step-up-selected-action .cluster rect{fill:#fbf5ef;stroke:#c79670;stroke-width:1px;}#lt-step-up-selected-action .cluster text{fill:#587405;}#lt-step-up-selected-action .cluster span{color:#587405;}#lt-step-up-selected-action .node .collapsed-indicator{fill:#c79670;stroke:none;opacity:0.6;}#lt-step-up-selected-action .node .collapsed-separator{stroke:#c79670;stroke-width:0.75px;}#lt-step-up-selected-action div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:Arial,Helvetica,sans-serif;font-size:12px;background:#d99b6b;border:1px solid hsl(255.1351351351, 51.7355371901%, 66.2745098039%);border-radius:2px;pointer-events:none;z-index:100;}#lt-step-up-selected-action .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#63371d;}#lt-step-up-selected-action rect.text{fill:none;stroke-width:0;}#lt-step-up-selected-action .icon-shape,#lt-step-up-selected-action .image-shape{background-color:#ffffff;text-align:center;}#lt-step-up-selected-action .icon-shape p,#lt-step-up-selected-action .image-shape p{background-color:#ffffff;padding:2px;}#lt-step-up-selected-action .icon-shape .label rect,#lt-step-up-selected-action .image-shape .label rect{opacity:0.5;background-color:#ffffff;fill:#ffffff;}#lt-step-up-selected-action .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#lt-step-up-selected-action .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#lt-step-up-selected-action .node .neo-node{stroke:#9c673f;}#lt-step-up-selected-action [data-look="neo"].node rect,#lt-step-up-selected-action [data-look="neo"].cluster rect,#lt-step-up-selected-action [data-look="neo"].node polygon{stroke:url(#lt-step-up-selected-action-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#lt-step-up-selected-action [data-look="neo"].swimlane.cluster rect{filter:none;}#lt-step-up-selected-action [data-look="neo"].node path{stroke:url(#lt-step-up-selected-action-gradient);stroke-width:1px;}#lt-step-up-selected-action [data-look="neo"].node .outer-path{filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#lt-step-up-selected-action [data-look="neo"].node .neo-line path{stroke:#9c673f;filter:none;}#lt-step-up-selected-action [data-look="neo"].node circle{stroke:url(#lt-step-up-selected-action-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#lt-step-up-selected-action [data-look="neo"].node circle .state-start{fill:#000000;}#lt-step-up-selected-action [data-look="neo"].icon-shape .icon{fill:url(#lt-step-up-selected-action-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#lt-step-up-selected-action [data-look="neo"].icon-shape .icon-neo path{stroke:url(#lt-step-up-selected-action-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#lt-step-up-selected-action :root{--mermaid-font-family:Arial,Helvetica,sans-serif;}</style>
+<style>
+#lt-step-up-selected-action { --lt-text: #e1e0e0; --lt-line: #8a7566; --lt-border: #9c673f; --lt-fill: #d99b6b; --lt-decision: #d99b6b; --lt-label: #fff8f3; --lt-node-opacity: .20; --lt-decision-opacity: .12; --lt-cluster-opacity: .055; color-scheme: light dark; }
+@media (prefers-color-scheme: dark) { #lt-step-up-selected-action { --lt-text: #f4ba96; --lt-line: #afafaf; --lt-border: #573a23; --lt-fill: #45240d; --lt-decision: #251207; --lt-label: #251207; --lt-node-opacity: .80; --lt-decision-opacity: .80; --lt-cluster-opacity: .18; } }
+#lt-step-up-selected-action .node rect, #lt-step-up-selected-action .node polygon, #lt-step-up-selected-action .node circle, #lt-step-up-selected-action .node path, #lt-step-up-selected-action .node ellipse { fill: var(--lt-fill) !important; fill-opacity: var(--lt-node-opacity) !important; stroke: var(--lt-border) !important; stroke-width: 1.5px !important; }
+#lt-step-up-selected-action .node polygon { fill: var(--lt-decision) !important; fill-opacity: var(--lt-decision-opacity) !important; }
+#lt-step-up-selected-action .node rect { rx: 10px; ry: 10px; }
+#lt-step-up-selected-action .node rect, #lt-step-up-selected-action .node polygon, #lt-step-up-selected-action .node circle, #lt-step-up-selected-action .cluster rect { filter: none !important; }
+#lt-step-up-selected-action text, #lt-step-up-selected-action tspan, #lt-step-up-selected-action .nodeLabel, #lt-step-up-selected-action .label, #lt-step-up-selected-action .cluster-label { fill: var(--lt-text) !important; color: var(--lt-text) !important; opacity: 1; }
+#lt-step-up-selected-action .flowchart-link { stroke: var(--lt-line) !important; stroke-width: 1.5px; }
+#lt-step-up-selected-action .marker, #lt-step-up-selected-action marker path { fill: var(--lt-line) !important; stroke: var(--lt-line) !important; }
+#lt-step-up-selected-action .edgeLabel rect, #lt-step-up-selected-action .labelBkg { fill: var(--lt-label) !important; fill-opacity: .80 !important; }
+#lt-step-up-selected-action .cluster rect { fill: var(--lt-fill) !important; fill-opacity: var(--lt-cluster-opacity) !important; stroke: var(--lt-border) !important; stroke-opacity: .55; rx: 14px; ry: 14px; }
+</style>
+<style>
+#lt-step-up-selected-action .node text { font-family: Arial, Helvetica, sans-serif; font-size: 20px; font-weight: 400; text-anchor: middle; }
+#lt-step-up-selected-action .edgeLabel text { font-family: Arial, Helvetica, sans-serif; font-size: 18px; font-weight: 400; }
+</style>
+<defs><marker id="lt-step-up-selected-action-arrow" class="marker" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z"/></marker></defs>
+<g class="edges edgePaths" fill="none">
+<path class="flowchart-link" data-edge="true" data-id="L_A_B_0" id="lt-step-up-selected-action-L_A_B_0" d="M235,390 H310" fill="none" marker-end="url(#lt-step-up-selected-action-arrow)"/>
+<path class="flowchart-link" data-edge="true" data-id="L_B_C_0" id="lt-step-up-selected-action-L_B_C_0" d="M510,390 H580" fill="none" marker-end="url(#lt-step-up-selected-action-arrow)"/>
+<path class="flowchart-link" data-edge="true" data-id="L_B_D_0" id="lt-step-up-selected-action-L_B_D_0" d="M410,310 V135" fill="none" marker-end="url(#lt-step-up-selected-action-arrow)"/>
+<path class="flowchart-link" data-edge="true" data-id="L_D_E_0" id="lt-step-up-selected-action-L_D_E_0" d="M520,100 H605" fill="none" marker-end="url(#lt-step-up-selected-action-arrow)"/>
+<path class="flowchart-link" data-edge="true" data-id="L_E_F_0" id="lt-step-up-selected-action-L_E_F_0" d="M795,100 H885" fill="none" marker-end="url(#lt-step-up-selected-action-arrow)"/>
+<path class="flowchart-link" data-edge="true" data-id="L_E_G_0" id="lt-step-up-selected-action-L_E_G_0" d="M700,135 V183" fill="none" marker-end="url(#lt-step-up-selected-action-arrow)"/>
+<path class="flowchart-link" data-edge="true" data-id="L_F_C_0" id="lt-step-up-selected-action-L_F_C_0" d="M1010,135 V266 Q1010,280 996,280 H714 Q700,280 700,294 V355" fill="none" marker-end="url(#lt-step-up-selected-action-arrow)"/>
+<path class="flowchart-link" data-edge="true" data-id="L_C_H_0" id="lt-step-up-selected-action-L_C_H_0" d="M820,390 H890" fill="none" marker-end="url(#lt-step-up-selected-action-arrow)"/>
+<path class="flowchart-link" data-edge="true" data-id="L_H_I_0" id="lt-step-up-selected-action-L_H_I_0" d="M1130,390 H1210" fill="none" marker-end="url(#lt-step-up-selected-action-arrow)"/>
+<path class="flowchart-link" data-edge="true" data-id="L_I_J_0" id="lt-step-up-selected-action-L_I_J_0" d="M1320,480 V555" fill="none" marker-end="url(#lt-step-up-selected-action-arrow)"/>
+<path class="flowchart-link" data-edge="true" data-id="L_I_K_0" id="lt-step-up-selected-action-L_I_K_0" d="M1320,300 V135" fill="none" marker-end="url(#lt-step-up-selected-action-arrow)"/>
+<path class="flowchart-link" data-edge="true" data-id="L_H_J_0" id="lt-step-up-selected-action-L_H_J_0" d="M1010,480 V516 Q1010,530 1024,530 H1306 Q1320,530 1320,544 V555" fill="none" marker-end="url(#lt-step-up-selected-action-arrow)"/>
+</g><g class="edgeLabels">
+<g class="edgeLabel" data-edge-id="L_B_C_0"><text x="545" y="372" text-anchor="middle">Yes</text></g>
+<g class="edgeLabel" data-edge-id="L_B_D_0"><text x="426" y="247" text-anchor="start">No</text></g>
+<g class="edgeLabel" data-edge-id="L_E_F_0"><text x="840" y="82" text-anchor="middle">Approved</text></g>
+<g class="edgeLabel" data-edge-id="L_E_G_0"><text x="716" y="166" text-anchor="start">Cancelled</text></g>
+<g class="edgeLabel" data-edge-id="L_H_I_0"><text x="1170" y="372" text-anchor="middle">Yes</text></g>
+<g class="edgeLabel" data-edge-id="L_I_J_0"><text x="1336" y="513" text-anchor="start">Yes</text></g>
+<g class="edgeLabel" data-edge-id="L_I_K_0"><text x="1336" y="224" text-anchor="start">No</text></g>
+<g class="edgeLabel" data-edge-id="L_H_J_0"><text x="1138" y="517" text-anchor="middle">No</text></g>
+</g><g class="nodes">
+<g class="node default" id="lt-step-up-selected-action-flowchart-A" transform="translate(130, 390)">
+<rect class="label-container" x="-105.0" y="-35.0" width="210" height="70" rx="10" ry="10"/>
+<text class="nodeLabel">
+<tspan x="0" y="-5.5">Selected profile</tspan>
+<tspan x="0" y="19.5">or banking action</tspan>
+</text></g>
+<g class="node default" id="lt-step-up-selected-action-flowchart-B" transform="translate(410, 390)">
+<polygon class="label-container" points="0,-80.0 100.0,0 0,80.0 -100.0,0"/>
+<text class="nodeLabel">
+<tspan x="0" y="-5.5">Valid client</tspan>
+<tspan x="0" y="19.5">approval?</tspan>
+</text></g>
+<g class="node default" id="lt-step-up-selected-action-flowchart-C" transform="translate(700, 390)">
+<rect class="label-container" x="-120.0" y="-35.0" width="240" height="70" rx="10" ry="10"/>
+<text class="nodeLabel">
+<tspan x="0" y="-5.5">Send request with</tspan>
+<tspan x="0" y="19.5">approval ID</tspan>
+</text></g>
+<g class="node default" id="lt-step-up-selected-action-flowchart-D" transform="translate(410, 100)">
+<rect class="label-container" x="-110.0" y="-35.0" width="220" height="70" rx="10" ry="10"/>
+<text class="nodeLabel">
+<tspan x="0" y="-5.5">Hold action and</tspan>
+<tspan x="0" y="19.5">form data</tspan>
+</text></g>
+<g class="node default" id="lt-step-up-selected-action-flowchart-E" transform="translate(700, 100)">
+<rect class="label-container" x="-95.0" y="-35.0" width="190" height="70" rx="10" ry="10"/>
+<text class="nodeLabel">
+<tspan x="0" y="-5.5">Six-digit</tspan>
+<tspan x="0" y="19.5">challenge</tspan>
+</text></g>
+<g class="node default" id="lt-step-up-selected-action-flowchart-F" transform="translate(1010, 100)">
+<rect class="label-container" x="-125.0" y="-35.0" width="250" height="70" rx="10" ry="10"/>
+<text class="nodeLabel">
+<tspan x="0" y="-5.5">Store ID and</tspan>
+<tspan x="0" y="19.5">five-minute expiry</tspan>
+</text></g>
+<g class="node default" id="lt-step-up-selected-action-flowchart-G" transform="translate(700, 215)">
+<rect class="label-container" x="-105.0" y="-32.0" width="210" height="64" rx="10" ry="10"/>
+<text class="nodeLabel">
+<tspan x="0" y="-5.5">Clear pending</tspan>
+<tspan x="0" y="19.5">action</tspan>
+</text></g>
+<g class="node default" id="lt-step-up-selected-action-flowchart-H" transform="translate(1010, 390)">
+<polygon class="label-container" points="0,-90.0 120.0,0 0,90.0 -120.0,0"/>
+<text class="nodeLabel">
+<tspan x="0" y="-5.5">Server route and</tspan>
+<tspan x="0" y="19.5">method covered?</tspan>
+</text></g>
+<g class="node default" id="lt-step-up-selected-action-flowchart-I" transform="translate(1320, 390)">
+<polygon class="label-container" points="0,-90.0 110.0,0 0,90.0 -110.0,0"/>
+<text class="nodeLabel">
+<tspan x="0" y="-5.5">Session expiry</tspan>
+<tspan x="0" y="19.5">and proof valid?</tspan>
+</text></g>
+<g class="node default" id="lt-step-up-selected-action-flowchart-J" transform="translate(1320, 590)">
+<rect class="label-container" x="-115.0" y="-35.0" width="230" height="70" rx="10" ry="10"/>
+<text class="nodeLabel">
+<tspan x="0" y="7.0">Business handler</tspan>
+</text></g>
+<g class="node default" id="lt-step-up-selected-action-flowchart-K" transform="translate(1320, 100)">
+<rect class="label-container" x="-115.0" y="-35.0" width="230" height="70" rx="10" ry="10"/>
+<text class="nodeLabel">
+<tspan x="0" y="-5.5">Deny or request</tspan>
+<tspan x="0" y="19.5">new challenge</tspan>
+</text></g>
+</g></svg>

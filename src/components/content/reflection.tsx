@@ -1,7 +1,7 @@
 import { component$ } from "@builder.io/qwik";
 import { Typography } from "../ui/typography";
 
-export const CaseStudyReflection = component$<{ lesson?: string }>(
+export const ProjectReflection = component$<{ lesson?: string }>(
   ({ lesson }) => {
     if (!lesson) return;
 

@@ -45,6 +45,6 @@ The result is a focused demonstration of working code: an employer can compare w
 - **Testing:** Route-handler tests, SQL policy tests, container integration
 - **Delivery:** Docker, GitHub Actions, Bicep, Azure Container Apps, Key Vault
 
-## Related case studies
+## Related projects
 
-- [Step-up authentication](/work/step-up-authentication/)
+- [Step-up authentication](/projects/step-up-authentication/)

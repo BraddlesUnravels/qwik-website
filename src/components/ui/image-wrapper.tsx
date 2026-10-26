@@ -1,8 +1,8 @@
 import { component$ } from "@builder.io/qwik";
-import type { CaseStudyImage } from "~/content/types";
+import type { ProjectImage } from "~/content/types";
 
 type ImageWrapperProps = {
-  image: CaseStudyImage;
+  image: ProjectImage;
   sizes?: string;
 };
 
@@ -19,14 +19,15 @@ export const ImageWrapper = component$<ImageWrapperProps>(
           sizes={sizes}
           loading="lazy"
           decoding="async"
-          // Reserve the final size before loading, with one 32rem height limit.
+          data-tone={image.tone}
           style={{
             aspectRatio: `${image.w} / ${image.h}`,
             width: `min(100%, ${(image.w / image.h) * 32}rem)`,
           }}
-          class="bg-canvas-soft block h-auto max-w-full rounded-xl border border-white/10"
+          class="project-image bg-canvas-soft block h-auto max-w-full rounded-xl border border-white/10"
         />
       </div>
+
       <figcaption class="text-ink-muted mt-3 max-w-prose text-sm leading-tight">
         {image.caption}{" "}
         <a

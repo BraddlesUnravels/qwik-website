@@ -67,7 +67,7 @@ The conversion-rate drop was an improvement in measurement coverage, not evidenc
 - **Integration:** Authenticated endpoint, cross-database stored procedure
 - **Discovery:** Stakeholder interviews, workflow and reporting mapping
 
-## Related case studies
+## Related projects
 
-- [Commercial engineering](/about/commercial-engineering/)
-- [Qwik and HubSpot](/work/qwik-hubspot/)
+- [Engineering approach](/about/approach/)
+- [Qwik and HubSpot](/projects/site-rebuild/)

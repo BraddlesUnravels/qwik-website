@@ -60,6 +60,6 @@ The wider lesson is practical: before building the requested fix, find out how p
 - **Integration:** Linked quote hand-off, shared identifiers
 - **Business context:** Commission visibility, lead attribution, employer matching
 
-## Related case studies
+## Related projects
 
-- [PipelineAxis CRM integration](/work/crm-legacy-integration/)
+- [PipelineAxis CRM integration](/projects/crm-legacy-integration/)

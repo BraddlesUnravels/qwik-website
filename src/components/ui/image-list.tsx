@@ -1,9 +1,9 @@
 import { component$ } from "@builder.io/qwik";
-import type { CaseStudyImage } from "~/content/types";
+import type { ProjectImage } from "~/content/types";
 import { ImageWrapper } from "~/components/ui/image-wrapper";
 
-export const CaseStudyImages = component$<{
-  images?: CaseStudyImage[];
+export const ProjectImages = component$<{
+  images?: ProjectImage[];
   sizes?: string;
 }>(({ images = [], sizes }) => (
   <div class="mt-8 grid gap-8 empty:hidden">

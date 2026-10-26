@@ -1,7 +1,8 @@
-import type { CaseStudy } from "../types";
+import type { Project } from "../types";
 import ReimbursementDesktop from "~/media/autodash/Reimb_Page_Desktop(redacted).png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
 import ReimbursementMobile from "~/media/autodash/Reimb_Page_Mobile(redacted).png?w=240;400&format=webp&quality=80&withoutEnlargement&as=img";
 import DocumentsDesktop from "~/media/autodash/Lease_Docx_Page_Desktop(redacted).png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
+import LegacyPortalHome from "~/media/legacy-portal/legacy-portal-account-home.png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
 
 export default {
   slug: "autodash",
@@ -36,6 +37,14 @@ export default {
   sections: [
     {
       title: "The problem",
+      images: [
+        {
+          ...LegacyPortalHome,
+          alt: "Legacy customer portal home screen with its original navigation and vehicle banner.",
+          caption:
+            "The previous customer portal, before AutoDash replaced public access. This is the legacy interface, not the new application.",
+        },
+      ],
       paragraphs: [
         `
           A security review had identified vulnerabilities in LeaseCore, including unsupported dependencies. 
@@ -144,8 +153,14 @@ export default {
     },
   ],
   related: [
-    { label: "Customer migration", href: "/work/customer-migration/" },
-    { label: "Step-up authentication", href: "/work/step-up-authentication/" },
-    { label: "On-demand balances", href: "/work/lease-balance-calculation/" },
+    { label: "Customer migration", href: "/projects/autodash-migration/" },
+    {
+      label: "Step-up authentication",
+      href: "/projects/step-up-authentication/",
+    },
+    {
+      label: "On-demand balances",
+      href: "/projects/lease-balance-calculation/",
+    },
   ],
-} satisfies CaseStudy;
+} satisfies Project;

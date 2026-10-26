@@ -44,7 +44,7 @@ Sensitive operations gained a fresh, server-enforced check while normal use rema
 - **Validation:** Direct API, expiry, replay and failure-path checks
 - **Testing:** Indepentant unit tests, staged integration tests
 
-## Related case studies
+## Related projects
 
-- [LeaseTrack customer portal](/work/customer-finance-portal/)
-- [Customer migration](/work/customer-migration/)
+- [AutoDash customer portal](/projects/autodash/)
+- [Customer migration](/projects/autodash-migration/)

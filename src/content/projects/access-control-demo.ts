@@ -1,5 +1,9 @@
-import type { CaseStudy } from "../types";
+import type { Project } from "../types";
 import DemoAuthorization from "~/media/diagrams/demo-authorization.svg?url&no-inline";
+import StudentDashboard from "~/media/access-control-demo/desktop-student-account.png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
+import RoleSelection from "~/media/access-control-demo/desktop-user-select-close-up.png?w=640;960;1280&format=webp&quality=80&withoutEnlargement&as=img";
+import AdministratorDashboard from "~/media/access-control-demo/desktop-administrator-account.png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
+import StudentMobileActions from "~/media/access-control-demo/mobile-student-actions.png?w=240;400;640&format=webp&quality=80&withoutEnlargement&as=img";
 
 export default {
   slug: "access-control-demo",
@@ -16,6 +20,15 @@ export default {
       reviewable rather than asking employers to take it on trust.
     `,
   featured: true,
+  images: [
+    {
+      ...StudentDashboard,
+      tone: "dark",
+      alt: "Student consultation dashboard with a creation form and existing consultations.",
+      caption:
+        "The student dashboard brings consultation creation and the signed-in student’s records together.",
+    },
+  ],
   metrics: [
     {
       label: "Roles",
@@ -53,6 +66,15 @@ export default {
     },
     {
       title: "My role",
+      images: [
+        {
+          ...RoleSelection,
+          tone: "dark",
+          alt: "Demo account selector offering Student 01, Student 02 and Administrator roles.",
+          caption:
+            "Two student accounts and a read-only administrator let reviewers compare ownership and role boundaries.",
+        },
+      ],
       paragraphs: [
         `
           I designed, implemented, tested and deployed the application independently. I kept the domain small:
@@ -68,9 +90,17 @@ export default {
           src: DemoAuthorization,
           w: 854,
           h: 1055,
+          tone: "diagram",
           alt: "Consultation requests pass through the visitor gate, role and ownership checks, then PostgreSQL row-level security and column grants.",
           caption:
             "Requests pass through the visitor gate, role and ownership checks, and database policies. The visitor gate does not grant an application role.",
+        },
+        {
+          ...AdministratorDashboard,
+          tone: "dark",
+          alt: "Administrator dashboard displaying consultations from multiple students.",
+          caption:
+            "The administrator interface lists consultations across students without offering student editing controls.",
         },
       ],
       subsections: [
@@ -121,6 +151,15 @@ export default {
     },
     {
       title: "The result",
+      images: [
+        {
+          ...StudentMobileActions,
+          tone: "dark",
+          alt: "Mobile student consultation list with reschedule, mark incomplete and cancel controls.",
+          caption:
+            "On mobile, students can reschedule a consultation or change its status from the consultation card.",
+        },
+      ],
       paragraphs: [
         `
           The result is a focused demonstration of working code: an employer can compare what different accounts
@@ -156,4 +195,4 @@ export default {
       href: "/projects/step-up-authentication/",
     },
   ],
-} satisfies CaseStudy;
+} satisfies Project;

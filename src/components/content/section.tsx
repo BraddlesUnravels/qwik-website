@@ -1,8 +1,8 @@
 import { component$ } from "@builder.io/qwik";
-import { CaseStudyImages } from "~/components/ui/image-list";
+import { ProjectImages } from "~/components/ui/image-list";
 import type {
-  CaseStudySection as SectionData,
-  CaseStudySubsection as SubsectionData,
+  ProjectSection as SectionData,
+  ProjectSubsection as SubsectionData,
 } from "~/content/types";
 
 const Subsection = component$<{ subsection: SubsectionData }>(
@@ -45,7 +45,7 @@ const Subsection = component$<{ subsection: SubsectionData }>(
   ),
 );
 
-export const CaseStudySection = component$<{
+export const ProjectSection = component$<{
   section: SectionData;
   index: number;
 }>(({ section, index }) => (
@@ -82,7 +82,7 @@ export const CaseStudySection = component$<{
         ))}
       </div>
     ) : null}
-    <CaseStudyImages
+    <ProjectImages
       images={section.images}
       sizes="(min-width: 1152px) 768px, (min-width: 1024px) calc(100vw - 384px), (min-width: 640px) calc(100vw - 64px), calc(100vw - 40px)"
     />

@@ -43,6 +43,6 @@ The full-batch and individual-lease figures measure different operations: the ch
 - **Validation:** Parallel old-versus-new calculation comparisons
 - **Environment:** Docker, local database
 
-## Related case studies
+## Related projects
 
-- [LeaseTrack customer portal](/work/customer-finance-portal/)
+- [AutoDash customer portal](/projects/autodash/)

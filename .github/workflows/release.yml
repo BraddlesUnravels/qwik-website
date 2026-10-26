@@ -176,7 +176,7 @@ jobs:
         run: docker build -f docker/Dockerfile -t "${IMAGE_NAME}" .
 
       # HTTP checks mirror IaC deploy-workload-release.sh verify for qwik-website:
-      # GET /health -> 200, GET / -> 200, GET /work/access-control-demo -> 200.
+      # GET /health -> 200, GET / -> 200, GET /projects/access-control-demo -> 200.
       - name: Smoke test the built image
         shell: bash
         run: |
@@ -224,9 +224,9 @@ jobs:
           fi
 
           # Qwik City uses trailingSlash: false; bare paths are canonical (slash forms 301).
-          study_code="$(curl -sS -o /tmp/scw-live-study -w '%{http_code}' "${url}/work/access-control-demo")"
-          if [[ "${study_code}" != '200' ]]; then
-            echo "Case study expected 200, got ${study_code}" >&2
+          project_code="$(curl -sS -o /tmp/scw-live-project -w '%{http_code}' "${url}/projects/access-control-demo")"
+          if [[ "${project_code}" != '200' ]]; then
+            echo "Project page expected 200, got ${project_code}" >&2
             docker logs "${container_name}" || true
             exit 1
           fi
