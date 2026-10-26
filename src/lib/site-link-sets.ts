@@ -5,25 +5,27 @@ import { LuDownload } from "@qwikest/icons/lucide";
 interface NavLink {
   label: string;
   href: string;
-  icon?: (props: IconProps) => JSXNode;
-  download?: boolean;
   type: "link" | "anchor";
+  icon?: (props: IconProps) => JSXNode;
+  download?: string;
+  prefetch?: boolean;
 }
 export const navLinks: NavLink[] = [
   {
     label: "Résumé",
     href: "/Bradley_Laskey_Full_Stack_Developer_Resume_2026.pdf",
-    type: "anchor",
+    type: "link",
     icon: LuDownload,
-    download: true,
+    download: "Bradley_Laskey_Full_Stack_Developer_Resume_2026.pdf",
+    prefetch: false,
   },
   {
     label: "Projects",
     href: "/#selected-projects",
-    type: "anchor",
+    type: "link",
   },
   {
-    label: "Approach",
+    label: "About",
     href: "/about/approach",
     type: "link",
   },

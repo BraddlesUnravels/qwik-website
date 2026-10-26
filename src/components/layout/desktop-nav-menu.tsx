@@ -2,9 +2,10 @@ import { component$ } from "@builder.io/qwik";
 import { Link } from "@builder.io/qwik-city";
 import { navLinks } from "~/lib/site-link-sets";
 
-const anchorContact =
+const anchorClass =
   "rounded-full border border-zinc-700 px-4 py-2 text-zinc-100 hover:border-zinc-500";
-const anchorlink =
+
+const linkClass =
   "hidden items-center gap-1 text-zinc-400 hover:text-zinc-100 sm:flex sm:flex-row";
 
 export default component$(() => (
@@ -15,28 +16,27 @@ export default component$(() => (
   >
     {navLinks.map((link) => {
       const Icon = link.icon;
-      const isContactButton =
-        link.type === "anchor" && link.label === "Contact";
-      const isResumeDownload = link.download && link.label === "Résumé";
-      const projectsLink = link.href === "/#selected-projects";
+      const isAnchor = link.type === "anchor" || Boolean(link.download);
 
-      return isContactButton || isResumeDownload || projectsLink ? (
+      return isAnchor ? (
         <a
-          aria-label={link.label}
           key={link.href}
           href={link.href}
           download={link.download}
-          class={isContactButton ? anchorContact : anchorlink}
+          aria-label={`${link.download ? "Download " : ""}${link.label}`}
+          class={link.download ? linkClass : anchorClass}
         >
           <span>{link.label}</span>
           {Icon && <Icon class="h-4 w-4" aria-hidden="true" />}
         </a>
       ) : (
         <Link
-          aria-label={link.label}
+          id={`link-comp-${link.label}`}
           key={link.href}
           href={link.href}
-          class="hidden items-center gap-1 text-zinc-400 hover:text-zinc-100 sm:flex sm:flex-row"
+          prefetch={link.prefetch ? link.prefetch : false}
+          aria-label={link.label}
+          class={linkClass}
         >
           <span class="mr-1">{link.label}</span>
           {Icon && <Icon class="h-4 w-4" aria-hidden="true" />}
