@@ -1,84 +1,39 @@
 import { component$ } from "@builder.io/qwik";
+import { Typography } from "../ui/typography";
 import type { CaseStudyMetric } from "~/content/types";
 
-export const StatCard = component$(
-  ({ metric, index }: { metric: CaseStudyMetric; index: number }) => {
-    return (
-      <div
-        key={metric.label}
-        class={[
-          "group relative isolate flex min-w-0 flex-col",
-          "overflow-hidden rounded-2xl border p-6 sm:p-7",
-          "shadow-lg backdrop-blur-sm",
-          "transition duration-300 ease-out",
-          "hover:shadow-2xl",
-          "motion-safe:hover:-translate-y-2",
-          "motion-safe:hover:scale-[1.02]",
-          "motion-reduce:transition-none",
-        ].join(" ")}
-      >
-        {/* Soft coloured light in the corner */}
-        <div
-          aria-hidden="true"
-          class={[
-            "pointer-events-none absolute -top-12 -right-12 -z-10",
-            "h-36 w-36 rounded-full opacity-10 blur-3xl",
-            "transition-opacity duration-300 group-hover:opacity-30",
-            "motion-reduce:transition-none",
-          ].join(" ")}
-        />
-
-        <dt class="flex items-start justify-between gap-3">
-          <span class="text-xs font-semibold tracking-widest text-gray-300 uppercase">
-            {metric.label}
-          </span>
-
-          <span aria-hidden="true" class="font-mono text-xs text-white/20">
-            {String(index + 1).padStart(2, "0")}
-          </span>
-        </dt>
-
-        <dd class="mt-6 flex flex-1 flex-col">
-          <span
-            class={[
-              "block text-3xl leading-tight font-semibold",
-              "tracking-tight text-balance",
-            ].join(" ")}
+export const StatCard = component$<{ metric: CaseStudyMetric }>(
+  ({ metric }) => (
+    <div class="bg-surface/60 min-w-0 rounded-xl border border-white/10 p-4 sm:p-5">
+      <dt class="text-ink-muted text-xs leading-relaxed font-semibold tracking-wider uppercase">
+        {metric.label}
+      </dt>
+      <dd class="mt-3">
+        <Typography
+          as="span"
+          class="text-ink block text-xl leading-snug font-semibold tracking-tight wrap-anywhere sm:text-2xl"
+        >
+          {metric.value}
+        </Typography>
+        {metric.description && (
+          <Typography
+            as="p"
+            class="text-ink-muted mt-3 text-sm leading-relaxed"
           >
-            {metric.value}
-          </span>
-
-          {metric.description && (
-            <p class="mt-4 text-sm leading-relaxed text-gray-400">
-              {metric.description}
-            </p>
-          )}
-
-          {/* Accent line grows across the card on hover */}
-          <span aria-hidden="true" class="mt-auto block pt-7">
-            <span
-              class={[
-                "block h-0.5 w-10 rounded-full opacity-60",
-                "transition-all duration-300 ease-out",
-                "group-hover:w-full group-hover:opacity-100",
-                "motion-reduce:transition-none",
-              ].join(" ")}
-            />
-          </span>
-        </dd>
-      </div>
-    );
-  },
+            {metric.description}
+          </Typography>
+        )}
+      </dd>
+    </div>
+  ),
 );
 
-export const CardRow = component$(
-  ({ metrics }: { metrics: CaseStudyMetric[] }) => {
-    return (
-      <dl class="rounded-card shadow-card mt-14 grid space-x-4 overflow-hidden sm:grid-cols-2 lg:grid-cols-4">
-        {metrics.map((m, i) => (
-          <StatCard key={m.label} metric={m} index={i} />
-        ))}
-      </dl>
-    );
-  },
+export const CardRow = component$<{ metrics: CaseStudyMetric[] }>(
+  ({ metrics }) => (
+    <dl class="mt-8 grid auto-rows-fr gap-3 empty:hidden min-[380px]:grid-cols-2 sm:mt-10 sm:gap-4 lg:grid-cols-4">
+      {metrics.map((metric) => (
+        <StatCard key={metric.label} metric={metric} />
+      ))}
+    </dl>
+  ),
 );

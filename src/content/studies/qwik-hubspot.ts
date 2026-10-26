@@ -1,4 +1,7 @@
 import type { CaseStudy } from "../types";
+import WebsiteLanding from "~/media/site-rebuild/company-website-landing.png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
+import LeaseCalculator from "~/media/site-rebuild/company-website-lease-calculator-monthly.png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
+import EmployeeEnquiry from "~/media/site-rebuild/company-contact-form-employee.png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
 
 export default {
   slug: "qwik-hubspot",
@@ -15,6 +18,14 @@ export default {
     website and a more reliable records of what happened after an enquiry.
   `,
   featured: true,
+  images: [
+    {
+      ...WebsiteLanding,
+      alt: "Inside Edge homepage with vehicle imagery and an estimate form.",
+      caption:
+        "The rebuilt Inside Edge homepage gives visitors a direct route into a lease estimate.",
+    },
+  ],
   metrics: [
     { label: "Delivery", value: "3 months" },
     { label: "Lighthouse", value: "100 in 3 categories" },
@@ -50,6 +61,20 @@ export default {
     },
     {
       title: "How I approached it",
+      images: [
+        {
+          ...LeaseCalculator,
+          alt: "Lease calculator showing entered values, a monthly estimate and a contact toggle.",
+          caption:
+            "The calculator turns vehicle and salary inputs into an estimate and offers a contact option.",
+        },
+        {
+          ...EmployeeEnquiry,
+          alt: "Employee enquiry form with contact details, employer details and an enquiry reason.",
+          caption:
+            "The employee enquiry form collects the details needed for the server-side lead workflow.",
+        },
+      ],
       subsections: [
         {
           title: "Prioritise fast, indexable pages",
