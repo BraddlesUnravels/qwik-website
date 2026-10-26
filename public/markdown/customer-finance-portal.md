@@ -1,10 +1,10 @@
-# LeaseTrack: a new portal around a legacy lease platform
+# AutoDash: a new portal around a legacy lease platform
 
 **Full-stack product delivery**
 
 The business needed to take a vulnerable legacy customer portal offline,
 but the same platform (LeaseCore) held the lease data and financial processes
-staff relied on every day. I owned the delivery of LeaseTrack, a replacement
+staff relied on every day. I owned the delivery of AutoDash, a replacement
 customer-facing application that kept those internal processes available.
 
 **At a glance:** Customers: 5,000+ migrated · Delivery: 8 months · Release: November 2024 · Scope: Full-stack ownership
@@ -23,7 +23,7 @@ I worked with the board to define the first release around two constraints: redu
 
 ### Keep the existing business data where it belonged
 
-Most of the information LeaseTrack needed already lived in the LeaseCore MSSQL database. Rather than introduce a third database and another synchronisation problem, I added portal-owned tables for identities, MFA, preferences and activity alongside the existing lease data. The Node.js API exposed controlled operations and reused legacy stored procedures where they remained necessary. This kept the legacy dependency explicit; it did not remove all of its testing limitations.
+Most of the information AutoDash needed already lived in the LeaseCore MSSQL database. Rather than introduce a third database and another synchronisation problem, I added portal-owned tables for identities, MFA, preferences and activity alongside the existing lease data. The Node.js API exposed controlled operations and reused legacy stored procedures where they remained necessary. This kept the legacy dependency explicit; it did not remove all of its testing limitations.
 
 ### Design around actual customer and staff behaviour
 
@@ -38,7 +38,7 @@ troubleshooting. Employees with active leases tested the live journey before cus
 
 ## The result
 
-LeaseTrack went into production on 14 November 2024 and supported the migration of more than 5,000 customers. Customers gained current lease information, more understandable budgets, documents and self-service account changes. Staff reported far fewer calls about forgotten usernames and routine profile updates.
+AutoDash went into production on 14 November 2024 and supported the migration of more than 5,000 customers. Customers gained current lease information, more understandable budgets, documents and self-service account changes. Staff reported far fewer calls about forgotten usernames and routine profile updates.
 
 The key architectural outcome was the separation of public customer access from the older portal while keeping
 the internal lease-management (LeaseCore) platform in service.
@@ -51,8 +51,8 @@ the internal lease-management (LeaseCore) platform in service.
 - **Security:** MFA, Argon2, step-up authentication
 - **Delivery:** Docker, GitHub Actions, Azure, Bicep, Sentry, Grafana
 
-## Related case studies
+## Related projects
 
-- [Customer migration](/work/customer-migration/)
-- [Step-up authentication](/work/step-up-authentication/)
-- [On-demand balances](/work/lease-balance-calculation/)
+- [Customer migration](/projects/autodash-migration/)
+- [Step-up authentication](/projects/step-up-authentication/)
+- [On-demand balances](/projects/lease-balance-calculation/)

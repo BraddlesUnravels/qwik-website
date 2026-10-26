@@ -36,7 +36,7 @@ Workflow:
 Stable release published or manual main dispatch
   -> .github/workflows/release.yml
   -> verify source, run checks, build one production image
-  -> smoke /health, /, case study, static asset, origin/CSRF checks
+  -> smoke /health, /, project page, static asset, origin/CSRF checks
   -> OIDC publish to braddlesunravelsacr.azurecr.io/qwik-website:<40-char-sha>
   -> GitHub App token scoped to IaC repository
   -> repository_dispatch event_type=single-container-web-release-v1
@@ -99,7 +99,7 @@ in the IaC workload contract / catalog, not in this repository.
 5. Open the IaC Actions tab for **Deploy single-container-web release** and
    approve the protected `production` environment if configured.
 6. Confirm IaC summary: digest, deployment name, live URL, `/health`, homepage,
-   case study.
+   and project page.
 
 ## Image tags
 
@@ -151,8 +151,8 @@ Origin policy changes require a new application release, not an IaC change.
 ## Local container smoke
 
 Container HTTP smoke matches IaC live verify for `qwik-website`: `GET /health`,
-`GET /`, and `GET /work/access-control-demo` must each return 200. Case study
-routes use the bare path form (`/work/<slug>`); slash paths 301 when
+`GET /`, and `GET /projects/access-control-demo` must each return 200. Project
+routes use the bare path form (`/projects/<slug>`); slash paths 301 when
 `trailingSlash: false`.
 
 ```bash
@@ -169,8 +169,8 @@ done
 [[ "${ready}" -eq 1 ]] || { echo "Live health verification failed for ${health_url}" >&2; exit 1; }
 homepage_code="$(curl -sS -o /tmp/scw-live-home -w '%{http_code}' "${url}/")"
 [[ "${homepage_code}" == '200' ]] || { echo "Homepage expected 200, got ${homepage_code}" >&2; exit 1; }
-study_code="$(curl -sS -o /tmp/scw-live-study -w '%{http_code}' "${url}/work/access-control-demo")"
-[[ "${study_code}" == '200' ]] || { echo "Case study expected 200, got ${study_code}" >&2; exit 1; }
+project_code="$(curl -sS -o /tmp/scw-live-project -w '%{http_code}' "${url}/projects/access-control-demo")"
+[[ "${project_code}" == '200' ]] || { echo "Project page expected 200, got ${project_code}" >&2; exit 1; }
 docker logs qwik-release-test
 docker rm -f qwik-release-test
 ```

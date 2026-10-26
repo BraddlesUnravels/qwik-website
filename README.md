@@ -1,8 +1,8 @@
 # qwik-website
 
-Personal portfolio landing page for **Bradley Laskey**, built with Qwik and Qwik City.
-
-The site currently ships a dark single-page intro with a continuous technology carousel of logos and labels for languages, front-end, back-end, databases, data access, testing, and DevOps tools.
+Personal portfolio for **Bradley Laskey**, built with Qwik and Qwik City. The
+site presents selected projects, supporting work, an engineering approach page,
+and a technical toolkit carousel.
 
 ## Stack
 
@@ -12,23 +12,41 @@ The site currently ships a dark single-page intro with a continuous technology c
 | Bundler         | Vite 7                                                                                |
 | Language        | TypeScript 5.9                                                                        |
 | Styling         | Tailwind CSS v4 via `@tailwindcss/vite`                                               |
-| UI primitives   | `@qwik-ui/headless` (available, not wired into the home page yet)                     |
+| UI primitives   | `@qwik-ui/headless` (available, not currently used by the site)                       |
 | Unit tests      | Vitest 5 + `@builder.io/qwik/testing`                                                 |
 | Component / e2e | Cypress 15 + `cypress-ct-qwik`                                                        |
 | Lint / format   | ESLint 9 flat config + `eslint-plugin-qwik`, Prettier + `prettier-plugin-tailwindcss` |
 | Package manager | Bun (`packageManager`: `bun@1.3.12`)                                                  |
 
-Node `^18.17.0 || ^20.3.0 || >=21.0.0` or Bun `>=1.1.0`.
+Use Bun `1.3.12` as declared by `packageManager`. When running under Node,
+follow Vite 7's supported versions: Node `20.19+` or `22.12+`. The broader
+Node range currently declared in `package.json` does not reflect Vite 7's
+runtime requirement.
 
 ## Current features
 
-- **Home route** (`src/routes/index.tsx`): centered welcome copy, name heading with gradient accent, short tagline
-- **Technology carousel** (`src/components/ui/technology-carousel.tsx`): CSS-driven infinite horizontal scroll of tech logos, pauses on hover, respects `prefers-reduced-motion`
-- **Dark shell** (`src/routes/layout.tsx`): full-height `zinc-950` layout with short cache headers for SSR
-- **Document head** (`src/components/router-head/router-head.tsx`): title, meta, canonical, viewport
-- **Static assets**: SVG logos under `public/icon/logo/`, web app manifest, robots.txt
+- **Home page** (`src/routes/index.tsx`): introduction, selected and supporting
+  project cards, engineering approach section, and mobile back-to-top control.
+- **Project pages** (`src/routes/projects/[slug]/index.tsx`): data-driven pages
+  with project summaries, metrics, responsive images, implementation sections,
+  technologies, and related links.
+- **Engineering approach** (`src/routes/about/approach/index.tsx`): standalone
+  page about the workflow and business context behind the portfolio.
+- **Navigation** (`src/components/layout/`): responsive desktop and mobile
+  navigation, résumé download, and contact link.
+- **Technology carousel** (`src/components/ui/technology-carousel.tsx`):
+  continuously scrolling toolkit logos and labels, with reduced-motion support.
+- **Health endpoint** (`src/routes/health/index.ts`): `/health` returns `ok`
+  for deployment health checks.
+- **SEO and caching**: route metadata is defined with shared helpers; the root
+  route layout configures SSR cache headers.
+- **Project content and media**: typed project data lives in
+  `src/content/projects/`; images and diagrams live in `src/media/`.
 
-Production uses the Bun server adapter (`adapters/bun`) and a release-driven deploy path documented in `docs/deployment.md`. Version tags or manual `main` dispatch build/push the image to shared ACR and dispatch the central IaC single-container release; this app repo does not own Azure infrastructure.
+Production uses the Bun server adapter (`adapters/bun`) and a release-driven
+deploy path documented in [docs/deployment.md](docs/deployment.md). Release
+workflows publish the image and dispatch deployment evidence to the shared IaC
+repository; this repository does not own Azure infrastructure.
 
 ## Setup
 
@@ -54,8 +72,8 @@ bun run test.unit.ui      # Vitest UI
 bun run test.unit.coverage
 bun run test.ct           # Cypress component tests (headless)
 bun run test.ct.open      # Cypress component tests (interactive)
-bun run test.e2e          # start dev server, run Cypress e2e headless
-bun run test.e2e.open     # start dev server, open Cypress e2e
+bun run test.e2e          # start dedicated dev server and run Cypress E2E
+bun run test.e2e.open     # start dedicated dev server and open Cypress E2E
 bun run test.all          # unit + component + e2e
 bun run ci                # full CI suite (format, lint, types, unit, build, ct, e2e)
 ```
@@ -74,19 +92,25 @@ Pull requests and pushes to `main` run `.github/workflows/ci.yml` with Bun:
 
 Run the same sequence locally with `bun run ci`.
 
-Optional PR label `stage` still runs `.github/workflows/integration.yml` container checks. Production releases always rebuild and smoke-test the image in `.github/workflows/release.yml` against the released tag.
+Optional PR label `stage` still runs `.github/workflows/integration.yml`
+container checks. Production releases rebuild and smoke-test the image in
+`.github/workflows/release.yml` against the released tag.
 
 ## Production deployment
 
-See `docs/deployment.md`. Summary: publish a stable `vX.Y.Z` release **or** run `workflow_dispatch` on `main` → source workflow verifies/tests/pushes `qwik-website:<sha>` → `repository_dispatch` `single-container-web-release-v1` to `BraddlesUnravels/iac` → IaC plans and deploys into `rg-platform-production`.
+See [docs/deployment.md](docs/deployment.md). In short: publish a stable
+`vX.Y.Z` release or run `workflow_dispatch` on `main`; the source workflow
+verifies, tests, and publishes `qwik-website:<sha>`, then dispatches
+`single-container-web-release-v1` to `BraddlesUnravels/iac` for planning and
+deployment to `rg-platform-production`.
 
 ## Testing
 
 ### Vitest (unit)
 
-- Config lives in `vite.config.ts` under `test`
-- Specs live under `test/` and mirror `src/`
-- Qwik component tests use `createDOM` from `@builder.io/qwik/testing`
+- Configuration lives in `vite.config.ts` under `test`.
+- Specs live under `test/`.
+- Qwik component tests use `createDOM` from `@builder.io/qwik/testing`.
 
 ```bash
 bun run test
@@ -94,9 +118,11 @@ bun run test
 
 ### Cypress
 
-- Config: `cypress.config.ts`
-- E2E specs: `cypress/e2e/**/*.cy.ts` against `http://localhost:5173`
-- Component specs: co-located `src/**/*.cy.tsx` via `cypress-ct-qwik`
+- Configuration: `cypress.config.ts`.
+- E2E specs: `cypress/e2e/**/*.cy.ts` against `http://localhost:5174`.
+- Component specs: co-located `src/**/*.cy.tsx` via `cypress-ct-qwik`.
+- The E2E script starts Vite with `--strictPort` on port `5174` so it fails
+  rather than silently using another server if the port is occupied.
 
 ```bash
 bun run test.ct
@@ -107,58 +133,54 @@ bun run test.e2e
 
 ```text
 cypress/
-  e2e/                    end-to-end specs
-  fixtures/
+  e2e/                    Cypress end-to-end specs
   support/                e2e + component support files
-test/                     Vitest suite mirroring src/
-inspiration/              design reference screenshots (not served)
+docs/
+  deployment.md           release and deployment runbook
 public/
-  icon/logo/              technology SVG logos used by the carousel
-  image/                  reserved for future media
-  manifest.json           PWA-style web manifest
+  markdown/               published Markdown project write-ups
+  Bradley_Laskey_...pdf   downloadable résumé
+  favicon.ico             browser icon
+  apple-touch-icon.png     home-screen icon
+  manifest.json           web app manifest
   robots.txt
-raw-content/              scratch / content staging (empty)
 src/
   components/
+    content/              data-driven project page components
+    layout/               site header, navigation, and footer
     router-head/          document <head> wiring
-    ui/
-      technology-carousel.tsx
-      technology-carousel.cy.tsx
-  lib/                    shared helpers
+    ui/                   shared UI and technology carousel
+  content/
+    projects/              typed project write-ups
+    catalog.ts             home-page project summaries
+  media/                  imported project images, diagrams, and logos
   routes/
-    index.tsx             home / portfolio landing
-    layout.tsx            root layout + cacheControl
-  entry.dev.tsx           client-only dev entry
-  entry.ssr.tsx           SSR entry
-  entry.preview.tsx       preview adapter entry
-  root.tsx                QwikCity document shell
-  global.css              Tailwind import + base html/body rules
+    index.tsx              home / portfolio page
+    layout.tsx             root layout + cacheControl
+    about/approach/        engineering approach page
+    projects/[slug]/       project detail pages
+    health/                deployment health endpoint
+test/                     Vitest unit suite
 ```
 
 Path alias: `~/` maps to `src/` (see `tsconfig.json` / `vite-tsconfig-paths`).
 
 ## Design notes
 
-- Visual direction lives in `inspiration/` (Brad / Jacobson layout refs). Those files are local references only and are not part of the build output.
-- Carousel tech list is defined inline in `technology-carousel.tsx` and points at `/icon/logo/*.svg`.
-- Theme is dark-first (`bg-zinc-950` / slate fades on the carousel edges).
+- Technology carousel items and logo imports are defined in
+  `src/components/ui/technology-carousel.tsx` and `src/media/logos/`.
+- The site uses a dark theme with shared tokens and utilities in
+  `src/theme/base.css`.
+- Project summaries are listed in `src/content/catalog.ts`; detailed content
+  and image metadata are in `src/content/projects/`.
 
-## Next steps
+## Bun server
 
-Likely follow-ups as the portfolio grows:
+The app uses the Bun server adapter. After running a full build, preview the
+build with:
 
-1. Expand sections beyond the intro (projects, about, contact)
-2. Fill `public/image/` and wire project media
-3. Use `@qwik-ui/headless` where interactive primitives help
-4. After a verified custom domain exists, rebuild with `PUBLIC_SITE_URL` and re-enable SSG origin in a reviewed change
-5. Tighten SEO (favicon, Open Graph, richer `DocumentHead`) once the canonical domain is set
-
-## Bun Server
-
-This app has a minimal [Bun server](https://bun.sh/docs/api/http) implementation. After running a full build, you can preview the build using the command:
-
-```
+```bash
 bun run serve
 ```
 
-Then visit [http://localhost:3000/](http://localhost:3000/)
+Then visit [http://localhost:3000/](http://localhost:3000/).
