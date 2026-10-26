@@ -28,7 +28,7 @@ describe("Home page", () => {
       "exist",
     );
     cy.get('a[href="/projects/autodash"]').should("exist");
-    cy.contains("View case study").should("exist");
+    cy.contains("View case project").should("exist");
   });
 
   it("should show the approach section", () => {
