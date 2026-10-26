@@ -16,10 +16,28 @@ export default {
     `,
   featured: true,
   metrics: [
-    { label: "Roles", value: "2 students + 1 admin" },
-    { label: "Data boundary", value: "PostgreSQL RLS" },
-    { label: "Test focus", value: "Forbidden requests" },
-    { label: "Deployment", value: "Azure Container Apps" },
+    {
+      label: "Roles",
+      value: "2 students + 1 admin",
+      description:
+        "Compare account ownership and read-only administrator access.",
+    },
+    {
+      label: "Data boundary",
+      value: "PostgreSQL RLS",
+      description: "Database policies enforce access beneath the API checks.",
+    },
+    {
+      label: "Test focus",
+      value: "Forbidden requests",
+      description:
+        "Tests cover unauthenticated, wrong-role and cross-student access.",
+    },
+    {
+      label: "Deployment",
+      value: "Azure Container Apps",
+      description: "Containerised delivery with GitHub Actions and Bicep.",
+    },
   ],
   sections: [
     {
@@ -120,6 +138,7 @@ export default {
       value: "Docker, GitHub Actions, Bicep, Azure Container Apps, Key Vault",
     },
   ],
+  repoUrl: "https://github.com/BraddlesUnravels/access-control-demo",
   related: [
     { label: "Step-up authentication", href: "/work/step-up-authentication/" },
   ],
