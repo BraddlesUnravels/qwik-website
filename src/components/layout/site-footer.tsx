@@ -2,7 +2,6 @@ import { component$ } from "@builder.io/qwik";
 import { Container } from "../ui/container";
 import { siteConfig } from "~/config/site";
 import { LuGithub, LuLinkedin, LuMail } from "@qwikest/icons/lucide";
-import { SeekIcon } from "../ui/seek-icon";
 import { Typography } from "../ui/typography";
 import { version } from "../../../package.json";
 
@@ -18,11 +17,6 @@ const socialLinks = [
     icon: LuLinkedin,
     href: siteConfig.linkedin,
     label: "LinkedIn",
-  },
-  {
-    icon: SeekIcon,
-    href: siteConfig.seek,
-    label: "Seek",
   },
   {
     icon: LuMail,

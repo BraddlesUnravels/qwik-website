@@ -60,7 +60,7 @@ export const MainPageHeadBanner = component$(() => {
       </section>
 
       <a
-        href="#selected-work"
+        href="#selected-projects"
         class="absolute bottom-5 left-1/2 inline-flex -translate-x-1/2 items-center gap-2 rounded-full border border-emerald-400/30 bg-slate-950/90 px-5 py-3 text-sm font-medium text-emerald-300 shadow-lg transition-colors hover:bg-emerald-950"
       >
         View projects

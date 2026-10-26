@@ -1,52 +1,55 @@
 import { component$, useStylesScoped$ } from "@builder.io/qwik";
+// Logos
+import javascriptIcon from "~/media/logos/JS-logo.svg?url&no-inline";
+import typescriptIcon from "~/media/logos/typescript-logo.svg?url&no-inline";
+import qwikIcon from "~/media/logos/qwik-logo.svg?url&no-inline";
+import reactIcon from "~/media/logos/react-logo.svg?url&no-inline";
+import nextjsIcon from "~/media/logos/nextjs-logo.svg?url&no-inline";
+import tailwindIcon from "~/media/logos/tailwind-logo.svg?url&no-inline";
+import muiIcon from "~/media/logos/mui-logo.svg?url&no-inline";
+import nodeIcon from "~/media/logos/node-logo.svg?url&no-inline";
+import expressIcon from "~/media/logos/express-logo.svg?url&no-inline";
+import elysiaIcon from "~/media/logos/elysiajs-logo.svg?url&no-inline";
+import bunIcon from "~/media/logos/bun-logo.svg?url&no-inline";
+import npmIcon from "~/media/logos/npm-logo.svg?url&no-inline";
+import sqlServerIcon from "~/media/logos/microsoft-sql-logo.svg?url&no-inline";
+import mysqlIcon from "~/media/logos/mysql-logo.svg?url&no-inline";
+import postgresIcon from "~/media/logos/postgres-logo.svg?url&no-inline";
+import prismaIcon from "~/media/logos/prisma-logo.svg?url&no-inline";
+import typeormIcon from "~/media/logos/typeorm-logo.svg?url&no-inline";
+import drizzleIcon from "~/media/logos/drizzle-logo.svg?url&no-inline";
+import supabaseIcon from "~/media/logos/supabase-logo.svg?url&no-inline";
+import cypressIcon from "~/media/logos/cypress-circle-logo.svg?url&no-inline";
+import vitestIcon from "~/media/logos/vitest-logo.svg?url&no-inline";
+import dockerIcon from "~/media/logos/docker-logo.svg?url&no-inline";
+import githubActionsIcon from "~/media/logos/github-actions-logo.svg?url&no-inline";
+import iacIcon from "~/media/logos/iac-logo.svg?url&no-inline";
 
 const technologies = [
-  // Languages
-  { name: "JavaScript", icon: "/icon/logo/JS-logo.svg" },
-  { name: "TypeScript", icon: "/icon/logo/typescript-logo.svg" },
-
-  // Front-end
-  { name: "Qwik", icon: "/icon/logo/qwik-logo.svg" },
-  { name: "React", icon: "/icon/logo/react-logo.svg" },
-  { name: "Next.js", icon: "/icon/logo/nextjs-logo.svg" },
-  { name: "Tailwind CSS", icon: "/icon/logo/tailwind-logo.svg" },
-  { name: "MUI", icon: "/icon/logo/mui-logo.svg" },
-
-  // Back-end and runtimes
-  { name: "Node.js", icon: "/icon/logo/node-logo.svg" },
-  { name: "Express.js", icon: "/icon/logo/express-logo.svg" },
-  { name: "Elysia.js", icon: "/icon/logo/elysiajs-logo.svg" },
-  { name: "Bun", icon: "/icon/logo/bun-logo.svg" },
-  { name: "npm", icon: "/icon/logo/npm-logo.svg" },
-
-  // Databases
-  {
-    name: "Microsoft SQL Server",
-    icon: "/icon/logo/microsoft-sql-logo.svg",
-  },
-  { name: "MySQL", icon: "/icon/logo/mysql-logo.svg" },
-  { name: "PostgreSQL", icon: "/icon/logo/postgres-logo.svg" },
-
-  // Data access and back-end platforms
-  { name: "Prisma", icon: "/icon/logo/prisma-logo.svg" },
-  { name: "TypeORM", icon: "/icon/logo/typeorm-logo.svg" },
-  { name: "Drizzle", icon: "/icon/logo/drizzle-logo.svg" },
-  { name: "Supabase", icon: "/icon/logo/supabase-logo.svg" },
-
-  // Testing
-  { name: "Cypress", icon: "/icon/logo/cypress-circle-logo.svg" },
-  { name: "Vitest", icon: "/icon/logo/vitest-logo.svg" },
-
-  // DevOps and cloud
-  { name: "Docker", icon: "/icon/logo/docker-logo.svg" },
-  {
-    name: "GitHub Actions",
-    icon: "/icon/logo/github-actions-logo.svg",
-  },
-  {
-    name: "Infrastructure as Code",
-    icon: "/icon/logo/iac-logo.svg",
-  },
+  { name: "JavaScript", icon: javascriptIcon },
+  { name: "TypeScript", icon: typescriptIcon },
+  { name: "Qwik", icon: qwikIcon },
+  { name: "React", icon: reactIcon },
+  { name: "Next.js", icon: nextjsIcon },
+  { name: "Tailwind CSS", icon: tailwindIcon },
+  { name: "MUI", icon: muiIcon },
+  { name: "Node.js", icon: nodeIcon },
+  { name: "Express.js", icon: expressIcon },
+  { name: "Elysia.js", icon: elysiaIcon },
+  { name: "Bun", icon: bunIcon },
+  { name: "npm", icon: npmIcon },
+  { name: "Microsoft SQL Server", icon: sqlServerIcon },
+  { name: "MySQL", icon: mysqlIcon },
+  { name: "PostgreSQL", icon: postgresIcon },
+  { name: "Prisma", icon: prismaIcon },
+  { name: "TypeORM", icon: typeormIcon },
+  { name: "Drizzle", icon: drizzleIcon },
+  { name: "Supabase", icon: supabaseIcon },
+  { name: "Cypress", icon: cypressIcon },
+  { name: "Vitest", icon: vitestIcon },
+  { name: "Docker", icon: dockerIcon },
+  { name: "GitHub Actions", icon: githubActionsIcon },
+  { name: "Infrastructure as Code", icon: iacIcon },
 ] as const;
 
 const carouselCopies = [

@@ -15,7 +15,7 @@ export const CaseStudyHeader = component$<HeaderProps>(({ study }) => (
   <header class="mx-auto w-full max-w-6xl px-5 pt-10 pb-12 sm:px-8 sm:pt-16 sm:pb-16 lg:px-10">
     <div class="flex flex-wrap items-center justify-between gap-4">
       <a
-        href="/#selected-work"
+        href="/#selected-projects"
         class="group text-ink-muted hover:text-ink inline-flex items-center gap-2 text-sm font-semibold transition-colors"
       >
         <span

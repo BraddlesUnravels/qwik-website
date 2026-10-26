@@ -1,8 +1,8 @@
 import type { CaseStudy } from "../types";
 
 export default {
-  slug: "commercial-engineering",
-  path: "/about/commercial-engineering/",
+  slug: "about-approach",
+  path: "/about/approach",
   category: "How I work",
   title: "What sales leadership taught me about building software",
   description: `

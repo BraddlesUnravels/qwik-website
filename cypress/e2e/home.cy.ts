@@ -16,8 +16,8 @@ describe("Home page", () => {
     cy.contains("TypeScript").should("exist");
   });
 
-  it("should show selected and supporting work sections", () => {
-    cy.get("#selected-work").should("exist");
+  it("should show selected and supporting projects sections", () => {
+    cy.get("#selected-projects").should("exist");
     cy.contains("Selected work").should("exist");
     cy.contains("Complex systems, clearly evidenced.").should("exist");
     cy.contains("Supporting work").should("exist");
@@ -27,7 +27,7 @@ describe("Home page", () => {
     cy.contains("Access Control Demo: security you can inspect").should(
       "exist",
     );
-    cy.get('a[href="/work/customer-finance-portal/"]').should("exist");
+    cy.get('a[href="/projects/autodash"]').should("exist");
     cy.contains("View case study").should("exist");
   });
 
@@ -37,10 +37,10 @@ describe("Home page", () => {
     cy.contains("Start with the real workflow.").should("exist");
   });
 
-  it("should link from the banner to selected work", () => {
+  it("should link from the banner to selected projects", () => {
     cy.contains("a", "View projects")
-      .should("have.attr", "href", "#selected-work")
+      .should("have.attr", "href", "#selected-projects")
       .click();
-    cy.get("#selected-work").should("be.visible");
+    cy.get("#selected-projects").should("be.visible");
   });
 });

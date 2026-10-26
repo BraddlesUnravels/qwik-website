@@ -2,7 +2,7 @@ import type { CaseStudy } from "../types";
 
 export default {
   slug: "lease-balance-calculation",
-  path: "/work/lease-balance-calculation/",
+  path: "/projects/lease-balance-calculation",
   category: "Legacy modernisation",
   title: "Making lease balances available without a 34-minute DB lockout",
   description: `
@@ -110,7 +110,7 @@ export default {
   related: [
     {
       label: "LeaseTrack customer portal",
-      href: "/work/customer-finance-portal/",
+      href: "/projects/customer-finance-portal/",
     },
   ],
 } satisfies CaseStudy;
