@@ -176,7 +176,7 @@ jobs:
         run: docker build -f docker/Dockerfile -t "${IMAGE_NAME}" .
 
       # HTTP checks mirror IaC deploy-workload-release.sh verify for qwik-website:
-      # GET /health -> 200, GET / -> 200, GET /work/access-control-demo -> 200.
+      # GET /health -> 200, GET / -> 200, GET /projects/access-control-demo -> 200.
       - name: Smoke test the built image
         shell: bash
         run: |
