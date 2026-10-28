@@ -2,6 +2,9 @@ import type { Project } from "../types";
 import WebsiteLanding from "~/media/site-rebuild/company-website-landing.png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
 import LeaseCalculator from "~/media/site-rebuild/company-website-lease-calculator-monthly.png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
 import EmployeeEnquiry from "~/media/site-rebuild/company-contact-form-employee.png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
+import WebsiteLandingFull from "~/media/site-rebuild/company-website-landing.png?url&no-inline";
+import LeaseCalculatorFull from "~/media/site-rebuild/company-website-lease-calculator-monthly.png?url&no-inline";
+import EmployeeEnquiryFull from "~/media/site-rebuild/company-contact-form-employee.png?url&no-inline";
 
 export default {
   slug: "site-rebuild-with-intergration-hubspot",
@@ -21,6 +24,7 @@ export default {
   images: [
     {
       ...WebsiteLanding,
+      fullSrc: WebsiteLandingFull,
       alt: "Inside Edge homepage with vehicle imagery and an estimate form.",
       caption:
         "The rebuilt Inside Edge homepage gives visitors a direct route into a lease estimate.",
@@ -64,12 +68,14 @@ export default {
       images: [
         {
           ...LeaseCalculator,
+          fullSrc: LeaseCalculatorFull,
           alt: "Lease calculator showing entered values, a monthly estimate and a contact toggle.",
           caption:
             "The calculator turns vehicle and salary inputs into an estimate and offers a contact option.",
         },
         {
           ...EmployeeEnquiry,
+          fullSrc: EmployeeEnquiryFull,
           alt: "Employee enquiry form with contact details, employer details and an enquiry reason.",
           caption:
             "The employee enquiry form collects the details needed for the server-side lead workflow.",

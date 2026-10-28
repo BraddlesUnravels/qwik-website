@@ -33,8 +33,8 @@ export const projectSummaries: ProjectSummary[] = [
     evidence: ["12,000+ lines", "~34 minutes"],
   },
   {
-    slug: "crm-legacy-integration",
-    path: "/projects/crm-legacy-integration",
+    slug: "tqe-legacy-integration",
+    path: "/projects/tqe-legacy-integration",
     category: "Business systems integration",
     title: "Connecting the lead-to-lease journey across three systems",
     description:

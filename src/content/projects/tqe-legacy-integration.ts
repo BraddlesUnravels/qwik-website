@@ -1,8 +1,8 @@
 import type { Project } from "../types";
 
 export default {
-  slug: "crm-legacy-integration",
-  path: "/projects/crm-legacy-integration/",
+  slug: "tqe-legacy-integration",
+  path: "/projects/tqe-legacy-integration/",
   category: "Business systems integration",
   title: "Connecting the lead-to-lease journey across three systems",
   description: `

@@ -3,6 +3,10 @@ import ReimbursementDesktop from "~/media/autodash/Reimb_Page_Desktop(redacted).
 import ReimbursementMobile from "~/media/autodash/Reimb_Page_Mobile(redacted).png?w=240;400&format=webp&quality=80&withoutEnlargement&as=img";
 import DocumentsDesktop from "~/media/autodash/Lease_Docx_Page_Desktop(redacted).png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
 import LegacyPortalHome from "~/media/legacy-portal/legacy-portal-account-home.png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
+import ReimbursementDesktopFull from "~/media/autodash/Reimb_Page_Desktop(redacted).png?url&no-inline";
+import ReimbursementMobileFull from "~/media/autodash/Reimb_Page_Mobile(redacted).png?url&no-inline";
+import DocumentsDesktopFull from "~/media/autodash/Lease_Docx_Page_Desktop(redacted).png?url&no-inline";
+import LegacyPortalHomeFull from "~/media/legacy-portal/legacy-portal-account-home.png?url&no-inline";
 
 export default {
   slug: "autodash",
@@ -23,6 +27,7 @@ export default {
   images: [
     {
       ...ReimbursementDesktop,
+      fullSrc: ReimbursementDesktopFull,
       alt: "Desktop reimbursement page with a claim form and supporting-file upload area.",
       caption:
         "Reimbursements brings the claim form and supporting-file upload together.",
@@ -40,6 +45,7 @@ export default {
       images: [
         {
           ...LegacyPortalHome,
+          fullSrc: LegacyPortalHomeFull,
           alt: "Legacy customer portal home screen with its original navigation and vehicle banner.",
           caption:
             "The previous customer portal, before AutoDash replaced public access. This is the legacy interface, not the new application.",
@@ -75,12 +81,14 @@ export default {
       images: [
         {
           ...ReimbursementMobile,
+          fullSrc: ReimbursementMobileFull,
           alt: "Mobile reimbursement page with the claim form and bottom navigation.",
           caption:
             "The same claim form adapts to a narrow screen, with customer navigation kept within reach.",
         },
         {
           ...DocumentsDesktop,
+          fullSrc: DocumentsDesktopFull,
           alt: "Desktop lease documents page with document groups and download controls.",
           caption:
             "Customers can find lease documents by type and download them directly from the portal.",

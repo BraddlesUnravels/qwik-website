@@ -2,6 +2,8 @@ import type { Project } from "../types";
 import BalanceDesktop from "~/media/autodash/Lease_Detail_Page_Desktop(redacted).png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
 import BalanceMobile from "~/media/autodash/Lease_Detail_Page_Mobile(redacted).png?w=240;400&format=webp&quality=80&withoutEnlargement&as=img";
 import BalanceBoundary from "~/media/diagrams/balance-source-boundary.svg?url&no-inline";
+import BalanceDesktopFull from "~/media/autodash/Lease_Detail_Page_Desktop(redacted).png?url&no-inline";
+import BalanceMobileFull from "~/media/autodash/Lease_Detail_Page_Mobile(redacted).png?url&no-inline";
 
 export default {
   slug: "lease-balance-calculation",
@@ -21,6 +23,7 @@ export default {
   images: [
     {
       ...BalanceDesktop,
+      fullSrc: BalanceDesktopFull,
       alt: "AutoDash lease-details page with a balance breakdown, budget indicators and transaction history.",
       caption:
         "The lease-details interface brings balances, budgets and transaction history into one view. The screenshot illustrates the interface, not calculation timing.",
@@ -59,6 +62,7 @@ export default {
       images: [
         {
           src: BalanceBoundary,
+          fullSrc: BalanceBoundary,
           w: 1017,
           h: 358,
           alt: "React lease-detail requests mapped to stored-procedure calls, with unavailable SQL bodies marked as an evidence boundary.",
@@ -108,6 +112,7 @@ export default {
       images: [
         {
           ...BalanceMobile,
+          fullSrc: BalanceMobileFull,
           alt: "Mobile AutoDash lease-details page showing the balance breakdown and budget indicators.",
           caption:
             "The mobile lease view presents the balance breakdown and budget indicators in a single column.",

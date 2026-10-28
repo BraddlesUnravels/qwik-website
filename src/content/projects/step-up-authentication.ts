@@ -1,6 +1,7 @@
 import type { Project } from "../types";
 import BankingDesktop from "~/media/autodash/Bank_Account_Page_Desktop(redacted).png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
 import StepUpFlow from "~/media/diagrams/step-up-selected-action.svg?url&no-inline";
+import BankingDesktopFull from "~/media/autodash/Bank_Account_Page_Desktop(redacted).png?url&no-inline";
 
 export default {
   slug: "step-up-authentication",
@@ -18,6 +19,7 @@ export default {
   images: [
     {
       ...BankingDesktop,
+      fullSrc: BankingDesktopFull,
       alt: "AutoDash bank-account page with account details and update controls.",
       caption:
         "Bank-account changes are one of the portal actions covered by fresh verification. This capture shows the account page, not the verification dialog.",
@@ -54,6 +56,7 @@ export default {
       images: [
         {
           src: StepUpFlow,
+          fullSrc: StepUpFlow,
           w: 700,
           h: 1732,
           tone: "diagram",
