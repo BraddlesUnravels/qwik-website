@@ -4,6 +4,10 @@ import baseConfig from "../../vite.config";
 
 export default extendConfig(baseConfig, () => {
   return {
+    ssr: {
+      // The production image omits devDependencies, including Qwik UI's helpers.
+      noExternal: true,
+    },
     build: {
       ssr: true,
       rollupOptions: {

@@ -184,3 +184,20 @@ bun run serve
 ```
 
 Then visit [http://localhost:3000/](http://localhost:3000/).
+
+The Bun adapter bundles SSR dependencies into the server output. Keep this
+behavior when adding UI libraries: the production image installs only production
+dependencies, so external imports of development-only packages will fail at
+startup even if development-server tests pass.
+
+To check the production container locally:
+
+```bash
+docker compose -f docker/docker-compose.yml up --build -d --wait website
+curl --fail http://localhost:3000/health
+curl --fail http://localhost:3000/
+curl --fail http://localhost:3000/projects/access-control-demo
+docker compose -f docker/docker-compose.yml down
+```
+
+The `stage`-labelled Integration workflow performs these checks on pull requests.

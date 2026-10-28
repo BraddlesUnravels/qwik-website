@@ -16,6 +16,7 @@ export type OptimizedImage = {
 export type ProjectImage = OptimizedImage & {
   alt: string;
   caption: string;
+  fullSrc?: string;
   tone?: "dark" | "diagram";
 };
 

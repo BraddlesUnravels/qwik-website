@@ -56,6 +56,7 @@ export default {
       images: [
         {
           src: MigrationVersions,
+          fullSrc: MigrationVersions,
           w: 1077,
           h: 762,
           tone: "diagram",

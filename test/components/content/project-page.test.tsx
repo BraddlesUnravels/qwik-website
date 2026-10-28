@@ -127,7 +127,11 @@ describe("ProjectPage", () => {
           Open demo
         </button>
       </ProjectPage>,
-      { containerTagName: "div" },
+      {
+        containerTagName: "div",
+        // Unit tests have no client build manifest for serializing event QRLs.
+        symbolMapper: (symbolName) => [symbolName, "/test-qrl.js"],
+      },
     );
     const header = html.slice(
       html.indexOf("<header"),

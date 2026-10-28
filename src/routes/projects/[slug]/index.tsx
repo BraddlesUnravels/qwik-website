@@ -1,4 +1,5 @@
-import { component$ } from "@builder.io/qwik";
+import { component$, useSignal } from "@builder.io/qwik";
+import { MessageDialog } from "~/components/ui/app-modal/message-dialog";
 import {
   Form,
   routeAction$,
@@ -60,6 +61,7 @@ export const useDemoAccessRedirect = routeAction$(
 export default component$(() => {
   const project = useProject().value;
   const demoAccess = useDemoAccessRedirect();
+  const demoErrorOpen = useSignal(false);
 
   if (!project) {
     return (
@@ -90,8 +92,12 @@ export default component$(() => {
           id="demo-access"
           q:slot="actions"
           action={demoAccess}
-          reloadDocument
           class="mt-10 flex flex-col items-start gap-3"
+          onSubmitCompleted$={(event) => {
+            if (event.detail.value?.failed) {
+              demoErrorOpen.value = true;
+            }
+          }}
         >
           <button
             aria-label="Try demo"
@@ -100,13 +106,23 @@ export default component$(() => {
             disabled={demoAccess.isRunning}
           >
             {demoAccess.isRunning ? "Opening demo…" : "Try the live demo"}
+
             <span aria-hidden="true">→</span>
           </button>
+
           {demoAccess.value?.failed && (
-            <p role="alert" class="text-sm text-red-300">
-              {demoAccess.value.message}
-            </p>
+            <p class="text-sm text-red-300">{demoAccess.value.message}</p>
           )}
+
+          <MessageDialog
+            show={demoErrorOpen}
+            title="Live demo unavailable"
+            message={
+              demoAccess.value?.message ??
+              "The live demo is unavailable right now. Please try again later."
+            }
+            alert
+          />
         </Form>
       )}
     </ProjectPage>

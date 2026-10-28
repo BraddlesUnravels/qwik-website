@@ -4,6 +4,10 @@ import StudentDashboard from "~/media/access-control-demo/desktop-student-accoun
 import RoleSelection from "~/media/access-control-demo/desktop-user-select-close-up.png?w=640;960;1280&format=webp&quality=80&withoutEnlargement&as=img";
 import AdministratorDashboard from "~/media/access-control-demo/desktop-administrator-account.png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
 import StudentMobileActions from "~/media/access-control-demo/mobile-student-actions.png?w=240;400;640&format=webp&quality=80&withoutEnlargement&as=img";
+import StudentDashboardFull from "~/media/access-control-demo/desktop-student-account.png?url&no-inline";
+import RoleSelectionFull from "~/media/access-control-demo/desktop-user-select-close-up.png?url&no-inline";
+import AdministratorDashboardFull from "~/media/access-control-demo/desktop-administrator-account.png?url&no-inline";
+import StudentMobileActionsFull from "~/media/access-control-demo/mobile-student-actions.png?url&no-inline";
 
 export default {
   slug: "access-control-demo",
@@ -23,6 +27,7 @@ export default {
   images: [
     {
       ...StudentDashboard,
+      fullSrc: StudentDashboardFull,
       tone: "dark",
       alt: "Student consultation dashboard with a creation form and existing consultations.",
       caption:
@@ -69,6 +74,7 @@ export default {
       images: [
         {
           ...RoleSelection,
+          fullSrc: RoleSelectionFull,
           tone: "dark",
           alt: "Demo account selector offering Student 01, Student 02 and Administrator roles.",
           caption:
@@ -88,6 +94,7 @@ export default {
       images: [
         {
           src: DemoAuthorization,
+          fullSrc: DemoAuthorization,
           w: 854,
           h: 1055,
           tone: "diagram",
@@ -97,6 +104,7 @@ export default {
         },
         {
           ...AdministratorDashboard,
+          fullSrc: AdministratorDashboardFull,
           tone: "dark",
           alt: "Administrator dashboard displaying consultations from multiple students.",
           caption:
@@ -154,6 +162,7 @@ export default {
       images: [
         {
           ...StudentMobileActions,
+          fullSrc: StudentMobileActionsFull,
           tone: "dark",
           alt: "Mobile student consultation list with reschedule, mark incomplete and cancel controls.",
           caption:
