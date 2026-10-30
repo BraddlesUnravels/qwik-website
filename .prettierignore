@@ -13,3 +13,4 @@ yarn.lock
 bun.lock
 bun.lockb
 tsconfig.tsbuildinfo
+src/media

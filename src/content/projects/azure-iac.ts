@@ -1,6 +1,6 @@
 import type { Project } from "../types";
 import IacReleaseDiagram from "~/media/diagrams/azure-iac-release-path.svg?url&no-inline";
-import IacReleaseDiagramPath from "~/media/diagrams/azure-iac-release-path.svg";
+import IacReleasePath from "~/media/diagrams/azure-iac-release-path.svg";
 
 export default {
   slug: "azure-iac",
@@ -56,7 +56,7 @@ export default {
       images: [
         {
           src: IacReleaseDiagram,
-          fullSrc: IacReleaseDiagramPath,
+          fullSrc: IacReleasePath,
           w: 640,
           h: 1100,
           tone: "diagram",

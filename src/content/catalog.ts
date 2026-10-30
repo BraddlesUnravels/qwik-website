@@ -40,7 +40,7 @@ export const projectSummaries: ProjectSummary[] = [
     description:
       "I separated the identities used to publish, preview, deploy and run each application, and kept runtime secret values in Azure Key Vault.",
     featured: false,
-    evidence: ["4 identities per application", "Key Vault runtime references"],
+    evidence: ["4 identities. 1 per stage", "Key Vault runtime references"],
   },
   {
     slug: "lease-balance-calculation",
@@ -56,7 +56,7 @@ export const projectSummaries: ProjectSummary[] = [
     slug: "site-rebuild",
     path: "/projects/site-rebuild",
     category: "Web development and CRM automation",
-    title: "Rebuilding a WordPress site and connecting leads to HubSpot",
+    title: "Rebuilding a WordPress site with intergations for HubSpot",
     description:
       "I rebuilt the public website in Qwik and implemented a server-side lead flow that made enquiries and campaign attribution easier to follow.",
     featured: true,
