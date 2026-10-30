@@ -30,10 +30,27 @@ export default {
     },
   ],
   metrics: [
-    { label: "Legacy procedure", value: "12,000+ lines" },
-    { label: "Old full batch", value: "~34 minutes" },
-    { label: "Individual API request", value: "~30 ms" },
-    { label: "Required overnight batch", value: "12–13 minutes" },
+    {
+      label: "Legacy procedure",
+      value: "12,000+ lines",
+      description: "Undocumented procedure requiring input from accounts",
+    },
+    {
+      label: "Legacy Full batch",
+      value: "~34 minutes",
+      description: "Updates all lease balaces at once",
+    },
+    {
+      label: "Built API for Individual leases",
+      value: "API ~30 ms",
+      description: "Customers no longer saw stale balances",
+    },
+    {
+      label: "Refactored Legacy Account procedure",
+      value: "12–13 minutes",
+      description:
+        "Scheduled at 2am to avoid db lockouts during business hours",
+    },
   ],
   sections: [
     {

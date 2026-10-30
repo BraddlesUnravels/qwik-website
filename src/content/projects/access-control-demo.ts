@@ -1,5 +1,6 @@
 import type { Project } from "../types";
 import DemoAuthorization from "~/media/diagrams/demo-authorization.svg?url&no-inline";
+import DemoAuthorizationPath from "~/media/diagrams/demo-authorization.svg";
 import StudentDashboard from "~/media/access-control-demo/desktop-student-account.png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
 import RoleSelection from "~/media/access-control-demo/desktop-user-select-close-up.png?w=640;960;1280&format=webp&quality=80&withoutEnlargement&as=img";
 import AdministratorDashboard from "~/media/access-control-demo/desktop-administrator-account.png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
@@ -94,7 +95,7 @@ export default {
       images: [
         {
           src: DemoAuthorization,
-          fullSrc: DemoAuthorization,
+          fullSrc: DemoAuthorizationPath,
           w: 854,
           h: 1055,
           tone: "diagram",

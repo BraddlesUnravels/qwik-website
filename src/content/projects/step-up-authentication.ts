@@ -26,10 +26,30 @@ export default {
     },
   ],
   metrics: [
-    { label: "Approval window", value: "5 minutes" },
-    { label: "Challenge", value: "6-digit code" },
-    { label: "Enforcement", value: "Server middleware" },
-    { label: "Client flow", value: "Hold and resume" },
+    {
+      label: "Approval window",
+      value: "5 minutes",
+      description:
+        "The approval lasts 5 minutes. Allowing consecutive actions within that window.",
+    },
+    {
+      label: "Challenge",
+      value: "6-digit code",
+      description:
+        "Verifies identity for sensitive actions, never trust the session has not been compromised",
+    },
+    {
+      label: "Server Enforcement",
+      value: "Middleware",
+      description:
+        "Middelware does not trust client data, it checks the server side session for user identity.",
+    },
+    {
+      label: "Client flow",
+      value: "Hold - Resume",
+      description:
+        "Holds the action as pending until verification, then the client resumes the action.",
+    },
   ],
   sections: [
     {

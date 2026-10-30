@@ -34,10 +34,26 @@ export default {
     },
   ],
   metrics: [
-    { label: "Customers", value: "5,000+ migrated" },
-    { label: "Delivery", value: "8 months" },
-    { label: "Release", value: "November 2024" },
-    { label: "Scope", value: "Full-stack ownership" },
+    {
+      label: "Customers",
+      value: "5,000+ migrated",
+      description: "Moved from legacy finance portal",
+    },
+    {
+      label: "Delivery",
+      value: "8 months",
+      description: "I delayed release by 2 months, due to security hardening",
+    },
+    {
+      label: "Release",
+      value: "November 2024",
+      description: "Production went live on schedule with no downtime",
+    },
+    {
+      label: "Scope",
+      value: "Full-stack ownership",
+      description: "Taken from concept to release",
+    },
   ],
   sections: [
     {

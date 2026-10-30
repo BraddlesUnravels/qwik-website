@@ -17,12 +17,16 @@ export default {
   `,
   featured: true,
   metrics: [
-    { label: "Accounts", value: "5,000+" },
-    { label: "Legacy hash", value: "SHA-1", description: "JIT conversion" },
+    { label: "Accounts", value: "5,000+", description: "Migrated on login" },
+    {
+      label: "Legacy hash",
+      value: "SHA-1",
+      description: "Login password hash verified",
+    },
     {
       label: "New hash",
       value: "Argon2",
-      description: "Stored on first login",
+      description: "Just in time (or JIT) conversion from SHA-1",
     },
     {
       label: "Pilot",

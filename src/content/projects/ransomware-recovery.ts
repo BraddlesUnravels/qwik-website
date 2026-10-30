@@ -19,10 +19,26 @@ export default {
   `,
   featured: false,
   metrics: [
-    { label: "Initial response", value: "Containment" },
-    { label: "Recovery", value: "Parallel workstreams" },
-    { label: "Critical service", value: "Next morning" },
-    { label: "Further restoration", value: "About 3 weeks" },
+    {
+      label: "Immediate response",
+      value: "Containment",
+      description: "Isolated the network, stopped workstation use",
+    },
+    {
+      label: "Recovery responsibility",
+      value: "Network & PCs",
+      description: "Owned all network divice & workstation recovery",
+    },
+    {
+      label: "Critical service",
+      value: "Next Morning",
+      description: "Restored the critial business services.",
+    },
+    {
+      label: "Wider recovery",
+      value: "~3 weeks",
+      description: "Further systems brought back online.",
+    },
   ],
   sections: [
     {

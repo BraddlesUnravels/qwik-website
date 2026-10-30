@@ -10,16 +10,36 @@ export default {
       to a legacy desktop quoting tool and a legacy lease-management platform.
     `,
   introduction: `
-      Customer information started in PipelineAxis CRM, then re-entered into QuoteCore 
+      Customer information started in Torque CRM, then re-entered into QuoteCore 
       to prepare a quote that eventually reached LeaseCore if & when the lease settled. 
       Each hand-off created another opportunity for lost leads, inconsistent records and incomplete reporting.
     `,
   featured: true,
   metrics: [
-    { label: "Systems", value: "PipelineAxis, QuoteCore, LeaseCore" },
-    { label: "Reported conversion", value: "–9 points at first" },
-    { label: "Expiry pipeline", value: "Up to 3 months ahead" },
-    { label: "Approach", value: "Incremental integration" },
+    {
+      label: "System Isolation",
+      value: "Critical systems",
+      description:
+        "Torque, QuoteCore and LeaseCore, each is isolated from the next",
+    },
+    {
+      label: "Reporting and Data",
+      value: "Tracing the data",
+      description:
+        "Tracking data across isolated systems, identifing where data comes from and where it going",
+    },
+    {
+      label: "Leeking or lost Data",
+      value: "Untracked Data",
+      description:
+        "No need for a reporting overhaul. Staff working arounded difficult systems manually accounted for gaps",
+    },
+    {
+      label: "Adoption of changes",
+      value: "Align Incentives",
+      description:
+        "Aligning the staff incentives with the new workflow. By incentivising the right actions, adoption improved",
+    },
   ],
   sections: [
     {
