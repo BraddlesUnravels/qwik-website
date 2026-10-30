@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1100" viewBox="0 0 640 1100" role="img" aria-labelledby="iac-release-title iac-release-desc">
+  <title id="iac-release-title">Shared Azure release process</title>
+  <desc id="iac-release-desc">Release checks, deployment and website verification.</desc>
+  <style>
+    svg { color-scheme: light dark; --bg:#fff9f3; --card:#fffdf9; --ink:#4c3020; --muted:#725746; --line:#a46b43; --border:#c6a181; --accent:#eddbc5; --note:#f4e9dd; }
+    @media (prefers-color-scheme: dark) { svg { --bg:#201914; --card:#2c221b; --ink:#f3dfce; --muted:#d1b9a5; --line:#cc9c72; --border:#a37653; --accent:#443020; --note:#30241c; } }
+    text { font-family:Arial,Helvetica,sans-serif; fill:var(--ink); }
+    .background { fill:var(--bg); }
+    .card { fill:var(--card); stroke:var(--border); stroke-width:1.5; }
+    .accent { fill:var(--accent); }
+    .note { fill:var(--note); }
+    .eyebrow { font-size:16px; font-weight:700; letter-spacing:1.6px; fill:var(--muted); }
+    .heading { font-size:26px; font-weight:700; }
+    .label { font-size:24px; font-weight:700; }
+    .body { font-size:21px; fill:var(--muted); }
+    .number { font-size:19px; font-weight:700; text-anchor:middle; }
+    .connector { fill:none; stroke:var(--line); stroke-width:2; }
+    .arrow { fill:var(--line); }
+  </style>
+  <defs>
+    <marker id="iac-release-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="arrow" d="M1 1 L9 5 L1 9 Z"/></marker>
+  </defs>
+  <rect class="background" width="640" height="1100" rx="18"/>
+  <text class="eyebrow" x="32" y="39">AZURE INFRASTRUCTURE</text>
+  <text class="heading" x="32" y="81">Two applications, one release process</text>
+
+  <rect class="card" x="32" y="112" width="276" height="100" rx="12"/>
+  <text class="label" style="font-size:22px" x="170" y="153" text-anchor="middle">Portfolio website</text>
+  <text class="body" x="170" y="185" text-anchor="middle">Application repository</text>
+  <rect class="card" x="332" y="112" width="276" height="100" rx="12"/>
+  <text class="label" style="font-size:22px" x="470" y="153" text-anchor="middle">Access Control Demo</text>
+  <text class="body" x="470" y="185" text-anchor="middle">Application repository</text>
+
+  <path class="connector" d="M170 212 V244 H470 V212 M320 244 V268" marker-end="url(#iac-release-arrow)"/>
+  <path class="connector" d="M320 408 V450" marker-end="url(#iac-release-arrow)"/>
+  <path class="connector" d="M320 590 V632" marker-end="url(#iac-release-arrow)"/>
+  <path class="connector" d="M320 772 V814" marker-end="url(#iac-release-arrow)"/>
+
+  <rect class="card" x="32" y="280" width="576" height="128" rx="14"/>
+  <circle class="accent" cx="76" cy="319" r="23"/>
+  <text class="number" x="76" y="326">01</text>
+  <text class="label" x="118" y="326">Check the release</text>
+  <text class="body" x="118" y="361">Confirm source, version and settings</text>
+  <text class="body" x="118" y="389">against GitHub and approved rules.</text>
+
+  <rect class="card" x="32" y="462" width="576" height="128" rx="14"/>
+  <circle class="accent" cx="76" cy="501" r="23"/>
+  <text class="number" x="76" y="508">02</text>
+  <text class="label" x="118" y="508">Preview the changes</text>
+  <text class="body" x="118" y="543">Reject deletions and changes</text>
+  <text class="body" x="118" y="571">outside the approved release.</text>
+
+  <rect class="card accent" x="32" y="644" width="576" height="128" rx="14"/>
+  <circle class="card" cx="76" cy="683" r="23"/>
+  <text class="number" x="76" y="690">03</text>
+  <text class="label" x="118" y="690">Production deployment</text>
+  <text class="body" x="118" y="725">Recheck the proposed changes,</text>
+  <text class="body" x="118" y="753">then apply the fixed image version.</text>
+
+  <rect class="card" x="32" y="826" width="576" height="128" rx="14"/>
+  <circle class="accent" cx="76" cy="865" r="23"/>
+  <text class="number" x="76" y="872">04</text>
+  <text class="label" x="118" y="872">Check the live website</text>
+  <text class="body" x="118" y="907">Check image, domains and health;</text>
+  <text class="body" x="118" y="935">retry temporary website failures.</text>
+
+  <rect class="note" x="32" y="990" width="576" height="78" rx="12"/>
+  <text class="body" x="54" y="1021">A failed final check fails the workflow after</text>
+  <text class="body" x="54" y="1050">deployment. Recovery is manual.</text>
+</svg>

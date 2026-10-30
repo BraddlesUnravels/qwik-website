@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1000" viewBox="0 0 640 1000" role="img" aria-labelledby="iac-access-title iac-access-desc">
+  <title id="iac-access-title">Separate roles and runtime secrets</title>
+  <desc id="iac-access-desc">Publish, plan, deploy and runtime permissions.</desc>
+  <style>
+    svg { color-scheme: light dark; --bg:#fff9f3; --card:#fffdf9; --ink:#4c3020; --muted:#725746; --line:#a46b43; --border:#c6a181; --accent:#eddbc5; --note:#f4e9dd; }
+    @media (prefers-color-scheme: dark) { svg { --bg:#201914; --card:#2c221b; --ink:#f3dfce; --muted:#d1b9a5; --line:#cc9c72; --border:#a37653; --accent:#443020; --note:#30241c; } }
+    text { font-family:Arial,Helvetica,sans-serif; fill:var(--ink); }
+    .background { fill:var(--bg); }
+    .card { fill:var(--card); stroke:var(--border); stroke-width:1.5; }
+    .accent { fill:var(--accent); }
+    .note { fill:var(--note); }
+    .eyebrow { font-size:16px; font-weight:700; letter-spacing:1.6px; fill:var(--muted); }
+    .heading { font-size:30px; font-weight:700; }
+    .label { font-size:24px; font-weight:700; }
+    .body { font-size:21px; fill:var(--muted); }
+    .small { font-size:17px; fill:var(--muted); }
+    .connector { fill:none; stroke:var(--line); stroke-width:2; }
+    .arrow { fill:var(--line); }
+  </style>
+  <defs>
+    <marker id="iac-access-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="arrow" d="M1 1 L9 5 L1 9 Z"/></marker>
+  </defs>
+  <rect class="background" width="640" height="1000" rx="18"/>
+  <text class="eyebrow" x="32" y="39">IDENTITY AND RUNTIME SECRETS</text>
+  <text class="heading" x="32" y="81">Separate jobs, defined access</text>
+  <text class="body" x="32" y="115">Four defined identities per application.</text>
+
+  <rect class="card" x="32" y="144" width="576" height="108" rx="12"/>
+  <text class="label" x="56" y="179">Publish</text>
+  <text class="body" x="56" y="211">Write the packaged application</text>
+  <text class="body" x="56" y="238">to its own image repository.</text>
+
+  <rect class="card" x="32" y="270" width="576" height="108" rx="12"/>
+  <text class="label" x="56" y="305">Plan</text>
+  <text class="body" x="56" y="337">Read and preview infrastructure;</text>
+  <text class="body" x="56" y="364">cannot deploy.</text>
+
+  <rect class="card" x="32" y="396" width="576" height="108" rx="12"/>
+  <text class="label" x="56" y="431">Deploy</text>
+  <text class="body" x="56" y="463">Update Container Apps;</text>
+  <text class="body" x="56" y="490">no registry, vault or permission writes.</text>
+
+  <rect class="card" x="32" y="522" width="576" height="108" rx="12"/>
+  <text class="label" x="56" y="557">Run</text>
+  <text class="body" x="56" y="589">Read its own image and approved</text>
+  <text class="body" x="56" y="616">runtime secrets.</text>
+
+  <rect class="note" x="32" y="664" width="576" height="266" rx="14"/>
+  <text class="label" x="56" y="702">Runtime secrets</text>
+  <rect class="card" x="56" y="722" width="528" height="48" rx="9"/>
+  <text class="body" x="320" y="753" text-anchor="middle">Release passes approved names</text>
+  <path class="connector" d="M172 770 V806" marker-end="url(#iac-access-arrow)"/>
+
+  <rect class="card" x="56" y="820" width="226" height="84" rx="10"/>
+  <text class="label" x="169" y="854" text-anchor="middle">Running app</text>
+  <text class="body" x="169" y="884" text-anchor="middle">Runtime identity</text>
+  <rect class="card accent" x="358" y="820" width="226" height="84" rx="10"/>
+  <text class="label" x="471" y="854" text-anchor="middle">Azure Key Vault</text>
+  <text class="body" x="471" y="884" text-anchor="middle">Approved secrets</text>
+  <path class="connector" d="M358 866 H294" marker-end="url(#iac-access-arrow)"/>
+  <text class="small" x="320" y="846" text-anchor="middle">Values</text>
+
+  <text class="body" x="320" y="974" text-anchor="middle">Setup and permission changes stay separate.</text>
+</svg>

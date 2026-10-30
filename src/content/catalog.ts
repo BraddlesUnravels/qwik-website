@@ -23,6 +23,26 @@ export const projectSummaries: ProjectSummary[] = [
     evidence: ["2 students + 1 admin", "PostgreSQL RLS"],
   },
   {
+    slug: "azure-iac",
+    path: "/projects/azure-iac",
+    category: "Cloud infrastructure and deployment",
+    title: "One Azure release process for two web applications",
+    description:
+      "I built a shared Azure release process that checks the version and destination, previews infrastructure changes and checks the website after deployment.",
+    featured: true,
+    evidence: ["2 applications, 1 release path", "Public infrastructure code"],
+  },
+  {
+    slug: "azure-access-and-secrets",
+    path: "/projects/azure-access-and-secrets",
+    category: "Cloud permissions and sensitive settings",
+    title: "Separate permissions for publishing, deployment and runtime",
+    description:
+      "I separated the identities used to publish, preview, deploy and run each application, and kept runtime secret values in Azure Key Vault.",
+    featured: false,
+    evidence: ["4 identities per application", "Key Vault runtime references"],
+  },
+  {
     slug: "lease-balance-calculation",
     path: "/projects/lease-balance-calculation",
     category: "Legacy modernisation",
@@ -31,16 +51,6 @@ export const projectSummaries: ProjectSummary[] = [
       "I untangled a 12,000-line SQL calculation, separated the business rules and made individual lease balances available on demand.",
     featured: false,
     evidence: ["12,000+ lines", "~34 minutes"],
-  },
-  {
-    slug: "tqe-legacy-integration",
-    path: "/projects/tqe-legacy-integration",
-    category: "Business systems integration",
-    title: "Connecting the lead-to-lease journey across three systems",
-    description:
-      "I inherited a thinly documented CRM and built practical connections to a desktop quoting tool and a legacy lease-management platform.",
-    featured: false,
-    evidence: ["PipelineAxis, PackEdge, LeaseCore", "–9 points at first"],
   },
   {
     slug: "site-rebuild",
@@ -53,13 +63,23 @@ export const projectSummaries: ProjectSummary[] = [
     evidence: ["3 months", "100 in 3 categories"],
   },
   {
+    slug: "tqe-legacy-integration",
+    path: "/projects/tqe-legacy-integration",
+    category: "Business systems integration",
+    title: "Connecting the lead-to-lease journey across three systems",
+    description:
+      "I inherited a thinly documented CRM and built practical connections to a desktop quoting tool and a legacy lease-management platform.",
+    featured: false,
+    evidence: ["PipelineAxis, PackEdge, LeaseCore", "–9 points at first"],
+  },
+  {
     slug: "autodash-migration",
     path: "/projects/autodash-migration",
     category: "Identity and migration",
     title: "Moving 5,000+ accounts without a blanket password reset",
     description:
       "I pre-migrated eligible customer accounts, then upgraded each password from a legacy SHA-1 hash to Argon2 when its owner returned.",
-    featured: true,
+    featured: false,
     evidence: ["5,000+", "SHA-1"],
   },
   {
