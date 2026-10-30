@@ -31,6 +31,7 @@ export default {
     {
       label: "Related work",
       value: "Shared Azure release process",
+      description: "Shared release setup workflow",
     },
   ],
   sections: [

@@ -15,22 +15,23 @@ export default {
   metrics: [
     {
       label: "Applications",
-      value: "2",
-      description: "Portfolio website and Access Control Demo.",
+      value: ">=2",
+      description: "Currently 2 apps. This site and the domo site",
     },
     {
       label: "Release process",
       value: "1 shared path",
+      description: "Single workflow for both apps",
     },
     {
       label: "Automated tests",
       value: "112",
-      description:
-        "Checks for release requests, configuration and deployment behaviour.",
+      description: "Checks configuration and deployment behaviour.",
     },
     {
-      label: "Project context",
-      value: "Personal portfolio",
+      label: "Infastructure as Code",
+      value: "Small IaC Demo",
+      description: "Showcases a slice of my commercial skills",
     },
   ],
   sections: [

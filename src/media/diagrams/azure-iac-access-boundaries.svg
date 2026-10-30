@@ -1,21 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1000" viewBox="0 0 640 1000" role="img" aria-labelledby="iac-access-title iac-access-desc">
+<svg id="lt-azure-iac-access-boundaries" style="max-width:100%;height:auto;" xmlns="http://www.w3.org/2000/svg" width="640" height="1000" viewBox="0 0 640 1000" role="img" aria-labelledby="iac-access-title iac-access-desc">
   <title id="iac-access-title">Separate roles and runtime secrets</title>
   <desc id="iac-access-desc">Publish, plan, deploy and runtime permissions.</desc>
   <style>
-    svg { color-scheme: light dark; --bg:#fff9f3; --card:#fffdf9; --ink:#4c3020; --muted:#725746; --line:#a46b43; --border:#c6a181; --accent:#eddbc5; --note:#f4e9dd; }
-    @media (prefers-color-scheme: dark) { svg { --bg:#201914; --card:#2c221b; --ink:#f3dfce; --muted:#d1b9a5; --line:#cc9c72; --border:#a37653; --accent:#443020; --note:#30241c; } }
-    text { font-family:Arial,Helvetica,sans-serif; fill:var(--ink); }
-    .background { fill:var(--bg); }
-    .card { fill:var(--card); stroke:var(--border); stroke-width:1.5; }
-    .accent { fill:var(--accent); }
-    .note { fill:var(--note); }
-    .eyebrow { font-size:16px; font-weight:700; letter-spacing:1.6px; fill:var(--muted); }
-    .heading { font-size:30px; font-weight:700; }
-    .label { font-size:24px; font-weight:700; }
-    .body { font-size:21px; fill:var(--muted); }
-    .small { font-size:17px; fill:var(--muted); }
-    .connector { fill:none; stroke:var(--line); stroke-width:2; }
-    .arrow { fill:var(--line); }
+    #lt-azure-iac-access-boundaries {
+      color-scheme: dark;
+      --lt-text: #f4ba96;
+      --lt-line: #afafaf;
+      --lt-border: #573a23;
+      --lt-fill: #45240d;
+      --lt-decision: #251207;
+      --lt-node-opacity: .80;
+      --lt-cluster-opacity: .18;
+    }
+    #lt-azure-iac-access-boundaries text { font-family:Arial,Helvetica,sans-serif; fill:var(--lt-text); opacity:1; }
+    #lt-azure-iac-access-boundaries .background { fill:none; }
+    #lt-azure-iac-access-boundaries .card { fill:var(--lt-fill); fill-opacity:var(--lt-node-opacity); stroke:var(--lt-border); stroke-width:1.5px; filter:none; }
+    #lt-azure-iac-access-boundaries rect.card { rx:10px; ry:10px; }
+    #lt-azure-iac-access-boundaries .accent { fill:var(--lt-decision); fill-opacity:var(--lt-node-opacity); }
+    #lt-azure-iac-access-boundaries circle.accent { stroke:var(--lt-border); stroke-width:1.5px; }
+    #lt-azure-iac-access-boundaries .note { fill:var(--lt-fill); fill-opacity:var(--lt-cluster-opacity); stroke:var(--lt-border); stroke-width:1.5px; stroke-opacity:.55; rx:14px; ry:14px; }
+    #lt-azure-iac-access-boundaries .eyebrow { font-size:16px; font-weight:700; letter-spacing:1.6px; }
+    #lt-azure-iac-access-boundaries .heading { font-size:30px; font-weight:700; }
+    #lt-azure-iac-access-boundaries .label { font-size:24px; font-weight:700; }
+    #lt-azure-iac-access-boundaries .body { font-size:21px; }
+    #lt-azure-iac-access-boundaries .small { font-size:17px; }
+    #lt-azure-iac-access-boundaries .number { font-size:19px; font-weight:700; text-anchor:middle; }
+    #lt-azure-iac-access-boundaries .connector { fill:none; stroke:var(--lt-line); stroke-width:1.5px; }
+    #lt-azure-iac-access-boundaries .arrow { fill:var(--lt-line); }
   </style>
   <defs>
     <marker id="iac-access-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="arrow" d="M1 1 L9 5 L1 9 Z"/></marker>

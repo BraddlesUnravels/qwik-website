@@ -1,21 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1100" viewBox="0 0 640 1100" role="img" aria-labelledby="iac-release-title iac-release-desc">
+<svg id="lt-azure-iac-release-path" style="max-width:100%;height:auto;" xmlns="http://www.w3.org/2000/svg" width="640" height="1100" viewBox="0 0 640 1100" role="img" aria-labelledby="iac-release-title iac-release-desc">
   <title id="iac-release-title">Shared Azure release process</title>
   <desc id="iac-release-desc">Release checks, deployment and website verification.</desc>
   <style>
-    svg { color-scheme: light dark; --bg:#fff9f3; --card:#fffdf9; --ink:#4c3020; --muted:#725746; --line:#a46b43; --border:#c6a181; --accent:#eddbc5; --note:#f4e9dd; }
-    @media (prefers-color-scheme: dark) { svg { --bg:#201914; --card:#2c221b; --ink:#f3dfce; --muted:#d1b9a5; --line:#cc9c72; --border:#a37653; --accent:#443020; --note:#30241c; } }
-    text { font-family:Arial,Helvetica,sans-serif; fill:var(--ink); }
-    .background { fill:var(--bg); }
-    .card { fill:var(--card); stroke:var(--border); stroke-width:1.5; }
-    .accent { fill:var(--accent); }
-    .note { fill:var(--note); }
-    .eyebrow { font-size:16px; font-weight:700; letter-spacing:1.6px; fill:var(--muted); }
-    .heading { font-size:26px; font-weight:700; }
-    .label { font-size:24px; font-weight:700; }
-    .body { font-size:21px; fill:var(--muted); }
-    .number { font-size:19px; font-weight:700; text-anchor:middle; }
-    .connector { fill:none; stroke:var(--line); stroke-width:2; }
-    .arrow { fill:var(--line); }
+    #lt-azure-iac-release-path {
+      color-scheme: dark;
+      --lt-text: #f4ba96;
+      --lt-line: #afafaf;
+      --lt-border: #573a23;
+      --lt-fill: #45240d;
+      --lt-decision: #251207;
+      --lt-node-opacity: .80;
+      --lt-cluster-opacity: .18;
+    }
+    #lt-azure-iac-release-path text { font-family:Arial,Helvetica,sans-serif; fill:var(--lt-text); opacity:1; }
+    #lt-azure-iac-release-path .background { fill:none; }
+    #lt-azure-iac-release-path .card { fill:var(--lt-fill); fill-opacity:var(--lt-node-opacity); stroke:var(--lt-border); stroke-width:1.5px; filter:none; }
+    #lt-azure-iac-release-path rect.card { rx:10px; ry:10px; }
+    #lt-azure-iac-release-path .accent { fill:var(--lt-decision); fill-opacity:var(--lt-node-opacity); }
+    #lt-azure-iac-release-path circle.accent { stroke:var(--lt-border); stroke-width:1.5px; }
+    #lt-azure-iac-release-path .note { fill:var(--lt-fill); fill-opacity:var(--lt-cluster-opacity); stroke:var(--lt-border); stroke-width:1.5px; stroke-opacity:.55; rx:14px; ry:14px; }
+    #lt-azure-iac-release-path .eyebrow { font-size:16px; font-weight:700; letter-spacing:1.6px; }
+    #lt-azure-iac-release-path .heading { font-size:26px; font-weight:700; }
+    #lt-azure-iac-release-path .label { font-size:24px; font-weight:700; }
+    #lt-azure-iac-release-path .body { font-size:21px; }
+    #lt-azure-iac-release-path .small { font-size:17px; }
+    #lt-azure-iac-release-path .number { font-size:19px; font-weight:700; text-anchor:middle; }
+    #lt-azure-iac-release-path .connector { fill:none; stroke:var(--lt-line); stroke-width:1.5px; }
+    #lt-azure-iac-release-path .arrow { fill:var(--lt-line); }
   </style>
   <defs>
     <marker id="iac-release-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="arrow" d="M1 1 L9 5 L1 9 Z"/></marker>

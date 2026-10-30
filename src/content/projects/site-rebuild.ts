@@ -31,10 +31,30 @@ export default {
     },
   ],
   metrics: [
-    { label: "Delivery", value: "3 months" },
-    { label: "Lighthouse", value: "100 in 3 categories" },
-    { label: "Recorded daily leads", value: "Nearly ⅓ more" },
-    { label: "Hosting", value: "Azure" },
+    {
+      label: "Delivery Deadline",
+      value: "3 months",
+      description:
+        "The old wordpress site could not be linked to HubSpot, reslting in manual lead allocation from marketing",
+    },
+    {
+      label: "Lighthouse",
+      value: "3 Scores 100%",
+      description:
+        "The new site scored 100% for performance, accessibility and SEO",
+    },
+    {
+      label: "Recorded daily leads",
+      value: "Nearly ⅓ more",
+      description:
+        "With the hubspot integration, more leads were tracked, improving visibility and actual conversions",
+    },
+    {
+      label: "Cloud Hosting",
+      value: "Azure Container",
+      description:
+        "The new site is cloud hosted in Azure container apps. The previous site was hosted onsite",
+    },
   ],
   sections: [
     {

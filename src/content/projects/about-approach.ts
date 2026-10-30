@@ -16,10 +16,26 @@ export default {
     `,
   featured: false,
   metrics: [
-    { label: "Initial request", value: "Fix the reports" },
-    { label: "Underlying issue", value: "Missing lead data" },
-    { label: "Focus", value: "Workflow + adoption" },
-    { label: "Teams", value: "Sales and marketing" },
+    {
+      label: "Initial request",
+      value: "Fix the reports",
+      description: "Find the underlying causes",
+    },
+    {
+      label: "Underlying issue",
+      value: "Missing lead data",
+      description: "Not all leads recorded",
+    },
+    {
+      label: "Focus",
+      value: "Workflow + adoption",
+      description: "Change the process, not just the reports",
+    },
+    {
+      label: "Teams",
+      value: "Sales and marketing",
+      description: "Cross-functional collaboration",
+    },
   ],
   sections: [
     {

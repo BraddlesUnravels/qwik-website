@@ -35,8 +35,8 @@ export const projectSummaries: ProjectSummary[] = [
   {
     slug: "azure-access-and-secrets",
     path: "/projects/azure-access-and-secrets",
-    category: "Cloud permissions and sensitive settings",
-    title: "Separate permissions for publishing, deployment and runtime",
+    category: "Cloud authorisation and permissions",
+    title: "Separate permissions for deployment stages",
     description:
       "I separated the identities used to publish, preview, deploy and run each application, and kept runtime secret values in Azure Key Vault.",
     featured: false,
@@ -70,7 +70,7 @@ export const projectSummaries: ProjectSummary[] = [
     description:
       "I inherited a thinly documented CRM and built practical connections to a desktop quoting tool and a legacy lease-management platform.",
     featured: false,
-    evidence: ["PipelineAxis, PackEdge, LeaseCore", "–9 points at first"],
+    evidence: ["Torque", "QuoteCore"],
   },
   {
     slug: "autodash-migration",
