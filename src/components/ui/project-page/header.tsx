@@ -1,9 +1,9 @@
 import { Slot, component$ } from "@builder.io/qwik";
 import type { Project } from "~/content/types";
-import { GithubRepoButton } from "../ui/github-repo-button";
-import { CardRow } from "../ui/stat-card";
-import { ProjectImages } from "~/components/ui/image-list";
-import { Typography } from "../ui/typography";
+import { GithubRepoButton } from "../github-repo-button";
+import { CardRow } from "../stat-card";
+import { ProjectImages } from "../image-list";
+import { Typography } from "../typography";
 
 type HeaderProps = {
   project: Pick<

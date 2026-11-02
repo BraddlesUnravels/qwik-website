@@ -20,6 +20,18 @@ export type ProjectImage = OptimizedImage & {
   tone?: "dark" | "diagram";
 };
 
+export type ProjectVideo = {
+  id: string;
+  title: string;
+  label: string;
+  src: string;
+  poster: string;
+  width: number;
+  height: number;
+  seconds: number;
+  caption: string;
+};
+
 export type ProjectSubsection = {
   title: string;
   paragraphs?: string[];

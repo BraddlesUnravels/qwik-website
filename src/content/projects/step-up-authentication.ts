@@ -1,7 +1,7 @@
 import type { Project } from "../types";
-import BankingDesktop from "~/media/autodash/Bank_Account_Page_Desktop(redacted).png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
+import BankingDesktop from "~/media/autodash/imgs/Bank_Account_Page_Desktop(redacted).png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
 import StepUpFlow from "~/media/diagrams/step-up-selected-action.svg?url&no-inline";
-import BankingDesktopFull from "~/media/autodash/Bank_Account_Page_Desktop(redacted).png?url&no-inline";
+import BankingDesktopFull from "~/media/autodash/imgs/Bank_Account_Page_Desktop(redacted).png?url&no-inline";
 
 export default {
   slug: "step-up-authentication",

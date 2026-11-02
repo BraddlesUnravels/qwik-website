@@ -1,5 +1,5 @@
 import { component$ } from "@builder.io/qwik";
-import { ProjectImages } from "~/components/ui/image-list";
+import { ProjectImages } from "../image-list";
 import type {
   ProjectSection as SectionData,
   ProjectSubsection as SubsectionData,

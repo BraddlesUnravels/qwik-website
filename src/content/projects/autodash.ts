@@ -1,11 +1,11 @@
 import type { Project } from "../types";
-import ReimbursementDesktop from "~/media/autodash/Reimb_Page_Desktop(redacted).png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
-import ReimbursementMobile from "~/media/autodash/Reimb_Page_Mobile(redacted).png?w=240;400&format=webp&quality=80&withoutEnlargement&as=img";
-import DocumentsDesktop from "~/media/autodash/Lease_Docx_Page_Desktop(redacted).png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
+import ReimbursementDesktop from "~/media/autodash/imgs/Reimb_Page_Desktop(redacted).png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
+import ReimbursementMobile from "~/media/autodash/imgs/Reimb_Page_Mobile(redacted).png?w=240;400&format=webp&quality=80&withoutEnlargement&as=img";
+import DocumentsDesktop from "~/media/autodash/imgs/Lease_Docx_Page_Desktop(redacted).png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
 import LegacyPortalHome from "~/media/legacy-portal/legacy-portal-account-home.png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
-import ReimbursementDesktopFull from "~/media/autodash/Reimb_Page_Desktop(redacted).png?url&no-inline";
-import ReimbursementMobileFull from "~/media/autodash/Reimb_Page_Mobile(redacted).png?url&no-inline";
-import DocumentsDesktopFull from "~/media/autodash/Lease_Docx_Page_Desktop(redacted).png?url&no-inline";
+import ReimbursementDesktopFull from "~/media/autodash/imgs/Reimb_Page_Desktop(redacted).png?url&no-inline";
+import ReimbursementMobileFull from "~/media/autodash/imgs/Reimb_Page_Mobile(redacted).png?url&no-inline";
+import DocumentsDesktopFull from "~/media/autodash/imgs/Lease_Docx_Page_Desktop(redacted).png?url&no-inline";
 import LegacyPortalHomeFull from "~/media/legacy-portal/legacy-portal-account-home.png?url&no-inline";
 
 export default {

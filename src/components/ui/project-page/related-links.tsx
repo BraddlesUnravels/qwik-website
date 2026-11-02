@@ -1,5 +1,5 @@
 import { component$ } from "@builder.io/qwik";
-import { Typography } from "../ui/typography";
+import { Typography } from "../typography";
 import type { Project } from "~/content/types";
 
 const fallback = [{ label: "View all projects", href: "/#selected-projects" }];
