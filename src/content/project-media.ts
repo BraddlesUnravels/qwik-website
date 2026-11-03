@@ -1,4 +1,4 @@
-import type { ProjectVideo, ProjectSlug } from "./types";
+import type { ProjectSlug, ProjectMedia } from "./types";
 import reimbursementDesktop from "~/media/autodash/clips/autodash-reimbursement-desktop.mp4?url&no-inline";
 import reimbursementDesktopPoster from "~/media/autodash/clips/autodash-reimbursement-desktop.jpg?url&no-inline";
 import reimbursementMobile from "~/media/autodash/clips/autodash-reimbursement-mobile.mp4?url&no-inline";
@@ -239,7 +239,7 @@ export const projectVideos = {
     src: fullRecostingWorkflow,
     poster: fullRecostingWorkflowPoster,
   },
-} satisfies Record<string, ProjectVideo>;
+} satisfies Record<string, ProjectMedia>;
 
 // Every catalog slug must have an entry. Empty arrays mean no matching recording.
 export const projectMedia = {
@@ -276,4 +276,4 @@ export const projectMedia = {
     projectVideos["step-up-delete-phone-mobile"],
   ],
   "ransomware-recovery": [],
-} satisfies Record<ProjectSlug, ProjectVideo[]>;
+} satisfies Record<ProjectSlug, ProjectMedia[]>;

@@ -22,7 +22,7 @@ export type ProjectImage = OptimizedImage & {
 
 export type ProjectSlug = ProjectSummary[][number]["slug"];
 
-export type ProjectVideo = {
+export type ProjectMedia = {
   id: string;
   title: string;
   label: string;
@@ -47,7 +47,7 @@ export type ProjectSection = {
   bullets?: string[];
   subsections?: ProjectSubsection[];
   images?: ProjectImage[];
-  videos?: ProjectVideo[];
+  videos?: ProjectMedia[];
 };
 
 export type Project = {
@@ -60,7 +60,7 @@ export type Project = {
   featured: boolean;
   metrics: ProjectMetric[];
   images?: ProjectImage[];
-  videos?: ProjectVideo[];
+  videos?: ProjectMedia[];
   sections: ProjectSection[];
   technologies: ProjectMetric[];
   lesson?: string;
@@ -73,6 +73,10 @@ export type ProjectSummary = Pick<
   "slug" | "path" | "category" | "title" | "description" | "featured"
 > & {
   evidence: [string, string];
+};
+
+export type DataConnection = EventTarget & {
+  readonly saveData?: boolean;
 };
 
 export const isProject = (value: unknown): value is Project => {
