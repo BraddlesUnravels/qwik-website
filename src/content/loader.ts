@@ -1,6 +1,5 @@
 import type { Project } from "./types";
 import { projectSummaries } from "./catalog";
-import { projectMedia } from "./project-media";
 
 type ProjectModule = { default: Project };
 type ProjectLoader = () => Promise<ProjectModule>;
@@ -29,6 +28,5 @@ export const loadProject = async (
   return {
     ...(await loader()).default,
     ...summary,
-    videos: projectMedia[summary.slug],
   };
 };

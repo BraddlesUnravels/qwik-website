@@ -48,6 +48,7 @@ export type ProjectSection = {
   subsections?: ProjectSubsection[];
   images?: ProjectImage[];
   videos?: ProjectMedia[];
+  additionalVideos?: ProjectMedia[];
 };
 
 export type Project = {
