@@ -37,6 +37,7 @@ export function connectMediaAutoplay(video: HTMLVideoElement): () => void {
     if (pending || !video.paused) return;
 
     video.muted = true;
+    video.playbackRate = 2;
     pending = true;
 
     void video
