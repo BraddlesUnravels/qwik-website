@@ -20,6 +20,8 @@ export type ProjectImage = OptimizedImage & {
   tone?: "dark" | "diagram";
 };
 
+export type ProjectSlug = ProjectSummary[][number]["slug"];
+
 export type ProjectVideo = {
   id: string;
   title: string;
@@ -45,6 +47,7 @@ export type ProjectSection = {
   bullets?: string[];
   subsections?: ProjectSubsection[];
   images?: ProjectImage[];
+  videos?: ProjectVideo[];
 };
 
 export type Project = {
@@ -57,6 +60,7 @@ export type Project = {
   featured: boolean;
   metrics: ProjectMetric[];
   images?: ProjectImage[];
+  videos?: ProjectVideo[];
   sections: ProjectSection[];
   technologies: ProjectMetric[];
   lesson?: string;

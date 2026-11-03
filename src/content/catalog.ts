@@ -1,7 +1,7 @@
 import type { ProjectSummary } from "./types";
 
 // Order reflects the recommended work-page reading path.
-export const projectSummaries: ProjectSummary[] = [
+export const projectSummaries = [
   {
     slug: "autodash",
     path: "/projects/autodash",
@@ -102,7 +102,7 @@ export const projectSummaries: ProjectSummary[] = [
     featured: false,
     evidence: ["Containment", "Parallel workstreams"],
   },
-];
+] as const satisfies readonly ProjectSummary[];
 
 export const engineeringApproach: ProjectSummary = {
   slug: "about-approach",
