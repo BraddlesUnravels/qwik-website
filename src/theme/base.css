@@ -60,6 +60,10 @@
     );
   }
 
+  .card-bg {
+    background: rgb(7 10 16 / 0.5);
+  }
+
   @keyframes cursor-blink {
     0%,
     49% {

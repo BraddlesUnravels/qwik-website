@@ -39,6 +39,7 @@ export default component$(() => {
           </div>
         </div>
       </section>
+
       <MobileBackToTop />
     </main>
   );
