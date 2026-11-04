@@ -1,4 +1,5 @@
 import type { Project } from "../types";
+import { projectVideos } from "../project-media";
 import ReimbursementDesktop from "~/media/autodash/imgs/Reimb_Page_Desktop(redacted).png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
 import ReimbursementMobile from "~/media/autodash/imgs/Reimb_Page_Mobile(redacted).png?w=240;400&format=webp&quality=80&withoutEnlargement&as=img";
 import DocumentsDesktop from "~/media/autodash/imgs/Lease_Docx_Page_Desktop(redacted).png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
@@ -94,6 +95,10 @@ export default {
     },
     {
       title: "How I built it",
+      videos: [
+        projectVideos["autodash-reimbursement-desktop"],
+        projectVideos["autodash-reimbursement-mobile"],
+      ],
       images: [
         {
           ...ReimbursementMobile,

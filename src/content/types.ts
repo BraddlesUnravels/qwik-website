@@ -73,7 +73,7 @@ export type ProjectSummary = Pick<
   Project,
   "slug" | "path" | "category" | "title" | "description" | "featured"
 > & {
-  evidence: [string, string];
+  evidence: [string, string, string?];
 };
 
 export type DataConnection = EventTarget & {

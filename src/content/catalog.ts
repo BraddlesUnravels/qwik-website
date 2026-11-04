@@ -6,9 +6,10 @@ export const projectSummaries = [
     slug: "autodash",
     path: "/projects/autodash",
     category: "Full-stack product delivery",
-    title: "LeaseTrack: a new portal around a legacy lease platform",
-    description:
-      "I built a customer finance portal that let the business withdraw public access to an ageing platform without retiring the system it still depended on.",
+    title: "AutoDash · A new front door for 5,000+ customers",
+    description: `
+      LeaseCore had to stay. I built AutoDash so customers could manage their accounts while LeaseCore moved behind the scenes.
+    `,
     featured: true,
     evidence: ["5,000+ migrated", "8 months"],
   },
@@ -16,9 +17,9 @@ export const projectSummaries = [
     slug: "access-control-demo",
     path: "/projects/access-control-demo",
     category: "Inspectable full-stack application",
-    title: "Access Control Demo: security you can inspect",
+    title: "Access Control Demo · What does each account do?",
     description:
-      "I built a small, deployed application so employers can test permissions and follow the enforcement from the interface to the API, database and tests.",
+      "Switch accounts in the live demo, try a forbidden action, and trace how the API, database and tests handle it.",
     featured: true,
     evidence: ["2 students + 1 admin", "PostgreSQL RLS"],
   },
@@ -26,39 +27,39 @@ export const projectSummaries = [
     slug: "azure-iac",
     path: "/projects/azure-iac",
     category: "Cloud infrastructure and deployment",
-    title: "One Azure release process for two web applications",
-    description:
-      "I built a shared Azure release process that checks the version and destination, previews infrastructure changes and checks the website after deployment.",
+    title: "Two apps · One Azure release path.",
+    description: `A shared Azure workflow that deploys the right version to the right environment, blocks risky infrastructure changes, and checks each sites health.`,
     featured: true,
-    evidence: ["2 applications, 1 release path", "Public infrastructure code"],
+    evidence: ["2 applications", "Public infrastructure code"],
   },
   {
     slug: "azure-access-and-secrets",
     path: "/projects/azure-access-and-secrets",
     category: "Cloud authorisation and permissions",
-    title: "Separate permissions for deployment stages",
-    description:
-      "I separated the identities used to publish, preview, deploy and run each application, and kept runtime secret values in Azure Key Vault.",
+    title: "Preview a change · Only the deployer can apply it.",
+    description: `I gave publishing, previewing, deploying and running each app separate permissions. Only the running app reads its secrets from Key Vault.`,
     featured: false,
-    evidence: ["4 identities. 1 per stage", "Key Vault runtime references"],
+    evidence: ["4 shared identities", "Azure Key Vault"],
   },
   {
     slug: "lease-balance-calculation",
     path: "/projects/lease-balance-calculation",
     category: "Legacy modernisation",
-    title: "Making lease balances available without a 34-minute lockout",
-    description:
-      "I untangled a 12,000-line SQL calculation, separated the business rules and made individual lease balances available on demand.",
+    title: "One lease balance · Why calculate them all?",
+    description: `
+      Calculating every balance locked LeaseCore for ~34 minutes. I untangled 12,000+ lines of SQL so customers could check their own balance on demand.
+    `,
     featured: false,
-    evidence: ["12,000+ lines", "~34 minutes"],
+    evidence: ["12,000+ lines of SQL", "~34 minute legacy batch"],
   },
   {
     slug: "site-rebuild",
     path: "/projects/site-rebuild",
     category: "Web development and CRM automation",
-    title: "Rebuilding a WordPress site with intergations for HubSpot",
-    description:
-      "I rebuilt the public website in Qwik and implemented a server-side lead flow that made enquiries and campaign attribution easier to follow.",
+    title: "Website rebuild · More leads; the same campaigns",
+    description: `
+      I replaced WordPress with Qwik and connected enquiries to HubSpot. Recorded daily leads rose by nearly a third without more campaign activity.
+    `,
     featured: true,
     evidence: ["3 months", "100 in 3 categories"],
   },
@@ -66,41 +67,46 @@ export const projectSummaries = [
     slug: "tqe-legacy-integration",
     path: "/projects/tqe-legacy-integration",
     category: "Business systems integration",
-    title: "Connecting the lead-to-lease journey across three systems",
-    description:
-      "I inherited a thinly documented CRM and built practical connections to a desktop quoting tool and a legacy lease-management platform.",
+    title: "Lead to lease · Where did the leads go?",
+    description: `
+      Leads vanished from reports before quoting. I linked three systems so staff could track each enquiry through to lease settlement.
+    `,
     featured: false,
-    evidence: ["Torque", "QuoteCore"],
+    evidence: ["Torque", "QuoteCore", "LeaseCore"],
   },
   {
     slug: "autodash-migration",
     path: "/projects/autodash-migration",
     category: "Identity and migration",
-    title: "Moving 5,000+ accounts without a blanket password reset",
-    description:
-      "I pre-migrated eligible customer accounts, then upgraded each password from a legacy SHA-1 hash to Argon2 when its owner returned.",
+    title: "5,000+ accounts · Same passwords, new portal",
+    description: `Customers signed in as usual. On their first login, the new portal upgraded their password hash from SHA-1 to Argon2.`,
     featured: false,
-    evidence: ["5,000+", "SHA-1"],
+    evidence: ["5,000+ Users", "SHA-1", "Argon2"],
   },
   {
     slug: "step-up-authentication",
     path: "/projects/step-up-authentication",
     category: "Application security",
-    title: "Step-up authentication without interrupting routine portal use",
+    title: "Step-up auth · Extra checks only when needed",
     description:
-      "I added fresh identity checks to sensitive customer actions and enforced them at the API, not just in the React interface.",
+      "Customers browse as usual. For sensitive changes, I built an API check that requires a fresh code.",
     featured: false,
-    evidence: ["5 minutes", "6-digit code"],
+    evidence: ["6-digit code", "SMS delivery", "5 minutes approval window"],
   },
   {
     slug: "ransomware-recovery",
     path: "/projects/ransomware-recovery",
     category: "Incident response",
-    title: "Helping restore critical systems after a ransomware incident",
-    description:
-      "I handled initial containment, owned network and workstation restoration, and worked with an external specialist on the subsequent investigation.",
+    title: "Ransomware recovery · Back online by morning",
+    description: `
+      A ransom note appreared on a workstation screen. I isolated the network, and led network recovery workstation rebuild.
+    `,
     featured: false,
-    evidence: ["Containment", "Parallel workstreams"],
+    evidence: [
+      "Crital Incident Response",
+      "Parallel workstreams",
+      "Incident Investigation",
+    ],
   },
 ] as const satisfies readonly ProjectSummary[];
 
