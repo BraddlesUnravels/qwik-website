@@ -1,19 +1,19 @@
 import type { Project } from "../types";
 import { projectVideos } from "../project-media";
-import ReimbursementDesktop from "~/media/autodash/imgs/Reimb_Page_Desktop(redacted).png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
-import ReimbursementMobile from "~/media/autodash/imgs/Reimb_Page_Mobile(redacted).png?w=240;400&format=webp&quality=80&withoutEnlargement&as=img";
+import DesktopLogin from "~/media/autodash/imgs/AutoDash-Desktop-Login.png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
+import MobileLogin from "~/media/autodash/imgs/AutoDash-Mobile-Login.png?w=240;400&format=webp&quality=80&withoutEnlargement&as=img";
 import DocumentsDesktop from "~/media/autodash/imgs/Lease_Docx_Page_Desktop(redacted).png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
-import LegacyPortalHome from "~/media/legacy-portal/legacy-portal-account-home.png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
-import ReimbursementDesktopFull from "~/media/autodash/imgs/Reimb_Page_Desktop(redacted).png?url&no-inline";
-import ReimbursementMobileFull from "~/media/autodash/imgs/Reimb_Page_Mobile(redacted).png?url&no-inline";
+import LegacyApplHome from "~/media/legacy-portal/legacy-portal-account-home.png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
+import DesktopLoginPath from "~/media/autodash/imgs/AutoDash-Desktop-Login.png?url&no-inline";
+import MobileLoginPath from "~/media/autodash/imgs/Reimb_Page_Mobile(redacted).png?url&no-inline";
 import DocumentsDesktopFull from "~/media/autodash/imgs/Lease_Docx_Page_Desktop(redacted).png?url&no-inline";
-import LegacyPortalHomeFull from "~/media/legacy-portal/legacy-portal-account-home.png?url&no-inline";
+import LegacyApplHomePath from "~/media/legacy-portal/legacy-portal-account-home.png?url&no-inline";
 
 export default {
   slug: "autodash",
   path: "/projects/autodash",
   category: "Full-stack product delivery",
-  title: "AutoDash: a new portal around a legacy lease platform",
+  title: "AutoDash · A new front door for 5,000+ customers",
   description: `
     I built a customer finance portal that let the business withdraw public access 
     to an ageing platform without retiring the system it still depended on.
@@ -27,8 +27,8 @@ export default {
   featured: true,
   images: [
     {
-      ...ReimbursementDesktop,
-      fullSrc: ReimbursementDesktopFull,
+      ...DesktopLogin,
+      fullSrc: DesktopLoginPath,
       alt: "Desktop reimbursement page with a claim form and supporting-file upload area.",
       caption:
         "Reimbursements brings the claim form and supporting-file upload together.",
@@ -61,8 +61,8 @@ export default {
       title: "The problem",
       images: [
         {
-          ...LegacyPortalHome,
-          fullSrc: LegacyPortalHomeFull,
+          ...LegacyApplHome,
+          fullSrc: LegacyApplHomePath,
           alt: "Legacy customer portal home screen with its original navigation and vehicle banner.",
           caption:
             "The previous customer portal, before AutoDash replaced public access. This is the legacy interface, not the new application.",
@@ -101,8 +101,8 @@ export default {
       ],
       images: [
         {
-          ...ReimbursementMobile,
-          fullSrc: ReimbursementMobileFull,
+          ...MobileLogin,
+          fullSrc: MobileLoginPath,
           alt: "Mobile reimbursement page with the claim form and bottom navigation.",
           caption:
             "The same claim form adapts to a narrow screen, with customer navigation kept within reach.",
@@ -190,6 +190,10 @@ export default {
     {
       label: "On-demand balances",
       href: "/projects/lease-balance-calculation/",
+    },
+    {
+      label: "Azure IaC",
+      href: "/projects/azure-iac/",
     },
   ],
 } satisfies Project;
