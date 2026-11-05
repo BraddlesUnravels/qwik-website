@@ -7,6 +7,12 @@
       "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
 
     /* Every Tailwind text utility now scales fluidly with the viewport. */
+    --text-foot-note: clamp(0.6rem, 0.55rem + 0.05vw, 0.65rem);
+    --text-foot-note-line-height: 1;
+    --text-caption: clamp(0.75rem, 0.7rem + 0.05vw, 0.8rem);
+    --text-caption-line-height: 1;
+    --text-xxs: clamp(0.64rem, 0.6rem + 0.05vw, 0.7rem);
+    --text-xxs--line-height: 1.4;
     --text-xs: clamp(0.72rem, 0.7rem + 0.08vw, 0.78rem);
     --text-xs--line-height: 1.5;
     --text-sm: clamp(0.82rem, 0.78rem + 0.14vw, 0.92rem);
