@@ -54,7 +54,7 @@ describe("MediaPlayer SSR", () => {
 });
 
 describe("MediaPlayer rendering", () => {
-  it("should show the failed video's direct link and clears the message for a new source", async () => {
+  it("shouold show the failed video's direct link and clears the message for a new source", async () => {
     const { render, screen, userEvent } = await createDOM();
     await render(<SourceChangingPlayer />);
     await userEvent("video", "error");

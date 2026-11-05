@@ -56,7 +56,7 @@ describe("Autoplay preferences and ownership", () => {
     vi.clearAllMocks();
   });
 
-  it("starts only when sufficiently visible and always mutes", async () => {
+  it("should start only when sufficiently visible and always mutes", async () => {
     visible(0.1);
     expect(video.play).not.toHaveBeenCalled();
     visible();
@@ -66,7 +66,7 @@ describe("Autoplay preferences and ownership", () => {
   });
 
   it.each(["motion", "data", "hidden"])(
-    "suppresses automatic playback for %s",
+    "should suppress automatic playback for %s",
     (preference) => {
       if (preference === "motion") motion.matches = true;
       if (preference === "data") connection.saveData = true;
@@ -76,7 +76,7 @@ describe("Autoplay preferences and ownership", () => {
     },
   );
 
-  it("pauses offscreen and resumes automatic playback on return", async () => {
+  it("should pause offscreen and resumes automatic playback on return", async () => {
     visible();
     await settle();
     visible(0);
@@ -86,7 +86,7 @@ describe("Autoplay preferences and ownership", () => {
     expect(video.play).toHaveBeenCalledTimes(2);
   });
 
-  it("never overrides a viewer's pause", async () => {
+  it("should never override a viewer's pause", async () => {
     visible();
     await settle();
     video.pause();
@@ -97,7 +97,7 @@ describe("Autoplay preferences and ownership", () => {
     expect(video.paused).toBe(true);
   });
 
-  it("allows deliberate playback under reduced motion without taking ownership", async () => {
+  it("should allow deliberate playback under reduced motion without taking ownership", async () => {
     motion.matches = true;
     visible();
     await video.play();
@@ -106,7 +106,7 @@ describe("Autoplay preferences and ownership", () => {
     expect(video.paused).toBe(false);
   });
 
-  it("responds to live preference changes", async () => {
+  it("shoukld respond to live preference changes", async () => {
     visible();
     await settle();
     motion.matches = true;
@@ -118,7 +118,7 @@ describe("Autoplay preferences and ownership", () => {
     expect(video.play).toHaveBeenCalledTimes(2);
   });
 
-  it("handles blocked autoplay without retrying on every scroll", async () => {
+  it("should handle blocked autoplay without retrying on every scroll", async () => {
     video.play.mockRejectedValueOnce(new Error("NotAllowedError"));
     visible();
     await settle();
@@ -128,7 +128,7 @@ describe("Autoplay preferences and ownership", () => {
     expect(video.play).toHaveBeenCalledOnce();
   });
 
-  it("can resume when a preference pause aborts a pending play request", async () => {
+  it("should resume when a preference pause aborts a pending play request", async () => {
     let rejectPlay!: (reason: Error) => void;
     video.play.mockImplementationOnce(() => {
       video.paused = false;
@@ -149,7 +149,7 @@ describe("Autoplay preferences and ownership", () => {
     expect(video.paused).toBe(false);
   });
 
-  it("disconnects and stops automatic playback when removed", async () => {
+  it("should disconnect and stop automatic playback when removed", async () => {
     visible();
     await settle();
     disconnect();
