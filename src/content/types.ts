@@ -32,6 +32,8 @@ export type ProjectMedia = {
   height: number;
   seconds: number;
   caption: string;
+  loop?: boolean;
+  autoPlay?: boolean;
 };
 
 export type ProjectSubsection = {
@@ -61,7 +63,7 @@ export type Project = {
   featured: boolean;
   metrics: ProjectMetric[];
   images?: ProjectImage[];
-  videos?: ProjectMedia[];
+  videos?: ProjectMedia | ProjectMedia[];
   sections: ProjectSection[];
   technologies: ProjectMetric[];
   lesson?: string;

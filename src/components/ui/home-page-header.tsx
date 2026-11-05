@@ -3,7 +3,7 @@ import { TechnologyCarousel } from "~/components/ui/technology-carousel";
 import { Typography } from "~/components/ui/typography";
 
 const twHeader = [
-  "relative display mx-auto flex w-full max-w-7xl flex-col px-5",
+  "relative flex flex-col",
   "py-0 max-lg:min-h-[calc(100svh-4.5rem)]",
   "2xl:min-h-[calc(100svh-4.5rem)]",
 ].join(" ");
@@ -74,7 +74,7 @@ export default component$(() => {
       </Typography>
 
       <section class="mt-4 overflow-hidden border-y border-white/8 py-5 lg:mt-8 2xl:mt-15">
-        <div class="mx-auto w-full max-w-7xl lg:px-8 2xl:py-5">
+        <div class="mx-auto w-full lg:px-8 2xl:py-5">
           <Typography variant="eyebrow">Technical toolkit</Typography>
           <TechnologyCarousel />
         </div>

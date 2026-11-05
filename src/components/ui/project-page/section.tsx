@@ -1,6 +1,6 @@
 import { component$ } from "@builder.io/qwik";
 import { ProjectImages } from "../image-list";
-import { ProjectVideos } from "../media-list";
+import { ProjectMediaList } from "../media-list";
 import type {
   ProjectSection as SectionData,
   ProjectSubsection as SubsectionData,
@@ -87,13 +87,15 @@ export const ProjectSection = component$<{
       images={section.images}
       sizes="(min-width: 1152px) 768px, (min-width: 1024px) calc(100vw - 384px), (min-width: 640px) calc(100vw - 64px), calc(100vw - 40px)"
     />
-    {section.videos?.length ? <ProjectVideos videos={section.videos} /> : null}
+    {section.videos?.length ? (
+      <ProjectMediaList videos={section.videos} />
+    ) : null}
     {section.additionalVideos?.length ? (
       <details class="mt-8 min-w-0 rounded-xl border border-white/10 p-5">
         <summary class="text-ink cursor-pointer font-semibold">
           More recorded workflows ({section.additionalVideos.length})
         </summary>
-        <ProjectVideos videos={section.additionalVideos} />
+        <ProjectMediaList videos={section.additionalVideos} />
       </details>
     ) : null}
   </section>

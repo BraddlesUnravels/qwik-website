@@ -40,7 +40,11 @@ describe("MediaPlayer SSR", () => {
       );
       const video = html.match(/<video\b[^>]*>/)?.[0] ?? "";
       expect(video).toContain('preload="none"');
-      expect(video).toContain("controls");
+      if (autoPlay) {
+        expect(video).not.toContain("controls");
+      } else {
+        expect(video).toContain("controls");
+      }
       expect(video.toLowerCase()).toContain("playsinline");
       expect(video.toLowerCase()).not.toMatch(/\sautoplay(?:[\s=>]|$)/);
       expect(video).toContain('aria-label="Workflow"');
@@ -54,7 +58,7 @@ describe("MediaPlayer SSR", () => {
 });
 
 describe("MediaPlayer rendering", () => {
-  it("shouold show the failed video's direct link and clears the message for a new source", async () => {
+  it("should show the failed video's direct link and clears the message for a new source", async () => {
     const { render, screen, userEvent } = await createDOM();
     await render(<SourceChangingPlayer />);
     await userEvent("video", "error");

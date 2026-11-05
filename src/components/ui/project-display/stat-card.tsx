@@ -1,5 +1,5 @@
 import { component$ } from "@builder.io/qwik";
-import { Typography } from "../ui/typography";
+import { Typography } from "../typography";
 import type { ProjectMetric } from "~/content/types";
 
 export const StatCard = component$<{ metric: ProjectMetric }>(({ metric }) => (
@@ -24,11 +24,12 @@ export const StatCard = component$<{ metric: ProjectMetric }>(({ metric }) => (
 ));
 
 export const CardRow = component$<{ metrics: ProjectMetric[] }>(
-  ({ metrics }) => (
-    <dl class="mt-8 grid auto-rows-fr gap-3 empty:hidden min-[380px]:grid-cols-2 sm:mt-10 sm:gap-4 lg:grid-cols-4">
-      {metrics.map((metric) => (
-        <StatCard key={metric.label} metric={metric} />
-      ))}
-    </dl>
-  ),
+  ({ metrics }) =>
+    metrics.length ? (
+      <dl class="mt-8 grid auto-rows-fr gap-3 empty:hidden min-[380px]:grid-cols-2 sm:mt-10 sm:gap-4 lg:grid-cols-4">
+        {metrics.map((metric) => (
+          <StatCard key={metric.label} metric={metric} />
+        ))}
+      </dl>
+    ) : undefined,
 );

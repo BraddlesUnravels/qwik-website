@@ -103,7 +103,7 @@ export const projectSummaries = [
     `,
     featured: false,
     evidence: [
-      "Crital Incident Response",
+      "Crital Incident",
       "Parallel workstreams",
       "Incident Investigation",
     ],

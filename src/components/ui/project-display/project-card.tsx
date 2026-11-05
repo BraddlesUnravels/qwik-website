@@ -1,20 +1,21 @@
 import { component$ } from "@builder.io/qwik";
+import { Link } from "@builder.io/qwik-city";
 import { Typography } from "~/components/ui/typography";
+import { LuArrowUpRight } from "@qwikest/icons/lucide";
 import type { CardProps } from "./feature-card";
 
-const twSupportingAnchor = [
-  "card-bg",
-  "group bg-surface/50 hover:border-brand/35",
-  "hover:bg-surface-raised focus-visible:outline-brand-bright",
-  "flex min-w-0 flex-col rounded-xl border border-white/10 p-5",
+const twProjectCard = [
+  "project-card group h-full",
+  "flex min-w-0 flex-col rounded-xl p-5",
   "transition duration-200 ease-out",
   "motion-safe:hover:-translate-y-1 hover:shadow-xl",
+  "focus-visible:outline-brand-bright",
   "focus-visible:outline-2 focus-visible:outline-offset-4",
   "motion-reduce:transition-none",
 ].join(" ");
 
 export default component$<CardProps>(({ project, index }) => (
-  <a href={project.path} class={twSupportingAnchor}>
+  <Link href={project.path} class={twProjectCard}>
     <div class="flex items-start justify-between gap-4">
       <Typography
         as="p"
@@ -72,9 +73,9 @@ export default component$<CardProps>(({ project, index }) => (
           aria-hidden="true"
           class="text-lg motion-safe:transition-transform motion-safe:group-hover:translate-x-1"
         >
-          ↗
+          <LuArrowUpRight />
         </Typography>
       </div>
     </div>
-  </a>
+  </Link>
 ));

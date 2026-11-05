@@ -8,7 +8,7 @@ export const ProjectRelatedLinks = component$<{
   links: Project["related"];
 }>(({ links }) => (
   <footer class="bg-canvas-soft/70 border-t border-white/8">
-    <div class="mx-auto w-full max-w-7xl px-5 py-16 sm:px-8 lg:px-10">
+    <div class="mx-auto w-full px-5 py-16 sm:px-8 lg:px-10">
       <Typography
         as="p"
         class="text-brand-bright font-mono text-xs font-semibold tracking-[0.16em] uppercase"

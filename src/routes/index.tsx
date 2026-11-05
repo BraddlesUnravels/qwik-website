@@ -13,7 +13,7 @@ export default component$(() => {
       <ProjectList />
 
       <section id="approach" class="scroll-mt-24">
-        <div class="mx-auto grid w-full max-w-7xl gap-10 px-5 py-10 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20 lg:px-10 lg:py-32">
+        <div class="mx-auto grid w-full gap-10 px-5 py-10 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20 lg:px-10 lg:py-32">
           <div>
             <Typography variant="eyebrow">How I work</Typography>
             <Typography as="h2" variant="heading-2" class="mt-5">
