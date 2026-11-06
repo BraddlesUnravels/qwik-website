@@ -1,47 +1,58 @@
 import { component$ } from "@builder.io/qwik";
 import { ProjectImages } from "../image-list";
-import { ProjectVideos } from "../media-list";
+import { ProjectMediaList } from "../media-list";
+import { Typography } from "../typography";
 import type {
   ProjectSection as SectionData,
   ProjectSubsection as SubsectionData,
 } from "~/content/types";
 
+const BulletPoint = () => (
+  <span
+    aria-hidden="true"
+    class="bg-brand mt-[0.65em] h-1.5 w-1.5 shrink-0 rounded-full"
+  />
+);
+
 const Subsection = component$<{ subsection: SubsectionData }>(
   ({ subsection }) => (
     <section class="border-brand/35 border-l pl-5 sm:pl-7">
-      <h3 class="font-display text-ink text-xl font-semibold tracking-[-0.02em]">
+      <Typography
+        as="h3"
+        class="font-display text-ink text-xl font-semibold tracking-[-0.02em]"
+      >
         {subsection.title}
-      </h3>
+      </Typography>
+
       {subsection.paragraphs?.map((paragraph) => (
         <p key={paragraph} class="text-ink-soft mt-4 text-base">
           {paragraph}
         </p>
       ))}
-      {subsection.bullets?.length ? (
+
+      {subsection.bullets?.length && (
         <ul class="mt-5 grid gap-3">
           {subsection.bullets.map((item) => (
             <li key={item} class="text-ink-soft flex gap-3 text-base">
-              <span
-                aria-hidden="true"
-                class="bg-brand mt-[0.65em] h-1.5 w-1.5 shrink-0 rounded-full"
-              />
-              <span>{item}</span>
+              <BulletPoint />
+              <Typography as="span">{item}</Typography>
             </li>
           ))}
         </ul>
-      ) : null}
-      {subsection.steps?.length ? (
+      )}
+
+      {subsection.steps?.length && (
         <ol class="mt-6 grid gap-4">
           {subsection.steps.map((item, index) => (
             <li key={item} class="text-ink-soft flex gap-4 text-base">
               <span class="border-brand/35 bg-brand/10 text-brand-bright flex h-7 w-7 shrink-0 items-center justify-center rounded-full border font-mono text-xs font-semibold">
                 {index + 1}
               </span>
-              <span>{item}</span>
+              <Typography as="span">{item}</Typography>
             </li>
           ))}
         </ol>
-      ) : null}
+      )}
     </section>
   ),
 );
@@ -59,11 +70,14 @@ export const ProjectSection = component$<{
         {section.title}
       </h2>
     </div>
+
     {section.paragraphs?.map((paragraph) => (
       <p key={paragraph} class="text-ink-soft mt-5 text-base first:mt-0">
         {paragraph}
       </p>
     ))}
+
+    {/*  */}
     {section.bullets?.length ? (
       <ul class="mt-7 grid gap-3 sm:grid-cols-2">
         {section.bullets.map((item) => (
@@ -71,11 +85,15 @@ export const ProjectSection = component$<{
             key={item}
             class="text-ink-soft rounded-xl border border-white/8 bg-white/3 p-4 text-sm"
           >
+            <BulletPoint />
             {item}
           </li>
         ))}
       </ul>
     ) : null}
+    {/*  */}
+
+    {/* refactor subsections to handle both arrays and single items */}
     {section.subsections?.length ? (
       <div class="mt-9 grid gap-10">
         {section.subsections.map((subsection) => (
@@ -83,18 +101,24 @@ export const ProjectSection = component$<{
         ))}
       </div>
     ) : null}
+    {/*  */}
+
     <ProjectImages
       images={section.images}
       sizes="(min-width: 1152px) 768px, (min-width: 1024px) calc(100vw - 384px), (min-width: 640px) calc(100vw - 64px), calc(100vw - 40px)"
     />
-    {section.videos?.length ? <ProjectVideos videos={section.videos} /> : null}
-    {section.additionalVideos?.length ? (
+
+    <ProjectMediaList videos={section.videos} />
+
+    {/*  */}
+    {section.additionalVideos?.length && (
       <details class="mt-8 min-w-0 rounded-xl border border-white/10 p-5">
         <summary class="text-ink cursor-pointer font-semibold">
           More recorded workflows ({section.additionalVideos.length})
         </summary>
-        <ProjectVideos videos={section.additionalVideos} />
+        <ProjectMediaList videos={section.additionalVideos} />
       </details>
-    ) : null}
+    )}
+    {/*  */}
   </section>
 ));

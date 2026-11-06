@@ -1,5 +1,5 @@
 import { component$ } from "@builder.io/qwik";
-import { Container } from "../ui/container";
+import { ContentContainer } from "../ui/container";
 import { siteConfig } from "~/config/site";
 import { LuGithub, LuLinkedin, LuMail } from "@qwikest/icons/lucide";
 import { Typography } from "../ui/typography";
@@ -28,7 +28,7 @@ const socialLinks = [
 export default component$(() => {
   return (
     <footer class="border-t border-zinc-800">
-      <Container>
+      <ContentContainer>
         <div class="flex items-center py-5 lg:grid lg:grid-cols-2 lg:items-end lg:gap-8">
           <div id="site-footer-author" class="hidden flex-col gap-1 lg:flex">
             <Typography variant="small" tone="default" class="text-zinc-100">
@@ -70,7 +70,7 @@ export default component$(() => {
             </div>
           </div>
         </div>
-      </Container>
+      </ContentContainer>
     </footer>
   );
 });

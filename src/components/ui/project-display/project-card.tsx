@@ -1,22 +1,25 @@
 import { component$ } from "@builder.io/qwik";
+import { Link } from "@builder.io/qwik-city";
 import { Typography } from "~/components/ui/typography";
+import { LuArrowUpRight } from "@qwikest/icons/lucide";
 import type { CardProps } from "./feature-card";
 
-const twSupportingAnchor = [
-  "group bg-surface/50 hover:border-brand/35",
-  "hover:bg-surface-raised focus-visible:outline-brand-bright",
-  "flex min-w-0 flex-col rounded-xl border border-white/10 p-5",
+const twProjectCard = [
+  "project-card group h-full",
+  "flex min-w-0 flex-col rounded-xl p-5",
   "transition duration-200 ease-out",
   "motion-safe:hover:-translate-y-1 hover:shadow-xl",
+  "focus-visible:outline-brand-bright",
   "focus-visible:outline-2 focus-visible:outline-offset-4",
   "motion-reduce:transition-none",
 ].join(" ");
 
 export default component$<CardProps>(({ project, index }) => (
-  <a href={project.path} class={twSupportingAnchor}>
+  <Link href={project.path} class={twProjectCard}>
     <div class="flex items-start justify-between gap-4">
       <Typography
         as="p"
+        tone="emerald"
         class="text-brand-bright font-mono text-[11px] leading-relaxed font-semibold tracking-[0.12em] uppercase"
       >
         {project.category}
@@ -25,36 +28,54 @@ export default component$<CardProps>(({ project, index }) => (
       <Typography
         as="span"
         aria-hidden="true"
+        tone="emerald"
         class="text-ink-muted shrink-0 font-mono text-xs"
       >
         {String(index + 1).padStart(2, "0")}
       </Typography>
     </div>
-
-    <h3 class="font-display text-ink mt-3 text-xl leading-snug font-semibold tracking-[-0.035em] text-balance">
+    <Typography
+      as="h3"
+      class="font-display text-ink mt-3 text-xl leading-snug font-semibold tracking-[-0.035em] text-balance"
+    >
       {project.title}
-    </h3>
-
+    </Typography>
     <Typography as="p" class="text-ink-soft mt-3 text-sm leading-relaxed">
       {project.description}
     </Typography>
-
     <div class="mt-auto pt-5">
       <ul class="text-ink-muted m-0 flex list-none flex-wrap gap-x-4 gap-y-2 p-0 text-xs">
-        {project.evidence.map((item) => (
-          <li key={item}>{item}</li>
-        ))}
+        {project.evidence.map((item, i) => {
+          const seperatorDot = (i: number) =>
+            i !== 0 && (
+              <span class="text-ink self-center text-lg leading-none font-bold">
+                ·
+              </span>
+            );
+
+          return (
+            <>
+              {seperatorDot(i)}
+              <li key={item}>
+                <Typography as="span" class="text-ink self-center text-sm">
+                  {item}
+                </Typography>
+              </li>
+            </>
+          );
+        })}
       </ul>
 
       <div class="text-brand-bright mt-5 flex items-center justify-between gap-4 text-xs font-medium">
-        <Typography as="span">View case project</Typography>
-        <span
+        <Typography as="span">View project</Typography>
+        <Typography
+          as="span"
           aria-hidden="true"
           class="text-lg motion-safe:transition-transform motion-safe:group-hover:translate-x-1"
         >
-          ↗
-        </span>
+          <LuArrowUpRight />
+        </Typography>
       </div>
     </div>
-  </a>
+  </Link>
 ));

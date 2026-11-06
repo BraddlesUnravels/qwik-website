@@ -4,7 +4,7 @@ export default component$(() => {
   return (
     <div
       id="background"
-      class="relative h-full w-full overflow-hidden bg-[#070a10]"
+      class="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-[#070a10]"
     >
       {/* Directional blue light */}
       <div
