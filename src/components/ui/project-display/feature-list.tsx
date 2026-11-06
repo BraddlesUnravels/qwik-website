@@ -12,17 +12,18 @@ export default component$(() => (
       class="flex scroll-mt-24 flex-col gap-5 sm:flex-row sm:items-end sm:justify-between"
     >
       <div>
-        <Typography variant="eyebrow">Selected work</Typography>
-        <Typography as="h2" variant="heading-2" class="mt-5">
-          Complex systems, clearly evidenced.
+        <Typography tone="emerald" variant="eyebrow">
+          Selected projects
+        </Typography>
+        <Typography variant="heading-2" class="mt-5">
+          Making the complicated work.
         </Typography>
       </div>
       <Typography variant="small" class="max-w-md sm:text-right">
-        Production outcomes, architectural decisions, trade-offs and the
-        evidence behind them.
+        What I built, why I built it that way, and how it worked in practice.
       </Typography>
     </div>
-    <div class="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
+    <div class="mt-3 grid grid-cols-1 items-start gap-4 md:grid-cols-2">
       {features.map((project, index) => (
         <FeaturedCard key={project.slug} project={project} index={index} />
       ))}
