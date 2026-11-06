@@ -1,6 +1,6 @@
 import { component$ } from "@builder.io/qwik";
 import PageHeader from "~/components/ui/home-page-header";
-// import ProjectList from "~/components/ui/project-display/project-list";
+import ProjectList from "~/components/ui/project-display/project-list";
 import { Typography } from "~/components/ui/typography";
 import { createSeoHead } from "~/lib/seo";
 import { MobileBackToTop } from "~/components/ui/mobile-back-to-top-button";
@@ -10,14 +10,12 @@ export default component$(() => {
     <main id="main-page-content">
       <PageHeader />
 
-      {/* <ProjectList /> */}
+      <ProjectList />
 
       <section id="approach" class="scroll-mt-24">
-        <div class="mx-auto grid w-full gap-10 px-5 py-10 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20 lg:px-10 lg:py-32">
+        <div class="mx-auto grid w-full max-w-7xl gap-10 px-5 py-10 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20 lg:px-10 lg:py-32">
           <div>
-            <Typography variant="eyebrow" tone="emerald">
-              How I work
-            </Typography>
+            <Typography variant="eyebrow">How I work</Typography>
             <Typography as="h2" variant="heading-2" class="mt-5">
               Start with the real workflow.
             </Typography>
@@ -41,7 +39,6 @@ export default component$(() => {
           </div>
         </div>
       </section>
-
       <MobileBackToTop />
     </main>
   );

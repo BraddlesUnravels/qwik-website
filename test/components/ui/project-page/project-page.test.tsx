@@ -1,9 +1,9 @@
 import { createDOM } from "@builder.io/qwik/testing";
 import { renderToString } from "@builder.io/qwik/server";
 import { describe, expect, it } from "vitest";
-import { ProjectPage } from "~/components/content/project-page";
-import { ProjectRelatedLinks } from "~/components/content/related-links";
-import { ProjectSection } from "~/components/content/section";
+import { ProjectPage } from "~/components/ui/project-page/project-page";
+import { ProjectRelatedLinks } from "~/components/ui/project-page/related-links";
+import { ProjectSection } from "~/components/ui/project-page/section";
 import type {
   Project,
   ProjectImage,

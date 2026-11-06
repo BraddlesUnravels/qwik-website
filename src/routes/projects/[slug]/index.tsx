@@ -6,7 +6,7 @@ import {
   routeLoader$,
   type DocumentHead,
 } from "@builder.io/qwik-city";
-import { ProjectPage } from "~/components/content/project-page";
+import { ProjectPage } from "~/components/ui/project-page/project-page";
 import { loadProject } from "~/content/loader";
 import { resolveAccessLink } from "~/lib/demo-access";
 import { createSeoHead } from "~/lib/seo";
