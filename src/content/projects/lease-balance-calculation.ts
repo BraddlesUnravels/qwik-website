@@ -1,9 +1,9 @@
 import type { Project } from "../types";
-import BalanceDesktop from "~/media/autodash/Lease_Detail_Page_Desktop(redacted).png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
-import BalanceMobile from "~/media/autodash/Lease_Detail_Page_Mobile(redacted).png?w=240;400&format=webp&quality=80&withoutEnlargement&as=img";
+import BalanceDesktop from "~/media/autodash/imgs/Lease_Detail_Page_Desktop(redacted).png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
+import BalanceMobile from "~/media/autodash/imgs/Lease_Detail_Page_Mobile(redacted).png?w=240;400&format=webp&quality=80&withoutEnlargement&as=img";
 import BalanceBoundary from "~/media/diagrams/balance-source-boundary.svg?url&no-inline";
-import BalanceDesktopFull from "~/media/autodash/Lease_Detail_Page_Desktop(redacted).png?url&no-inline";
-import BalanceMobileFull from "~/media/autodash/Lease_Detail_Page_Mobile(redacted).png?url&no-inline";
+import BalanceDesktopFull from "~/media/autodash/imgs/Lease_Detail_Page_Desktop(redacted).png?url&no-inline";
+import BalanceMobileFull from "~/media/autodash/imgs/Lease_Detail_Page_Mobile(redacted).png?url&no-inline";
 
 export default {
   slug: "lease-balance-calculation",

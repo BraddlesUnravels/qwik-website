@@ -50,7 +50,12 @@ export default {
     {
       title: "Give each job a defined role",
       paragraphs: [
-        "The publisher writes the packaged application to its image repository. The planner reads infrastructure and previews changes. The deployer updates Container Apps using a custom role without registry, Key Vault or permission writes. The runtime identity can read its application image and approved secrets.",
+        `
+          **The publisher** writes the packaged application to its image repository. 
+          The planner reads infrastructure and previews changes. 
+          The deployer updates Container Apps using a custom role without registry, Key Vault or permission writes. 
+          The runtime identity can read its application image and approved secrets.
+        `,
       ],
       images: [
         {
@@ -67,7 +72,11 @@ export default {
     {
       title: "Keep secret values out of release configuration",
       paragraphs: [
-        "GitHub authenticates to Azure with short-lived identity tokens rather than a stored Azure password. For runtime settings, the release configuration carries approved secret names. Azure resolves the corresponding values from Key Vault using the application’s runtime identity.",
+        `
+          GitHub authenticates to Azure uses short-lived identity tokens rather stored Azure passwords. 
+          For runtime settings, the release configuration carries approved secret names. 
+          Azure resolves the corresponding values from Key Vault using the apps runtime identity.
+        `,
       ],
     },
     {
