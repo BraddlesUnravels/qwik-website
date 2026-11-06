@@ -58,7 +58,6 @@ export default component$(() => {
             </div>
             <div id="site-footer-version" class="hidden justify-end sm:flex">
               <Typography
-                id="site-footer-version"
                 variant="small"
                 tone="muted"
                 class="mt-0.5 text-zinc-100"

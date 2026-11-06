@@ -108,6 +108,16 @@ export const projectSummaries = [
       "Incident Investigation",
     ],
   },
+  {
+    slug: "about-approach",
+    path: "/about/approach",
+    category: "How I work",
+    title: "What sales leadership taught me about building software",
+    description:
+      "I use operational questions, workflow mapping and commercial context to work out what software actually needs to change.",
+    featured: false,
+    evidence: ["Fix the reports", "Missing lead data"],
+  },
 ] as const satisfies readonly ProjectSummary[];
 
 export const engineeringApproach: ProjectSummary = {

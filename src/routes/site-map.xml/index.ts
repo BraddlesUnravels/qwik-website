@@ -1,16 +1,14 @@
 import type { RequestHandler } from "@builder.io/qwik-city";
-import { routes } from "@qwik-city-plan";
 import { createSitemap } from "./create-sitemap";
+import { projectSummaries } from "../../content/catalog";
 
 export const onGet: RequestHandler = (ev) => {
-  const siteRoutes = routes
-    .map(([route]) => route as string)
-    .filter((route) => route !== "/"); // Exclude the '/' route
+  const siteRoutes = projectSummaries.map((p) => p.path);
 
   const sitemap = createSitemap([
     { loc: "/", priority: 1 }, // Manually include the root route
-    ...siteRoutes.map((route) => ({
-      loc: route,
+    ...siteRoutes.map((path) => ({
+      loc: path,
       priority: 0.9, // Default priority, adjust as needed
     })),
   ]);

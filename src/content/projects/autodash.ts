@@ -1,12 +1,6 @@
 import type { Project } from "../types";
 import { projectVideos } from "../project-media";
-import DesktopLogin from "~/media/autodash/imgs/AutoDash-Desktop-Login.png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
-import MobileLogin from "~/media/autodash/imgs/AutoDash-Mobile-Login.png?w=240;400&format=webp&quality=80&withoutEnlargement&as=img";
-import DocumentsDesktop from "~/media/autodash/imgs/Lease_Docx_Page_Desktop(redacted).png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
 import LegacyApplHome from "~/media/legacy-portal/legacy-portal-account-home.png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
-import DesktopLoginPath from "~/media/autodash/imgs/AutoDash-Desktop-Login.png?url&no-inline";
-import MobileLoginPath from "~/media/autodash/imgs/Reimb_Page_Mobile(redacted).png?url&no-inline";
-import DocumentsDesktopFull from "~/media/autodash/imgs/Lease_Docx_Page_Desktop(redacted).png?url&no-inline";
 import LegacyApplHomePath from "~/media/legacy-portal/legacy-portal-account-home.png?url&no-inline";
 
 export default {
@@ -25,15 +19,7 @@ export default {
     customer-facing application that kept those internal processes available.
   `,
   featured: true,
-  images: [
-    {
-      ...DesktopLogin,
-      fullSrc: DesktopLoginPath,
-      alt: "Desktop reimbursement page with a claim form and supporting-file upload area.",
-      caption:
-        "Reimbursements brings the claim form and supporting-file upload together.",
-    },
-  ],
+  videos: projectVideos["autodash-lease-workflow-desktop"],
   metrics: [
     {
       label: "Customers",
@@ -95,26 +81,7 @@ export default {
     },
     {
       title: "How I built it",
-      videos: [
-        projectVideos["autodash-reimbursement-desktop"],
-        projectVideos["autodash-reimbursement-mobile"],
-      ],
-      images: [
-        {
-          ...MobileLogin,
-          fullSrc: MobileLoginPath,
-          alt: "Mobile reimbursement page with the claim form and bottom navigation.",
-          caption:
-            "The same claim form adapts to a narrow screen, with customer navigation kept within reach.",
-        },
-        {
-          ...DocumentsDesktop,
-          fullSrc: DocumentsDesktopFull,
-          alt: "Desktop lease documents page with document groups and download controls.",
-          caption:
-            "Customers can find lease documents by type and download them directly from the portal.",
-        },
-      ],
+      videos: [projectVideos["autodash-lease-workflow-mobile"]],
       subsections: [
         {
           title: "Keep the existing business data where it belonged",

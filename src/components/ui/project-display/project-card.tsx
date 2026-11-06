@@ -45,25 +45,21 @@ export default component$<CardProps>(({ project, index }) => (
     </Typography>
     <div class="mt-auto pt-5">
       <ul class="text-ink-muted m-0 flex list-none flex-wrap gap-x-4 gap-y-2 p-0 text-xs">
-        {project.evidence.map((item, i) => {
-          const seperatorDot = (i: number) =>
-            i !== 0 && (
-              <span class="text-ink self-center text-lg leading-none font-bold">
+        {project.evidence.map((item, i) => (
+          <li key={item} class="flex items-center gap-3">
+            {i !== 0 && (
+              <span
+                aria-hidden="true"
+                class="text-ink self-center text-lg leading-none font-bold"
+              >
                 ·
               </span>
-            );
-
-          return (
-            <>
-              {seperatorDot(i)}
-              <li key={item}>
-                <Typography as="span" class="text-ink self-center text-sm">
-                  {item}
-                </Typography>
-              </li>
-            </>
-          );
-        })}
+            )}
+            <Typography as="span" class="text-ink self-center text-sm">
+              {item}
+            </Typography>
+          </li>
+        ))}
       </ul>
 
       <div class="text-brand-bright mt-5 flex items-center justify-between gap-4 text-xs font-medium">

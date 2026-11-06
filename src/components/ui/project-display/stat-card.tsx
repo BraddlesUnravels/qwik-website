@@ -10,14 +10,13 @@ export const StatCard = component$<{ metric: ProjectMetric }>(({ metric }) => (
     <dd class="mt-3">
       <Typography
         as="span"
-        class="text-ink block text-lg leading-snug font-semibold tracking-tight wrap-anywhere sm:text-2xl"
+        variant="body-large"
+        class="block leading-snug font-semibold tracking-tight wrap-anywhere"
       >
         {metric.value}
       </Typography>
       {metric.description && (
-        <Typography as="p" class="text-ink-muted mt-3 text-sm leading-relaxed">
-          {metric.description}
-        </Typography>
+        <Typography variant="x-small">{metric.description}</Typography>
       )}
     </dd>
   </div>

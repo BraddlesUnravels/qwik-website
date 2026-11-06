@@ -1,4 +1,4 @@
-import { component$, Slot } from "@builder.io/qwik";
+import { component$, Slot, type JSX } from "@builder.io/qwik";
 import { twMerge } from "tailwind-merge";
 
 type TypographyElement = "h1" | "h2" | "h3" | "p" | "span" | "div";
@@ -18,12 +18,20 @@ type TypographyVariant =
 
 type TypographyTone = "default" | "muted" | "accent" | "emerald" | "teal";
 
-interface TypographyProps {
+interface TypographyProps extends Pick<
+  JSX.IntrinsicElements["span"],
+  | "id"
+  | "role"
+  | "title"
+  | "aria-hidden"
+  | "aria-label"
+  | "aria-labelledby"
+  | "aria-describedby"
+> {
   as?: TypographyElement;
   variant?: TypographyVariant;
   tone?: TypographyTone;
   align?: "left" | "center" | "right";
-  id?: string;
   class?: string;
 }
 
@@ -64,24 +72,31 @@ const defaultElements: Record<TypographyVariant, TypographyElement> = {
 };
 
 export const Typography = component$<TypographyProps>((props) => {
-  const variant = props.variant ?? "body";
-  const Component = props.as ?? defaultElements[variant];
+  const {
+    as,
+    variant = "body",
+    tone = "default",
+    align,
+    class: customClass,
+    ...attributes
+  } = props;
+  const Component = as ?? defaultElements[variant];
   const alignment =
-    props.align === "center"
+    align === "center"
       ? "text-center"
-      : props.align === "right"
+      : align === "right"
         ? "text-right"
         : undefined;
 
   const className = twMerge(
     variants[variant],
-    tones[props.tone ?? "default"],
+    tones[tone],
     alignment,
-    props.class,
+    customClass,
   );
 
   return (
-    <Component id={props.id} class={className}>
+    <Component {...attributes} class={className}>
       <Slot />
     </Component>
   );

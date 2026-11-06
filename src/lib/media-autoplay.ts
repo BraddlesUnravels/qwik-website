@@ -3,6 +3,10 @@ type DataConnection = EventTarget & {
 };
 
 export function connectMediaAutoplay(video: HTMLVideoElement): () => void {
+  // Set the default and current speed before any autoplay checks.
+  video.defaultPlaybackRate = 2;
+  video.playbackRate = 2;
+
   const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const connection: DataConnection | undefined = (
     navigator as { readonly connection?: DataConnection }
@@ -27,9 +31,14 @@ export function connectMediaAutoplay(video: HTMLVideoElement): () => void {
 
   const pause = () => {
     if (!automatic && !pending) return;
+
     if (pending) interrupted = true;
     automatic = false;
-    if (!video.paused) (internalPauses++, video.pause());
+
+    if (!video.paused) {
+      internalPauses++;
+      video.pause();
+    }
   };
 
   const update = () => {
@@ -37,7 +46,6 @@ export function connectMediaAutoplay(video: HTMLVideoElement): () => void {
     if (pending || !video.paused) return;
 
     video.muted = true;
-    video.playbackRate = 2;
     pending = true;
 
     void video
@@ -46,23 +54,29 @@ export function connectMediaAutoplay(video: HTMLVideoElement): () => void {
         automatic = true;
         pending = false;
         interrupted = false;
+
         if (!allowed()) pause();
       })
       .catch(() => {
         pending = false;
+
         // A visibility/preference pause can abort a pending play promise.
         if (interrupted) {
           interrupted = false;
           update();
           return;
         }
-        // Autoplay is best effort. Keep native controls available, without retries.
+
+        // Stop automatic retries; deliberate playback remains available.
         userControlled = true;
       });
   };
 
   const onPlay = () => {
-    if (!pending) ((userControlled = true), (automatic = false));
+    if (!pending) {
+      userControlled = true;
+      automatic = false;
+    }
   };
 
   const onPause = () => {
@@ -104,6 +118,7 @@ export function connectMediaAutoplay(video: HTMLVideoElement): () => void {
     disposed = true;
     pause();
     observer.disconnect();
+
     motion.removeEventListener("change", update);
     connection?.removeEventListener("change", update);
     document.removeEventListener("visibilitychange", update);

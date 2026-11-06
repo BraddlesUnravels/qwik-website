@@ -46,8 +46,6 @@ export const projectVideos = {
       "Choose a vehicle and account, enter the claim, attach receipts and inspect the submitted reimbursement. Synthetic demo data.",
     src: reimbursementDesktop,
     poster: reimbursementDesktopPoster,
-    autoPlay: true,
-    loop: true,
   },
   "autodash-reimbursement-mobile": {
     id: "autodash-reimbursement-mobile",
@@ -60,8 +58,6 @@ export const projectVideos = {
       "Complete the reimbursement form and upload receipts on mobile. Synthetic demo data.",
     src: reimbursementMobile,
     poster: reimbursementMobilePoster,
-    autoPlay: true,
-    loop: true,
   },
   "autodash-lease-workflow-desktop": {
     id: "autodash-lease-workflow-desktop",
@@ -88,6 +84,8 @@ export const projectVideos = {
       "Inspect the lease balance and budget breakdown on mobile. Synthetic demo data.",
     src: leaseMobile,
     poster: leaseMobilePoster,
+    autoPlay: true,
+    loop: true,
   },
   "autodash-sign-in-desktop": {
     id: "autodash-sign-in-desktop",

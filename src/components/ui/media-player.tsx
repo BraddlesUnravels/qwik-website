@@ -33,20 +33,20 @@ export type MediaPlayerProps = {
   }>;
 };
 
-type ErrorProps = {
-  failedSignal?: Signal<string | undefined>;
-  srcFailure?: string;
-};
-
 type NativeVideoProps = MediaPlayerProps & {
-  videoRef?: Signal<HTMLVideoElement | undefined>;
+  videoId: string;
+  videoRef: Signal<HTMLVideoElement | undefined>;
   describedBy?: string;
   onError$: QRL<() => void>;
+  onPlay$: QRL<() => void>;
+  onPause$: QRL<() => void>;
+  onEnded$: QRL<() => void>;
 };
 
 const NativeVideo = (props: NativeVideoProps) => (
   <video
     key={props.src}
+    id={props.videoId}
     ref={props.videoRef}
     src={props.src}
     poster={props.poster}
@@ -60,6 +60,9 @@ const NativeVideo = (props: NativeVideoProps) => (
     aria-label={props.title}
     aria-describedby={props.describedBy}
     onError$={props.onError$}
+    onPlay$={props.onPlay$}
+    onPause$={props.onPause$}
+    onEnded$={props.onEnded$}
     style={
       props.width && props.height
         ? {
@@ -78,13 +81,12 @@ const NativeVideo = (props: NativeVideoProps) => (
 );
 
 const AutoPlayVideo = component$<NativeVideoProps>((props) => {
-  const video = useSignal<HTMLVideoElement>();
   const disconnect = useSignal<NoSerialize<() => void>>();
+
   useOn(
     "qvisible",
     $((_, element) => {
       if (disconnect.value) return;
-
       disconnect.value = noSerialize(
         connectMediaAutoplay(element as HTMLVideoElement),
       );
@@ -92,99 +94,144 @@ const AutoPlayVideo = component$<NativeVideoProps>((props) => {
   );
 
   useTask$(({ cleanup }) => {
-    // Handle players mounted by client navigation or a source change.
     if (isBrowser) {
       const frame = requestAnimationFrame(() => {
-        if (!disconnect.value && video.value) {
-          disconnect.value = noSerialize(connectMediaAutoplay(video.value));
+        if (!disconnect.value && props.videoRef.value) {
+          disconnect.value = noSerialize(
+            connectMediaAutoplay(props.videoRef.value),
+          );
         }
       });
-
       cleanup(() => cancelAnimationFrame(frame));
     }
-
     cleanup(() => disconnect.value?.());
   });
 
-  // Calling the function directly keeps <video> as the actual root.
-  return NativeVideo({
-    ...props,
-    videoRef: video,
-  });
+  return NativeVideo(props);
 });
-
-const MediaPlayerByType = (props: NativeVideoProps & { captionId: string }) => {
-  const { captionId, onError$ } = props;
-  return props.autoPlay ? (
-    <AutoPlayVideo
-      key={props.src}
-      {...props}
-      describedBy={props.caption ? captionId : undefined}
-      onError$={onError$}
-    />
-  ) : (
-    <NativeVideo
-      key={props.src}
-      {...props}
-      describedBy={props.caption ? captionId : undefined}
-      onError$={onError$}
-    />
-  );
-};
-
-const MediaCaption = (props: MediaPlayerProps & { captionId: string }) =>
-  props.caption && (
-    <figcaption
-      id={props.captionId}
-      class="text-ink-muted mt-3 text-sm leading-relaxed"
-    >
-      <Typography as="p">{props.caption}</Typography>
-    </figcaption>
-  );
-
-const MediaFailed = (props: ErrorProps) =>
-  props.failedSignal?.value === props.srcFailure && (
-    <p role="status" class="text-ink-soft mt-3 text-sm">
-      This video could not be loaded.{" "}
-      <a class="underline" href={props.srcFailure}>
-        Open the MP4 directly
-      </a>
-      .
-    </p>
-  );
 
 export const MediaPlayer = component$<MediaPlayerProps | undefined>((props) => {
   if (!props) return undefined;
 
-  const captionId = useId();
+  const id = useId();
+  const videoId = `video-${id}`;
+  const captionId = `caption-${id}`;
+  const video = useSignal<HTMLVideoElement>();
+  const paused = useSignal(true);
   const failedSrc = useSignal<string>();
+  const playbackFailedSrc = useSignal<string>();
+
+  useTask$(({ track }) => {
+    track(() => props.src);
+    paused.value = true;
+  });
+
   const onError$ = $(() => {
     failedSrc.value = props.src;
   });
-  const figureClass = ["max-w-full min-w-0", props.class].join(" ");
+  const onPlay$ = $(() => {
+    paused.value = false;
+    playbackFailedSrc.value = undefined;
+  });
+  const onPause$ = $(() => {
+    paused.value = true;
+  });
+  const onEnded$ = $(() => {
+    paused.value = true;
+  });
+  const togglePlayback$ = $(async () => {
+    const element = video.value;
+    if (!element) return;
 
-  return (
-    <figure class={figureClass}>
-      <MediaPlayerByType
+    playbackFailedSrc.value = undefined;
+    if (!element.paused) {
+      element.pause();
+      paused.value = element.paused;
+      return;
+    }
+
+    try {
+      if (props.autoPlay || props.muted) element.muted = true;
+      await element.play();
+      paused.value = element.paused;
+    } catch {
+      paused.value = true;
+      playbackFailedSrc.value = props.src;
+    }
+  });
+
+  const nativeProps: NativeVideoProps = {
+    ...props,
+    videoId,
+    videoRef: video,
+    describedBy: props.caption ? captionId : undefined,
+    onError$,
+    onPlay$,
+    onPause$,
+    onEnded$,
+  };
+  const mediaFailed = failedSrc.value === props.src;
+  const playbackFailed = playbackFailedSrc.value === props.src;
+
+  const MediaPlayerByType = (
+    props: NativeVideoProps & { captionId: string },
+  ) => {
+    const { captionId, onError$ } = props;
+    return props.autoPlay ? (
+      <AutoPlayVideo
+        key={props.src}
         {...props}
-        captionId={captionId}
-        describedBy={captionId ? props.caption : undefined}
+        describedBy={props.caption ? captionId : undefined}
         onError$={onError$}
       />
+    ) : (
+      <NativeVideo
+        key={props.src}
+        {...props}
+        describedBy={props.caption ? captionId : undefined}
+        onError$={onError$}
+      />
+    );
+  };
 
-      <MediaCaption captionId={captionId} {...props} />
+  const MediaCaption = (props: MediaPlayerProps & { captionId: string }) =>
+    props.caption && (
+      <figcaption
+        id={props.captionId}
+        class="text-ink-muted mt-3 text-sm leading-relaxed"
+      >
+        <Typography as="p">{props.caption}</Typography>
+      </figcaption>
+    );
 
-      <MediaFailed failedSignal={failedSrc} srcFailure={props.src} />
+  const MediaFailed = () =>
+    (mediaFailed || playbackFailed) && (
+      <p role="status" class="text-ink-soft mt-3 text-sm">
+        This video could not be loaded.{" "}
+        <a class="underline" href={props.src}>
+          Open the MP4 directly
+        </a>
+        .
+      </p>
+    );
+
+  return (
+    <figure
+      class={["m-3 max-w-full min-w-0 touch-auto", props.class].join(" ")}
+      onMouseOver$={togglePlayback$}
+    >
+      <MediaPlayerByType {...nativeProps} captionId={captionId} />
+
+      <MediaCaption {...props} captionId={captionId} />
+
+      <MediaFailed />
     </figure>
   );
 });
 
 export const OptionalMedia = component$<{
-  video?: MediaPlayerProps | MediaPlayerProps[] | undefined;
+  video?: MediaPlayerProps | MediaPlayerProps[];
 }>(({ video }) => {
-  if (video === undefined || Array.isArray(video)) {
-    return undefined;
-  }
-
+  if (video === undefined || Array.isArray(video)) return undefined;
   return <MediaPlayer {...video} />;
 });
