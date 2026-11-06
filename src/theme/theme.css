@@ -12,6 +12,8 @@
     --color-brand-bright: oklch(0.79 0.16 282);
     --color-accent: oklch(0.78 0.13 210);
     --color-success: oklch(0.79 0.14 155);
+    --brand-secondary: oklch(0.75 0.13 185);
+    --brand-secondary-bright: oklch(0.83 0.12 185);
 
     --radius-card: 1.5rem;
     --radius-panel: 2rem;
