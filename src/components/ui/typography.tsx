@@ -65,7 +65,7 @@ const defaultElements: Record<TypographyVariant, TypographyElement> = {
 
 export const Typography = component$<TypographyProps>((props) => {
   const variant = props.variant ?? "body";
-  const Component = defaultElements[variant];
+  const Component = props.as ?? defaultElements[variant];
   const alignment =
     props.align === "center"
       ? "text-center"
