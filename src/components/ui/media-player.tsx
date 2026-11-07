@@ -139,26 +139,29 @@ export const MediaPlayer = component$<MediaPlayerProps | undefined>((props) => {
   const onEnded$ = $(() => {
     paused.value = true;
   });
-  const togglePlayback$ = $(async () => {
-    const element = video.value;
-    if (!element) return;
 
-    playbackFailedSrc.value = undefined;
-    if (!element.paused) {
-      element.pause();
-      paused.value = element.paused;
-      return;
-    }
+  // TODO: add toggle playback button back to video, not urgent or implemented yet
 
-    try {
-      if (props.autoPlay || props.muted) element.muted = true;
-      await element.play();
-      paused.value = element.paused;
-    } catch {
-      paused.value = true;
-      playbackFailedSrc.value = props.src;
-    }
-  });
+  // const togglePlayback$ = $(async () => {
+  //   const element = video.value;
+  //   if (!element) return;
+
+  //   playbackFailedSrc.value = undefined;
+  //   if (!element.paused) {
+  //     element.pause();
+  //     paused.value = element.paused;
+  //     return;
+  //   }
+
+  //   try {
+  //     if (props.autoPlay || props.muted) element.muted = true;
+  //     await element.play();
+  //     paused.value = element.paused;
+  //   } catch {
+  //     paused.value = true;
+  //     playbackFailedSrc.value = props.src;
+  //   }
+  // });
 
   const nativeProps: NativeVideoProps = {
     ...props,
@@ -217,8 +220,7 @@ export const MediaPlayer = component$<MediaPlayerProps | undefined>((props) => {
 
   return (
     <figure
-      class={["m-3 max-w-full min-w-0 touch-auto", props.class].join(" ")}
-      onMouseOver$={togglePlayback$}
+      class={["mt-4 mb-4 max-w-full min-w-0 touch-auto", props.class].join(" ")}
     >
       <MediaPlayerByType {...nativeProps} captionId={captionId} />
 

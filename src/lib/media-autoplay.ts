@@ -2,10 +2,25 @@ type DataConnection = EventTarget & {
   readonly saveData?: boolean;
 };
 
+// Playback speed is an HTMLMediaElement property, not an HTML attribute.
+export function enforceMediaPlaybackRate(video: HTMLVideoElement): void {
+  // Both setters queue ratechange events. Guard writes to avoid an event loop.
+  if (video.defaultPlaybackRate !== 2) video.defaultPlaybackRate = 2;
+  if (video.playbackRate !== 2) video.playbackRate = 2;
+}
+
 export function connectMediaAutoplay(video: HTMLVideoElement): () => void {
-  // Set the default and current speed before any autoplay checks.
-  video.defaultPlaybackRate = 2;
-  video.playbackRate = 2;
+  enforceMediaPlaybackRate(video);
+
+  const enforceRate = () => enforceMediaPlaybackRate(video);
+  const rateEvents = [
+    "loadstart",
+    "emptied",
+    "loadedmetadata",
+    "play",
+    "playing",
+    "ratechange",
+  ] as const;
 
   const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const connection: DataConnection | undefined = (
@@ -46,11 +61,17 @@ export function connectMediaAutoplay(video: HTMLVideoElement): () => void {
     if (pending || !video.paused) return;
 
     video.muted = true;
+    enforceRate();
     pending = true;
 
     void video
       .play()
       .then(() => {
+        if (!disposed) {
+          // Resource initialization can reset media properties in WebKit.
+          enforceRate();
+          video.muted = true;
+        }
         automatic = true;
         pending = false;
         interrupted = false;
@@ -106,6 +127,7 @@ export function connectMediaAutoplay(video: HTMLVideoElement): () => void {
     },
   );
 
+  rateEvents.forEach((event) => video.addEventListener(event, enforceRate));
   video.addEventListener("play", onPlay);
   video.addEventListener("pause", onPause);
   video.addEventListener("ended", onEnded);
@@ -119,6 +141,9 @@ export function connectMediaAutoplay(video: HTMLVideoElement): () => void {
     pause();
     observer.disconnect();
 
+    rateEvents.forEach((event) =>
+      video.removeEventListener(event, enforceRate),
+    );
     motion.removeEventListener("change", update);
     connection?.removeEventListener("change", update);
     document.removeEventListener("visibilitychange", update);
