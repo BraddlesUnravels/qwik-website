@@ -8,6 +8,7 @@ type TypographyVariant =
   | "heading-1"
   | "heading-2"
   | "heading-3"
+  | "header-text"
   | "body-large"
   | "body"
   | "small"
@@ -16,7 +17,16 @@ type TypographyVariant =
   | "caption"
   | "foot-note";
 
-type TypographyTone = "default" | "muted" | "accent" | "emerald" | "teal";
+type TypographyTone =
+  | "default"
+  | "muted"
+  | "accent"
+  | "emerald"
+  | "teal"
+  | "brand"
+  | "brand-bright"
+  | "brand-sec"
+  | "brand-sec-bright";
 
 interface TypographyProps extends Pick<
   JSX.IntrinsicElements["span"],
@@ -36,14 +46,16 @@ interface TypographyProps extends Pick<
 }
 
 const variants: Record<TypographyVariant, string> = {
-  display: "text-6xl font-semibold leading-[0.96] tracking-[-0.055em]",
+  display: "text-7xl font-semibold leading-[0.96] tracking-[-0.055em]",
   "heading-1": "text-5xl font-semibold leading-tight tracking-[-0.04em]",
   "heading-2": "text-4xl font-semibold leading-tight tracking-[-0.035em]",
   "heading-3": "text-2xl font-semibold leading-tight tracking-[-0.025em]",
+  "header-text":
+    "text-(length:--text-header) leading-(--text-header--line-height)",
   "body-large": "text-xl leading-8",
   body: "text-base leading-7",
   small: "text-sm leading-6",
-  eyebrow: "text-xs font-semibold uppercase tracking-[0.12em]",
+  eyebrow: "text-base font-semibold uppercase tracking-[0.05em]",
   "x-small": "text-xxs leading-4",
   caption: "text-caption leading-4",
   "foot-note": "text-foot-note leading-4",
@@ -55,6 +67,10 @@ const tones: Record<TypographyTone, string> = {
   accent: "text-indigo-300",
   emerald: "text-emerald-400",
   teal: "text-green-200",
+  brand: "text-brand",
+  "brand-bright": "brand-bright",
+  "brand-sec": "text-brand-secondary",
+  "brand-sec-bright": "text-brand-secondary-bright",
 };
 
 const defaultElements: Record<TypographyVariant, TypographyElement> = {
@@ -62,6 +78,7 @@ const defaultElements: Record<TypographyVariant, TypographyElement> = {
   "heading-1": "h1",
   "heading-2": "h2",
   "heading-3": "h3",
+  "header-text": "span",
   "body-large": "p",
   body: "p",
   small: "p",

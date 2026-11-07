@@ -1,6 +1,6 @@
 import type { JSXNode } from "@builder.io/qwik";
 import type { IconProps } from "@qwikest/icons";
-import { LuDownload } from "@qwikest/icons/lucide";
+import { LuDownload, LuGithub } from "@qwikest/icons/lucide";
 
 interface NavLink {
   label: string;
@@ -11,14 +11,6 @@ interface NavLink {
   prefetch?: boolean;
 }
 export const navLinks: NavLink[] = [
-  {
-    label: "Résumé",
-    href: "/Bradley_Laskey_Full_Stack_Developer_Resume_2026.pdf",
-    type: "link",
-    icon: LuDownload,
-    download: "Bradley_Laskey_Full_Stack_Developer_Resume_2026.pdf",
-    prefetch: false,
-  },
   {
     label: "Projects",
     href: "/#selected-projects",
@@ -32,6 +24,21 @@ export const navLinks: NavLink[] = [
   {
     label: "Contact",
     href: "mailto:bradley.laskey1990@gmail.com",
-    type: "anchor",
+    type: "link",
+  },
+  {
+    label: "Résumé",
+    href: "/Bradley_Laskey_Full_Stack_Developer_Resume_2026.pdf",
+    type: "link",
+    icon: LuDownload,
+    download: "Bradley_Laskey_Full_Stack_Developer_Resume_2026.pdf",
+    prefetch: false,
+  },
+  {
+    label: "GitHub",
+    href: "https://github.com/braddlesunravels",
+    type: "link",
+    icon: LuGithub,
+    prefetch: false,
   },
 ];

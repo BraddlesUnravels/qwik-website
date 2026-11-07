@@ -14,12 +14,32 @@ const twAnchor = [
   "focus-visible:outline-none",
 ].join(" ");
 
-export const GithubRepoButton = component$(({ url }: GithubRepoButtonProps) => {
-  if (!url) return;
-  return (
-    <a class={twAnchor} href={url} target="_blank">
-      <LuGithub class="text-color-black h-4 w-4" />
-      &nbsp;<span>GitHub Repo</span>
-    </a>
-  );
-});
+export const GithubRepoButton = component$<GithubRepoButtonProps>(
+  ({ url }) =>
+    url && (
+      <a class={twAnchor} href={url} target="_blank">
+        <LuGithub class="text-color-black h-4 w-4" />
+        &nbsp;<span>GitHub Repo</span>
+      </a>
+    ),
+);
+
+export const GitHubNavButton = component$<{ url?: string }>(
+  ({ url }) =>
+    url && (
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class={[
+          "inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full",
+          "border border-zinc-700 px-4 text-sm font-medium text-zinc-300",
+          "transition-colors hover:border-zinc-500 hover:bg-zinc-800/60 hover:text-zinc-100",
+          "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400",
+        ].join(" ")}
+      >
+        <span>GitHub</span>
+        <LuGithub class="size-4" aria-hidden="true" />
+      </a>
+    ),
+);

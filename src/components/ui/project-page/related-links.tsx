@@ -1,5 +1,6 @@
 import { component$ } from "@builder.io/qwik";
 import { Typography } from "../typography";
+import { LuArrowUpRight } from "@qwikest/icons/lucide";
 import type { Project } from "~/content/types";
 
 const fallback = [{ label: "View all projects", href: "/#selected-projects" }];
@@ -21,9 +22,9 @@ export const ProjectRelatedLinks = component$<{
           <a
             key={link.href}
             href={link.href}
-            class="text-ink hover:border-brand/50 hover:bg-brand/10 rounded-full border border-white/10 bg-white/4 px-5 py-3 text-sm font-semibold transition"
+            class="text-ink hover:border-brand/50 hover:bg-brand/10 flex flex-row items-center rounded-full border border-white/10 bg-white/4 px-5 py-3 text-sm font-semibold transition"
           >
-            {link.label} <span aria-hidden="true">↗</span>
+            {link.label} <LuArrowUpRight class="ml-2" />
           </a>
         ))}
       </div>

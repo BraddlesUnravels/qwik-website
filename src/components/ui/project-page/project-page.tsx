@@ -19,8 +19,8 @@ export const ProjectPage = component$<{ project: Project }>(({ project }) => (
         </div>
       </ProjectHeader>
 
-      <div class="mx-auto grid w-full gap-12 pb-24 lg:grid-cols-[minmax(0,1fr)_16rem] lg:px-10 lg:pb-32">
-        <div class="max-w-3xl min-w-0">
+      <div class="mx-auto grid w-full gap-12 pb-24 lg:grid-cols-[minmax(0,1fr)_16rem] lg:pb-32">
+        <div class="w-full">
           {project.sections.map((section, index) => (
             <ProjectSection
               key={section.title}

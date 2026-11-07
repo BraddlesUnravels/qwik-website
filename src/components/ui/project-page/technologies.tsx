@@ -6,7 +6,7 @@ export const ProjectTechnologies = component$<{
   technologies: ProjectMetric[];
 }>(({ technologies }) => (
   <aside class="lg:sticky lg:top-28 lg:h-fit">
-    <div class="shadow-card emerald-border background-color: rgb(7 10 16 / 0.5) rounded-xl p-6">
+    <div class="transparent p-6">
       <Typography as="h2" class="font-display text-ink text-lg font-semibold">
         Technology and methods
       </Typography>

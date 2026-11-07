@@ -32,15 +32,10 @@ export default component$(() => {
         <Typography variant="eyebrow" tone="emerald">
           Bradley Laskey · Full Stack Developer
         </Typography>
-        <Typography as="h1" variant="display" class="mt-4 lg:mt-8 2xl:mt-10">
+        <Typography variant="display" class="mt-4 lg:mt-8 2xl:mt-10">
           I think in business problems.
         </Typography>
-        <Typography
-          as="h1"
-          variant="display"
-          class="mt-4 lg:mt-7"
-          tone="emerald"
-        >
+        <Typography variant="display" class="mt-4 lg:mt-7" tone="emerald">
           I build in code
           <span
             class={
@@ -61,13 +56,20 @@ export default component$(() => {
           />
         </Typography>
       </div>
-      <Typography class="mt-8 min-h-15 max-w-6xl text-xl lg:mt-12">
+      <Typography
+        variant="header-text"
+        class="mt-8 min-h-15 max-w-4xl lg:mt-12"
+      >
         I'm a full-stack developer with five years of production experience
         across front and back-end development, APIs, databases and cloud
         infrastructure.
       </Typography>
 
-      <Typography class="mt-8 min-h-15 max-w-6xl text-xl lg:mt-12">
+      <Typography
+        variant="header-text"
+        tone="brand"
+        class="mt-8 min-h-15 max-w-5xl lg:mt-12"
+      >
         I build applications, modernise legacy platforms and connect systems
         that weren't designed to connect. Turning technical complexity into
         reliable, well documented and maintainable software.
