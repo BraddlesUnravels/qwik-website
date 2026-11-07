@@ -12,14 +12,14 @@ export const ProjectPage = component$<{ project: Project }>(({ project }) => (
       aria-hidden="true"
       class="pointer-events-none absolute top-0 left-1/2 -z-10 h-150 w-screen -translate-x-1/2 bg-[radial-gradient(circle_at_20%_10%,color-mix(in_oklab,var(--color-brand)_20%,transparent),transparent_42%),radial-gradient(circle_at_85%_20%,color-mix(in_oklab,var(--color-accent)_12%,transparent),transparent_36%)]"
     />
-    <article>
+    <article class="m-0">
       <ProjectHeader project={project}>
         <div q:slot="actions" class="contents">
           <Slot name="actions" />
         </div>
       </ProjectHeader>
 
-      <div class="mx-auto grid w-full gap-12 px-5 pb-24 sm:px-8 lg:grid-cols-[minmax(0,1fr)_16rem] lg:px-10 lg:pb-32">
+      <div class="mx-auto grid w-full gap-12 pb-24 lg:grid-cols-[minmax(0,1fr)_16rem] lg:px-10 lg:pb-32">
         <div class="max-w-3xl min-w-0">
           {project.sections.map((section, index) => (
             <ProjectSection

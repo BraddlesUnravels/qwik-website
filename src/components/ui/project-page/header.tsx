@@ -21,7 +21,7 @@ type HeaderProps = {
 
 export const ProjectHeader = component$<HeaderProps>(({ project }) => {
   return (
-    <header class="mx-auto w-full px-5 pt-10 pb-12 sm:px-8 sm:pt-16 sm:pb-16 lg:px-10">
+    <header class="w-full pt-10 pb-12 sm:pt-16 sm:pb-16">
       <div class="flex flex-wrap items-center justify-between gap-4">
         <a
           href="/#selected-projects"
@@ -45,7 +45,7 @@ export const ProjectHeader = component$<HeaderProps>(({ project }) => {
         <h1 class="font-display text-ink mt-5 text-[clamp(2.25rem,5vw,4rem)] leading-[1.08] font-semibold tracking-[-0.045em] text-balance">
           {project.title}
         </h1>
-        <p class="text-ink-soft mt-6 max-w-4xl text-lg leading-relaxed sm:text-xl">
+        <p class="text-ink-soft mt-6 max-w-4xl text-lg leading-relaxed">
           {project.introduction}
         </p>
         <Slot name="actions" />

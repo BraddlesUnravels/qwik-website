@@ -203,7 +203,7 @@ export const MediaPlayer = component$<MediaPlayerProps | undefined>((props) => {
         id={props.captionId}
         class="text-ink-muted mt-3 text-sm leading-relaxed"
       >
-        <Typography as="p">{props.caption}</Typography>
+        <Typography variant="caption">{props.caption}</Typography>
       </figcaption>
     );
 
