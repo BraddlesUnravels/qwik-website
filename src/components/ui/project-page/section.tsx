@@ -7,6 +7,8 @@ import type {
   ProjectSubsection as SubsectionData,
 } from "~/content/types";
 
+// TODO: break up into smaller components
+
 const BulletPoint = () => (
   <span
     aria-hidden="true"

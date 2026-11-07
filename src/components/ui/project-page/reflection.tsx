@@ -3,7 +3,7 @@ import { Typography } from "../typography";
 
 export const ProjectReflection = component$<{ lesson?: string }>(
   ({ lesson }) =>
-    lesson ? (
+    lesson && (
       <aside class="rounded-card border-brand/25 bg-brand/8 shadow-glow border p-7 sm:p-9">
         <Typography
           as="p"
@@ -18,5 +18,5 @@ export const ProjectReflection = component$<{ lesson?: string }>(
           {lesson}
         </Typography>
       </aside>
-    ) : undefined,
+    ),
 );

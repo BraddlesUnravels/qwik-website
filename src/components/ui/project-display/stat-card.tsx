@@ -25,7 +25,7 @@ export const StatCard = component$<{ metric: ProjectMetric }>(({ metric }) => (
 export const CardRow = component$<{ metrics: ProjectMetric[] }>(
   ({ metrics }) =>
     metrics.length ? (
-      <dl class="mt-8 grid auto-rows-fr gap-3 empty:hidden min-[380px]:grid-cols-2 sm:mt-10 sm:gap-4 lg:grid-cols-4">
+      <dl class="mt-8 hidden auto-rows-fr gap-3 empty:hidden lg:grid lg:grid-cols-4">
         {metrics.map((metric) => (
           <StatCard key={metric.label} metric={metric} />
         ))}

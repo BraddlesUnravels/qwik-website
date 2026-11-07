@@ -80,21 +80,8 @@ export default component$(() => {
       >
         {navLinks.map((link) => {
           const Icon = link.icon;
-          const isAnchor = link.type === "anchor" || Boolean(link.download);
 
-          return isAnchor ? (
-            <a
-              key={link.href}
-              href={link.href}
-              aria-label={link.label}
-              download={link.download}
-              onClick$={() => closeMenu()}
-              class="flex justify-between px-4 py-2 text-zinc-100 hover:bg-zinc-700"
-            >
-              <>{link.label}</>
-              <>{Icon && <Icon class="h-4 w-4" />}</>
-            </a>
-          ) : (
+          return (
             <Link
               key={link.href}
               href={link.href}
@@ -103,8 +90,8 @@ export default component$(() => {
               onClick$={() => closeMenu()}
               class="flex justify-between px-4 py-2 text-zinc-100 hover:bg-zinc-700"
             >
-              <>{link.label}</>
-              <>{Icon && <Icon class="h-4 w-4" />}</>
+              <span>{link.label}</span>
+              <span>{Icon && <Icon class="h-4 w-4" />}</span>
             </Link>
           );
         })}

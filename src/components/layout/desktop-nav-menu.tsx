@@ -1,9 +1,7 @@
 import { component$ } from "@builder.io/qwik";
 import { Link } from "@builder.io/qwik-city";
 import { navLinks } from "~/lib/site-link-sets";
-
-const anchorClass =
-  "rounded-full border border-zinc-700 px-4 py-2 text-zinc-100 hover:border-zinc-500";
+import { GitHubNavButton } from "~/components/ui/github-repo-button";
 
 const linkClass =
   "hidden items-center gap-1 text-zinc-400 hover:text-zinc-100 sm:flex sm:flex-row";
@@ -16,19 +14,10 @@ export default component$(() => (
   >
     {navLinks.map((link) => {
       const Icon = link.icon;
-      const isAnchor = link.type === "anchor" || Boolean(link.download);
+      const isGitHub = link.href.includes("github");
 
-      return isAnchor ? (
-        <a
-          key={link.href}
-          href={link.href}
-          download={link.download}
-          aria-label={`${link.download ? "Download " : ""}${link.label}`}
-          class={link.download ? linkClass : anchorClass}
-        >
-          <span>{link.label}</span>
-          {Icon && <Icon class="h-4 w-4" aria-hidden="true" />}
-        </a>
+      return isGitHub ? (
+        <GitHubNavButton url={link.href} />
       ) : (
         <Link
           id={`link-comp-${link.label}`}
