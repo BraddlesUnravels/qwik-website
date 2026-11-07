@@ -1,5 +1,5 @@
 import { component$ } from "@builder.io/qwik";
-import { Typography } from "../ui/typography";
+import { Typography } from "../typography";
 
 export const ProjectReflection = component$<{ lesson?: string }>(
   ({ lesson }) => {

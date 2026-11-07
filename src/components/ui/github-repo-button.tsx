@@ -18,7 +18,7 @@ export const GithubRepoButton = component$(({ url }: GithubRepoButtonProps) => {
   if (!url) return;
   return (
     <a class={twAnchor} href={url} target="_blank">
-      <LuGithub />
+      <LuGithub class="text-color-black h-4 w-4" />
       &nbsp;<span>GitHub Repo</span>
     </a>
   );

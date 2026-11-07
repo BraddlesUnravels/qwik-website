@@ -40,11 +40,7 @@ describe("MediaPlayer SSR", () => {
       );
       const video = html.match(/<video\b[^>]*>/)?.[0] ?? "";
       expect(video).toContain('preload="none"');
-      if (autoPlay) {
-        expect(video).not.toContain("controls");
-      } else {
-        expect(video).toContain("controls");
-      }
+      expect(video).toContain("controls");
       expect(video.toLowerCase()).toContain("playsinline");
       expect(video.toLowerCase()).not.toMatch(/\sautoplay(?:[\s=>]|$)/);
       expect(video).toContain('aria-label="Workflow"');

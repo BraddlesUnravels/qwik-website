@@ -2,9 +2,10 @@ import { component$ } from "@builder.io/qwik";
 import type { ProjectMedia } from "~/content/types";
 import { MediaPlayer } from "./media-player";
 
-export const ProjectMediaList = component$<{
+export const ProjectVideos = component$<{
   videos?: ProjectMedia[];
-}>(({ videos = [] }) => (
+  autoPlay?: boolean;
+}>(({ videos = [], autoPlay = false }) => (
   <div class="mt-8 grid min-w-0 gap-8 empty:hidden">
     {videos.map((video) => (
       <div key={video.id} class="min-w-0">
@@ -14,7 +15,7 @@ export const ProjectMediaList = component$<{
             ({video.label})
           </span>
         </h3>
-        <MediaPlayer {...video} />
+        <MediaPlayer {...video} autoPlay={autoPlay} />
       </div>
     ))}
   </div>

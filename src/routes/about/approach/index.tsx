@@ -1,5 +1,5 @@
 import { component$ } from "@builder.io/qwik";
-import { ProjectPage } from "~/components/content/project-page";
+import { ProjectPage } from "~/components/ui/project-page/project-page";
 import aboutApproach from "~/content/projects/about-approach";
 import { engineeringApproach } from "~/content/catalog";
 import { createSeoHead } from "~/lib/seo";

@@ -24,6 +24,7 @@ import vitestIcon from "~/media/logos/vitest-logo.svg?url&no-inline";
 import dockerIcon from "~/media/logos/docker-logo.svg?url&no-inline";
 import githubActionsIcon from "~/media/logos/github-actions-logo.svg?url&no-inline";
 import iacIcon from "~/media/logos/iac-logo.svg?url&no-inline";
+import azureIcon from "~/media/logos/azure-logo.svg?url&no-inline";
 
 const technologies = [
   { name: "JavaScript", icon: javascriptIcon },
@@ -41,14 +42,15 @@ const technologies = [
   { name: "Microsoft SQL Server", icon: sqlServerIcon },
   { name: "MySQL", icon: mysqlIcon },
   { name: "PostgreSQL", icon: postgresIcon },
+  { name: "Azure", icon: azureIcon },
+  { name: "Docker", icon: dockerIcon },
+  { name: "GitHub Actions", icon: githubActionsIcon },
   { name: "Prisma", icon: prismaIcon },
   { name: "TypeORM", icon: typeormIcon },
   { name: "Drizzle", icon: drizzleIcon },
   { name: "Supabase", icon: supabaseIcon },
   { name: "Cypress", icon: cypressIcon },
   { name: "Vitest", icon: vitestIcon },
-  { name: "Docker", icon: dockerIcon },
-  { name: "GitHub Actions", icon: githubActionsIcon },
   { name: "Infrastructure as Code", icon: iacIcon },
 ] as const;
 

@@ -1,5 +1,5 @@
 import { component$ } from "@builder.io/qwik";
-import { Typography } from "../ui/typography";
+import { Typography } from "../typography";
 import type { ProjectMetric } from "~/content/types";
 
 export const ProjectTechnologies = component$<{
