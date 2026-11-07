@@ -26,6 +26,35 @@
 }
 
 @layer utilities {
+  .feature-card {
+    background: color-mix(in oklab, var(--color-black) 20%, transparent);
+    border: 1px solid color-mix(in oklab, var(--color-brand) 30%, transparent);
+  }
+
+  .feature-card:hover {
+    border-color: color-mix(
+      in oklab,
+      var(--color-brand-bright) 60%,
+      transparent
+    );
+    background: color-mix(in oklab, var(--color-black) 30%, transparent);
+  }
+
+  .project-card {
+    background: color-mix(in oklab, var(--color-black) 20%, transparent);
+    border: 1px solid
+      color-mix(in oklab, var(--brand-secondary) 20%, transparent);
+  }
+
+  .project-card:hover {
+    background: color-mix(in oklab, var(--color-black) 30%, transparent);
+    border-color: color-mix(
+      in oklab,
+      var(--brand-secondary-bright) 30%,
+      transparent
+    );
+  }
+
   .project-image[data-tone="dark"] {
     filter: brightness(1.35) contrast(1);
     border-color: color-mix(
@@ -58,6 +87,10 @@
       var(--color-emerald-400) 25%,
       transparent
     );
+  }
+
+  .card-bg {
+    background: rgb(7 10 16 / 0.5);
   }
 
   @keyframes cursor-blink {

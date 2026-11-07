@@ -1,4 +1,5 @@
 import { component$, Slot } from "@builder.io/qwik";
+import { twMerge } from "tailwind-merge";
 
 type TypographyElement = "h1" | "h2" | "h3" | "p" | "span" | "div";
 
@@ -10,7 +11,10 @@ type TypographyVariant =
   | "body-large"
   | "body"
   | "small"
-  | "eyebrow";
+  | "eyebrow"
+  | "x-small"
+  | "caption"
+  | "foot-note";
 
 type TypographyTone = "default" | "muted" | "accent" | "emerald" | "teal";
 
@@ -18,7 +22,7 @@ interface TypographyProps {
   as?: TypographyElement;
   variant?: TypographyVariant;
   tone?: TypographyTone;
-  align?: "left" | "center";
+  align?: "left" | "center" | "right";
   id?: string;
   class?: string;
 }
@@ -32,6 +36,9 @@ const variants: Record<TypographyVariant, string> = {
   body: "text-base leading-7",
   small: "text-sm leading-6",
   eyebrow: "text-xs font-semibold uppercase tracking-[0.12em]",
+  "x-small": "text-xxs leading-4",
+  caption: "text-caption leading-4",
+  "foot-note": "text-foot-note leading-4",
 };
 
 const tones: Record<TypographyTone, string> = {
@@ -51,64 +58,31 @@ const defaultElements: Record<TypographyVariant, TypographyElement> = {
   body: "p",
   small: "p",
   eyebrow: "span",
+  "x-small": "span",
+  caption: "span",
+  "foot-note": "span",
 };
 
 export const Typography = component$<TypographyProps>((props) => {
   const variant = props.variant ?? "body";
-  const element = props.as ?? defaultElements[variant];
+  const Component = defaultElements[variant];
+  const alignment =
+    props.align === "center"
+      ? "text-center"
+      : props.align === "right"
+        ? "text-right"
+        : undefined;
 
-  const className = [
+  const className = twMerge(
     variants[variant],
     tones[props.tone ?? "default"],
-    props.align === "center" ? "text-center" : "",
-    props.class ?? "",
-  ]
-    .filter(Boolean)
-    .join(" ");
-
-  if (element === "h1") {
-    return (
-      <h1 id={props.id} class={className}>
-        <Slot />
-      </h1>
-    );
-  }
-
-  if (element === "h2") {
-    return (
-      <h2 id={props.id} class={className}>
-        <Slot />
-      </h2>
-    );
-  }
-
-  if (element === "h3") {
-    return (
-      <h3 id={props.id} class={className}>
-        <Slot />
-      </h3>
-    );
-  }
-
-  if (element === "span") {
-    return (
-      <span id={props.id} class={className}>
-        <Slot />
-      </span>
-    );
-  }
-
-  if (element === "div") {
-    return (
-      <div id={props.id} class={className}>
-        <Slot />
-      </div>
-    );
-  }
+    alignment,
+    props.class,
+  );
 
   return (
-    <p id={props.id} class={className}>
+    <Component id={props.id} class={className}>
       <Slot />
-    </p>
+    </Component>
   );
 });

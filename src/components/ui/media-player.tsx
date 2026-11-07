@@ -52,7 +52,7 @@ const NativeVideo = (props: NativeVideoProps) => (
     poster={props.poster}
     width={props.width}
     height={props.height}
-    controls
+    controls={!props.autoPlay}
     playsInline
     preload="none"
     muted={props.autoPlay || props.muted}
@@ -153,7 +153,9 @@ const MediaFailed = (props: ErrorProps) =>
     </p>
   );
 
-export const MediaPlayer = component$<MediaPlayerProps>((props) => {
+export const MediaPlayer = component$<MediaPlayerProps | undefined>((props) => {
+  if (!props) return undefined;
+
   const captionId = useId();
   const failedSrc = useSignal<string>();
   const onError$ = $(() => {
@@ -163,19 +165,26 @@ export const MediaPlayer = component$<MediaPlayerProps>((props) => {
 
   return (
     <figure class={figureClass}>
-      {[props.src].map((src) => (
-        <MediaPlayerByType
-          key={src}
-          {...props}
-          captionId={captionId}
-          describedBy={captionId ? props.caption : undefined}
-          onError$={onError$}
-        />
-      ))}
+      <MediaPlayerByType
+        {...props}
+        captionId={captionId}
+        describedBy={captionId ? props.caption : undefined}
+        onError$={onError$}
+      />
 
       <MediaCaption captionId={captionId} {...props} />
 
       <MediaFailed failedSignal={failedSrc} srcFailure={props.src} />
     </figure>
   );
+});
+
+export const OptionalMedia = component$<{
+  video?: MediaPlayerProps | MediaPlayerProps[] | undefined;
+}>(({ video }) => {
+  if (video === undefined || Array.isArray(video)) {
+    return undefined;
+  }
+
+  return <MediaPlayer {...video} />;
 });
