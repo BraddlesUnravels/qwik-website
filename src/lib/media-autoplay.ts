@@ -2,7 +2,26 @@ type DataConnection = EventTarget & {
   readonly saveData?: boolean;
 };
 
+// Playback speed is an HTMLMediaElement property, not an HTML attribute.
+export function enforceMediaPlaybackRate(video: HTMLVideoElement): void {
+  // Both setters queue ratechange events. Guard writes to avoid an event loop.
+  if (video.defaultPlaybackRate !== 2) video.defaultPlaybackRate = 2;
+  if (video.playbackRate !== 2) video.playbackRate = 2;
+}
+
 export function connectMediaAutoplay(video: HTMLVideoElement): () => void {
+  enforceMediaPlaybackRate(video);
+
+  const enforceRate = () => enforceMediaPlaybackRate(video);
+  const rateEvents = [
+    "loadstart",
+    "emptied",
+    "loadedmetadata",
+    "play",
+    "playing",
+    "ratechange",
+  ] as const;
+
   const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const connection: DataConnection | undefined = (
     navigator as { readonly connection?: DataConnection }
@@ -27,9 +46,14 @@ export function connectMediaAutoplay(video: HTMLVideoElement): () => void {
 
   const pause = () => {
     if (!automatic && !pending) return;
+
     if (pending) interrupted = true;
     automatic = false;
-    if (!video.paused) (internalPauses++, video.pause());
+
+    if (!video.paused) {
+      internalPauses++;
+      video.pause();
+    }
   };
 
   const update = () => {
@@ -37,32 +61,43 @@ export function connectMediaAutoplay(video: HTMLVideoElement): () => void {
     if (pending || !video.paused) return;
 
     video.muted = true;
-    video.playbackRate = 2;
+    enforceRate();
     pending = true;
 
     void video
       .play()
       .then(() => {
+        if (!disposed) {
+          // Resource initialization can reset media properties in WebKit.
+          enforceRate();
+          video.muted = true;
+        }
         automatic = true;
         pending = false;
         interrupted = false;
+
         if (!allowed()) pause();
       })
       .catch(() => {
         pending = false;
+
         // A visibility/preference pause can abort a pending play promise.
         if (interrupted) {
           interrupted = false;
           update();
           return;
         }
-        // Autoplay is best effort. Keep native controls available, without retries.
+
+        // Stop automatic retries; deliberate playback remains available.
         userControlled = true;
       });
   };
 
   const onPlay = () => {
-    if (!pending) ((userControlled = true), (automatic = false));
+    if (!pending) {
+      userControlled = true;
+      automatic = false;
+    }
   };
 
   const onPause = () => {
@@ -92,6 +127,7 @@ export function connectMediaAutoplay(video: HTMLVideoElement): () => void {
     },
   );
 
+  rateEvents.forEach((event) => video.addEventListener(event, enforceRate));
   video.addEventListener("play", onPlay);
   video.addEventListener("pause", onPause);
   video.addEventListener("ended", onEnded);
@@ -104,6 +140,10 @@ export function connectMediaAutoplay(video: HTMLVideoElement): () => void {
     disposed = true;
     pause();
     observer.disconnect();
+
+    rateEvents.forEach((event) =>
+      video.removeEventListener(event, enforceRate),
+    );
     motion.removeEventListener("change", update);
     connection?.removeEventListener("change", update);
     document.removeEventListener("visibilitychange", update);

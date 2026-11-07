@@ -22,5 +22,5 @@
     }
   },
   "include": ["src", "test", "./*.d.ts", "./*.config.ts"],
-  "exclude": ["src/**/*.cy.ts", "src/**/*.cy.tsx"]
+  "exclude": ["src/**/*.cy.ts", "src/**/*.cy.tsx", "scripts/**"]
 }

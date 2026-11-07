@@ -46,34 +46,34 @@ const project: Project = {
 };
 
 describe("ProjectSection", () => {
-  // it("renders nested content with headings, bullets and ordered steps", async () => {
-  //   const { screen, render } = await createDOM();
-  //   await render(
-  //     <ProjectSection
-  //       index={2}
-  //       section={{
-  //         title: "Implementation",
-  //         paragraphs: ["Section paragraph"],
-  //         bullets: ["Section bullet"],
-  //         subsections: [
-  //           {
-  //             title: "Verification",
-  //             paragraphs: ["Subsection paragraph"],
-  //             bullets: ["Subsection bullet"],
-  //             steps: ["Request verification", "Resume action"],
-  //           },
-  //         ],
-  //       }}
-  //     />,
-  //   );
-  //   // expect(screen.querySelector("h2")?.textContent).toBe("Implementation");
-  //   // expect(screen.querySelector("h3")?.textContent).toBe("Verification");
-  //   expect(screen.querySelectorAll("ul")).toHaveLength(2);
-  //   const steps = Array.from(screen.querySelectorAll("ol li"));
-  //   expect(steps).toHaveLength(2);
-  //   expect(steps[0]?.textContent).toContain("Request verification");
-  //   expect(steps[1]?.textContent).toContain("Resume action");
-  // });
+  it("renders nested content with headings, bullets and ordered steps", async () => {
+    const { screen, render } = await createDOM();
+    await render(
+      <ProjectSection
+        index={2}
+        section={{
+          title: "Implementation",
+          paragraphs: ["Section paragraph"],
+          bullets: ["Section bullet"],
+          subsections: [
+            {
+              title: "Verification",
+              paragraphs: ["Subsection paragraph"],
+              bullets: ["Subsection bullet"],
+              steps: ["Request verification", "Resume action"],
+            },
+          ],
+        }}
+      />,
+    );
+    expect(screen.querySelector("h2")?.textContent).toBe("Implementation");
+    expect(screen.querySelector("h3")?.textContent).toBe("Verification");
+    expect(screen.querySelectorAll("ul")).toHaveLength(2);
+    const steps = Array.from(screen.querySelectorAll("ol li"));
+    expect(steps).toHaveLength(2);
+    expect(steps[0]?.textContent).toContain("Request verification");
+    expect(steps[1]?.textContent).toContain("Resume action");
+  });
 
   it.each(["missing", "empty"])("omits %s optional content", async (mode) => {
     const { screen, render } = await createDOM();

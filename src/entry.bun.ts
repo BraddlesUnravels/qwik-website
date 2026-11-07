@@ -12,6 +12,8 @@ import { getRequestEvent } from "@builder.io/qwik-city";
 import { createQwikCity } from "@builder.io/qwik-city/middleware/bun";
 import qwikCityPlan from "@qwik-city-plan";
 import render from "./entry.ssr";
+import { mediaAssetName } from "./lib/media-asset";
+import { createMediaResponse } from "./lib/media-response";
 import { normalizeServerRequest } from "./lib/server-origin";
 
 // Create the Qwik City Bun middleware
@@ -68,6 +70,16 @@ Bun.serve({
   hostname,
   port,
   async fetch(request: Request) {
+    const assetName = mediaAssetName(request);
+    if (assetName) {
+      const file = Bun.file(
+        new URL(`../dist/assets/${assetName}`, import.meta.url),
+      );
+      if (await file.exists()) {
+        return createMediaResponse(request, file);
+      }
+    }
+
     const staticResponse = await staticFile(request);
     if (staticResponse) {
       return staticResponse;

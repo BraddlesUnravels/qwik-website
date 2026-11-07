@@ -48,6 +48,7 @@ const ignores = [
   "docker/Dockerfile",
   ".dockerignore",
   "src/entry.bun.ts",
+  "scripts/**/*.mjs",
 ];
 
 export default tseslint.config(

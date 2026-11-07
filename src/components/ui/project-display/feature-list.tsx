@@ -7,10 +7,7 @@ const features = projectSummaries.filter((p) => p.featured);
 
 export default component$(() => (
   <section id="featured-projects">
-    <div
-      id="selected-projects"
-      class="flex scroll-mt-24 flex-col gap-5 sm:flex-row sm:items-end sm:justify-between"
-    >
+    <div class="flex scroll-mt-24 flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
       <div>
         <Typography tone="emerald" variant="eyebrow">
           Selected projects

@@ -9,10 +9,10 @@ export default component$(() => (
   </div>
 ));
 
-export const ContentContainer = component$<{ className?: string }>(
-  ({ className }) => (
+export const ContentContainer = component$<{ id?: string; className?: string }>(
+  ({ id, className }) => (
     <div
-      id="content-container"
+      id={id}
       class={[
         "mx-auto w-full min-w-0 px-5 sm:px-8 lg:px-10 xl:max-w-[75%]",
         className,
