@@ -16,10 +16,17 @@ const loadersBySlug = Object.fromEntries(
   }),
 ) as Record<string, ProjectLoader>;
 
-const workSlugs = new Set(projectSummaries.map(({ slug }) => slug));
+// const workSlugs = new Set(projectSummaries.map(({ slug }) => slug));
 
-export const loadProject = async (slug: string) => {
-  if (!workSlugs.has(slug)) return;
+export const loadProject = async (
+  slug: string,
+): Promise<Project | undefined> => {
+  const summary = projectSummaries.find((project) => project.slug === slug);
+  if (!summary) return;
   const loader = loadersBySlug[slug];
-  return loader ? (await loader()).default : undefined;
+  if (!loader) return;
+  return {
+    ...(await loader()).default,
+    ...summary,
+  };
 };
