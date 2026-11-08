@@ -3,7 +3,7 @@ import { Link } from "@builder.io/qwik-city";
 import { Typography } from "~/components/ui/typography";
 import { LuArrowUpRight } from "@qwikest/icons/lucide";
 import type { ProjectSummary } from "~/content/types";
-import { twMerge } from "tailwind-merge";
+import { twMerge } from "~/lib/tw-merge";
 
 export type CardProps = {
   project: ProjectSummary;
@@ -32,19 +32,15 @@ const twFeaturedLink = twMerge([
 export default component$<CardProps>(({ project, index }) => (
   <Link href={project.path} class={twFeaturedLink}>
     <div class="flex items-start justify-between gap-4">
-      <Typography
-        as="p"
-        tone="emerald"
-        class="text-brand-bright font-mono text-xs leading-relaxed font-semibold tracking-[0.12em] uppercase"
-      >
+      <Typography tone="emerald" variant="eyebrow" class="tracking-wide">
         {project?.category}
       </Typography>
 
       <Typography
-        as="span"
         aria-hidden="true"
         tone="emerald"
-        class="text-ink-muted shrink-0 font-mono text-xs"
+        variant="eyebrow"
+        class="tracking-wide"
       >
         {String(index + 1).padStart(2, "0")}
       </Typography>
@@ -68,14 +64,18 @@ export default component$<CardProps>(({ project, index }) => (
         ))}
       </ul>
 
-      <div class="text-brand-bright mt-6 flex items-center justify-between gap-4 border-t border-t-cyan-400/30 pt-5">
-        <Typography as="span" class="text-sm font-medium">
+      <div class="mt-6 flex items-center justify-between gap-4 border-t border-t-cyan-400/30 pt-5">
+        <Typography variant="body" class="font-medium">
           View project
         </Typography>
 
-        <span aria-hidden="true" class="text-lg">
-          <LuArrowUpRight />
-        </span>
+        <Typography
+          aria-hidden="true"
+          variant="body"
+          class="motion-safe:transition-transform motion-safe:group-hover:translate-x-1"
+        >
+          <LuArrowUpRight class="h-[1.25em] w-[1.25em]" />
+        </Typography>
       </div>
     </div>
   </Link>

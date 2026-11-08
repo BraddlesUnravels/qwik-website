@@ -1,7 +1,7 @@
 import { component$, useSignal } from "@builder.io/qwik";
 import { TechnologyCarousel } from "~/components/ui/technology-carousel";
 import { Typography } from "~/components/ui/typography";
-import { twMerge } from "tailwind-merge";
+import { twMerge } from "~/lib/tw-merge";
 
 const twHeader = twMerge([
   "relative flex flex-col",

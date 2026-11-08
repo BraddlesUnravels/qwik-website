@@ -3,7 +3,7 @@ import { Link } from "@builder.io/qwik-city";
 import { Typography } from "~/components/ui/typography";
 import { LuArrowUpRight } from "@qwikest/icons/lucide";
 import type { CardProps } from "./feature-card";
-import { twMerge } from "tailwind-merge";
+import { twMerge } from "~/lib/tw-merge";
 
 const twProjectCard = twMerge([
   "project-card group h-full",
@@ -16,34 +16,36 @@ const twProjectCard = twMerge([
 ]);
 
 export default component$<CardProps>(({ project, index }) => (
-  <Link href={project.path} class={twProjectCard}>
-    <div class="flex items-start justify-between gap-4">
+  <Link id="project-card" href={project.path} class={twProjectCard}>
+    <div class="mb-2 flex items-start justify-between gap-4">
       <Typography
-        as="p"
         tone="emerald"
-        class="text-brand-bright font-mono text-[11px] leading-relaxed font-semibold tracking-[0.12em] uppercase"
+        variant="x-small"
+        class="font-mono font-semibold tracking-wider uppercase [word-spacing:-0.12em]"
       >
         {project.category}
       </Typography>
 
       <Typography
-        as="span"
-        aria-hidden="true"
         tone="emerald"
-        class="text-ink-muted shrink-0 font-mono text-xs"
+        variant="x-small"
+        class="font-mono font-semibold tracking-wider uppercase [word-spacing:-0.12em]"
       >
         {String(index + 1).padStart(2, "0")}
       </Typography>
     </div>
+
     <Typography
       as="h3"
       class="font-display text-ink mt-3 text-xl leading-snug font-semibold tracking-[-0.035em] text-balance"
     >
       {project.title}
     </Typography>
+
     <Typography as="p" class="text-ink-soft mt-3 text-sm leading-relaxed">
       {project.description}
     </Typography>
+
     <div class="mt-auto pt-5">
       <ul class="text-ink-muted m-0 flex list-none flex-wrap gap-x-4 gap-y-2 p-0 text-xs">
         {project.evidence.map((item, i) => (
@@ -63,14 +65,17 @@ export default component$<CardProps>(({ project, index }) => (
         ))}
       </ul>
 
-      <div class="text-brand-bright mt-5 flex items-center justify-between gap-4 text-xs font-medium">
-        <Typography as="span">View project</Typography>
+      <div class="text-brand-bright mt-5 flex items-center justify-between gap-4">
+        <Typography variant="body" class="font-medium">
+          View project
+        </Typography>
+
         <Typography
-          as="span"
           aria-hidden="true"
-          class="text-lg motion-safe:transition-transform motion-safe:group-hover:translate-x-1"
+          variant="body"
+          class="motion-safe:transition-transform motion-safe:group-hover:translate-x-1"
         >
-          <LuArrowUpRight />
+          <LuArrowUpRight class="h-[1em] w-[1em]" />
         </Typography>
       </div>
     </div>

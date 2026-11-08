@@ -15,7 +15,7 @@
   --text-xs: clamp(0.7rem, 0.6867rem + 0.0667vw, 0.74rem);
   --text-xs--line-height: 1.5;
 
-  --text-caption: clamp(0.75rem, 0.7292rem + 0.1042vw, 0.8125rem);
+  --text-caption: clamp(0.6875rem, 0.6667rem + 0.1042vw, 0.75rem);
   --text-caption--line-height: 1.5;
 
   --text-sm: clamp(0.8125rem, 0.8rem + 0.0625vw, 0.85rem);
