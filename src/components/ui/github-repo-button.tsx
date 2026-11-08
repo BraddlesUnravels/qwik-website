@@ -1,6 +1,6 @@
 import { component$, type HTMLAttributes } from "@builder.io/qwik";
 import { LuGithub } from "@qwikest/icons/lucide";
-import { twMerge } from "tailwind-merge";
+import { twMerge } from "~/lib/tw-merge";
 
 interface GithubRepoButtonProps extends HTMLAttributes<HTMLButtonElement> {
   url?: string;

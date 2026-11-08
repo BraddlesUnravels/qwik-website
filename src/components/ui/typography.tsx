@@ -1,5 +1,5 @@
 import { component$, Slot, type JSX } from "@builder.io/qwik";
-import { twMerge } from "tailwind-merge";
+import { twMerge } from "~/lib/tw-merge";
 
 type TypographyElement = "h1" | "h2" | "h3" | "p" | "span" | "div";
 
@@ -50,14 +50,13 @@ const variants: Record<TypographyVariant, string> = {
   "heading-1": "text-5xl font-semibold leading-tight tracking-[-0.04em]",
   "heading-2": "text-4xl font-semibold leading-tight tracking-[-0.035em]",
   "heading-3": "text-2xl font-semibold leading-tight tracking-[-0.025em]",
-  "header-text":
-    "text-(length:--text-header) leading-(--text-header--line-height)",
+  "header-text": "text-header",
   "body-large": "text-xl leading-8",
   body: "text-base leading-7",
-  small: "text-sm leading-6",
-  eyebrow: "text-base font-semibold uppercase tracking-[0.05em]",
-  "x-small": "text-xxs leading-4",
-  caption: "text-caption leading-4",
+  small: "text-sm",
+  eyebrow: "text-sm font-semibold uppercase font-mono [word-spacing:-0.16em]",
+  "x-small": "text-xs",
+  caption: "text-caption",
   "foot-note": "text-foot-note leading-4",
 };
 
@@ -78,7 +77,7 @@ const defaultElements: Record<TypographyVariant, TypographyElement> = {
   "heading-1": "h1",
   "heading-2": "h2",
   "heading-3": "h3",
-  "header-text": "span",
+  "header-text": "h3",
   "body-large": "p",
   body: "p",
   small: "p",

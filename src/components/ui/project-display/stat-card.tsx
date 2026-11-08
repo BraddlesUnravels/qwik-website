@@ -16,7 +16,9 @@ export const StatCard = component$<{ metric: ProjectMetric }>(({ metric }) => (
         {metric.value}
       </Typography>
       {metric.description && (
-        <Typography variant="x-small">{metric.description}</Typography>
+        <Typography variant="small" tone="teal" class="mt-2">
+          {metric.description}
+        </Typography>
       )}
     </dd>
   </div>
