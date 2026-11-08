@@ -9,15 +9,15 @@ export default {
   slug: "lease-balance-calculation",
   path: "/projects/lease-balance-calculation",
   category: "Legacy modernisation",
-  title: "Making lease balances available without a 34-minute DB lockout",
+  title: "Financial SQL · On-Demand Balances",
   description: `
-    I untangled a 12,000-line SQL calculation, separated the business rules 
-    and made individual lease balances available on demand.
+    I untangled more than 12,000 lines of financial SQL so 
+    customers and staff could get a current balance on demand
   `,
   introduction: `
-    Checking one lease balance should not require recalculating every lease in the business. 
-    The existing stored procedure ran as a batch, blocked the LeaseCore application for about 
-    34 minutes and left displayed balances out of date (stale) between runs.
+    A customer checking their lease account balance after a recent transaction would see a stale balance 
+    from the last payroll upload. Each upload triggered a full update across the lease-management systems, 
+    leaving them unavailable for ~34 minutes at a time.
   `,
   featured: true,
   images: [
@@ -31,9 +31,9 @@ export default {
   ],
   metrics: [
     {
-      label: "Legacy procedure",
+      label: "Legacy SQL procedure",
       value: "12,000+ lines",
-      description: "Undocumented procedure requiring input from accounts",
+      description: "Tracing financial rules",
     },
     {
       label: "Legacy Full batch",
@@ -41,15 +41,16 @@ export default {
       description: "Updates all lease balaces at once",
     },
     {
-      label: "Built API for Individual leases",
+      label: "On-demand balance",
       value: "API ~30 ms",
-      description: "Customers no longer saw stale balances",
+      description:
+        "Time to calculate one lease balance through the API in testing.",
     },
     {
-      label: "Refactored Legacy Account procedure",
+      label: "Refactored procedure",
       value: "12–13 minutes",
       description:
-        "Scheduled at 2am to avoid db lockouts during business hours",
+        "Payroll and transaction updates moved outside business hours.",
     },
   ],
   sections: [

@@ -45,12 +45,13 @@ export const projectSummaries = [
     slug: "lease-balance-calculation",
     path: "/projects/lease-balance-calculation",
     category: "Legacy modernisation",
-    title: "One lease balance · Why calculate them all?",
+    title: "Financial SQL · On-Demand Balances",
     description: `
-      Calculating every balance locked LeaseCore for ~34 minutes. I untangled 12,000+ lines of SQL so customers could check their own balance on demand.
+      I untangled more than 12,000 lines of financial SQL so 
+      customers and staff could get a current balance on demand
     `,
     featured: false,
-    evidence: ["12,000+ lines of SQL", "~34 minute legacy batch"],
+    evidence: ["12,000+ lines of SQL", "Financial SQL"],
   },
   {
     slug: "site-rebuild",
