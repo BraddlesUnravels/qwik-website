@@ -1,18 +1,19 @@
 import { component$, type HTMLAttributes } from "@builder.io/qwik";
 import { LuGithub } from "@qwikest/icons/lucide";
+import { twMerge } from "tailwind-merge";
 
 interface GithubRepoButtonProps extends HTMLAttributes<HTMLButtonElement> {
   url?: string;
 }
 
-const twAnchor = [
+const twAnchor = twMerge([
   "inline-flex items-center gap-1 rounded-md",
   "border border-gray-500 bg-gray-300 px-2",
   "py-2 text-xs font-semibold text-black shadow-sm",
   "transition-colors hover:bg-gray-400",
   "focus-visible:ring-4 focus-visible:ring-gray-500",
   "focus-visible:outline-none",
-].join(" ");
+]);
 
 export const GithubRepoButton = component$<GithubRepoButtonProps>(
   ({ url }) =>
@@ -31,12 +32,13 @@ export const GitHubNavButton = component$<{ url?: string }>(
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-        class={[
+        class={twMerge([
           "inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full",
           "border border-zinc-700 px-4 text-sm font-medium text-zinc-300",
           "transition-colors hover:border-zinc-500 hover:bg-zinc-800/60 hover:text-zinc-100",
           "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400",
-        ].join(" ")}
+          "transition duration-200",
+        ])}
       >
         <span>GitHub</span>
         <LuGithub class="size-4" aria-hidden="true" />

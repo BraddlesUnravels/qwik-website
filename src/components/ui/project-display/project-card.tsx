@@ -3,8 +3,9 @@ import { Link } from "@builder.io/qwik-city";
 import { Typography } from "~/components/ui/typography";
 import { LuArrowUpRight } from "@qwikest/icons/lucide";
 import type { CardProps } from "./feature-card";
+import { twMerge } from "tailwind-merge";
 
-const twProjectCard = [
+const twProjectCard = twMerge([
   "project-card group h-full",
   "flex min-w-0 flex-col rounded-xl p-5",
   "transition duration-200 ease-out",
@@ -12,7 +13,7 @@ const twProjectCard = [
   "focus-visible:outline-brand-bright",
   "focus-visible:outline-2 focus-visible:outline-offset-4",
   "motion-reduce:transition-none",
-].join(" ");
+]);
 
 export default component$<CardProps>(({ project, index }) => (
   <Link href={project.path} class={twProjectCard}>

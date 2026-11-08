@@ -3,6 +3,7 @@ import { Link } from "@builder.io/qwik-city";
 import { Typography } from "~/components/ui/typography";
 import { LuArrowUpRight } from "@qwikest/icons/lucide";
 import type { ProjectSummary } from "~/content/types";
+import { twMerge } from "tailwind-merge";
 
 export type CardProps = {
   project: ProjectSummary;
@@ -18,16 +19,15 @@ const ListChip = ({ key, item }: { key?: string; item?: string }) => (
   </li>
 );
 
-const twFeaturedLink = [
+const twFeaturedLink = twMerge([
   "feature-card group h-full",
   "relative flex min-h-[340px] min-w-0 flex-col rounded-[20px]",
-  "p-3 sm:p-8",
-  "transition duration-200 ease-out",
+  "p-5 lg:p-7 transition duration-200 ease-out",
   "motion-safe:hover:-translate-y-1 hover:shadow-xl",
   "focus-visible:outline-brand-bright",
   "focus-visible:outline-2 focus-visible:outline-offset-4",
   "motion-reduce:transition-none",
-].join(" ");
+]);
 
 export default component$<CardProps>(({ project, index }) => (
   <Link href={project.path} class={twFeaturedLink}>
