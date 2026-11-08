@@ -1,2 +1,6 @@
 User-agent: *
-Allow: /
+  Allow: /
+
+  Sitemap: https://braddlesunravels/sitmap.xml
+
+

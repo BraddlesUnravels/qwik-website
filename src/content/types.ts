@@ -75,6 +75,8 @@ export type ProjectSummary = Pick<
   Project,
   "slug" | "path" | "category" | "title" | "description" | "featured"
 > & {
+  priority?: number;
+  changeFreq?: string;
   evidence: [string, string, string?];
 };
 
