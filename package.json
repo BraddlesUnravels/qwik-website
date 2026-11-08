@@ -1,6 +1,6 @@
 {
   "name": "qwik-website",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "description": "Portfolio landing page built with Qwik and Qwik City",
   "private": true,
   "type": "module",
@@ -12,7 +12,7 @@
     "build.docker": "bun run build.client && bun run build.server",
     "build.types": "tsc --incremental --noEmit",
     "docker:build": "docker build -f docker/Dockerfile -t qwik-website:production .",
-    "ci": "bun run fmt.check && bun run lint && bun run build.types && bun run build && bun run test.all",
+    "ci": "bun run fmt.check && bun run lint && bun run build.types && bun run build && bun run test.all && rm -rf dist",
     "cypress.run": "cypress run",
     "dev": "vite --mode ssr --host",
     "dev.debug": "node --inspect-brk ./node_modules/vite/bin/vite.js --mode ssr --force",

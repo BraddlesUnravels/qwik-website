@@ -3,7 +3,9 @@ import { Typography } from "~/components/ui/typography";
 import ProjectCard from "./project-card";
 import { projectSummaries } from "~/content/catalog";
 
-const projects = projectSummaries.filter((p) => !p.featured);
+const rmFeatured = projectSummaries.filter((p) => !p.featured);
+// remove last project "about" required to be left in catalog for site map
+const projects = rmFeatured.slice(0, rmFeatured.length - 1);
 
 export default component$(() => {
   return (

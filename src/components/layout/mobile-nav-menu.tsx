@@ -8,12 +8,21 @@ const twButtonClasses = [
   "justify-center rounded-full border border-emerald-500",
   "p-2 text-zinc-100 hover:border-zinc-500 focus-visible:outline-2",
   "focus-visible:outline-offset-2 focus-visible:outline-emerald-500",
+  "active:inset-ring-2 active:inset-ring-white/40",
+  "aria-expanded:bg-white/10",
 ].join(" ");
 
 const twMenuClasses = [
   "absolute top-full right-0 z-50 mt-3 w-48 space-y-1",
   "rounded-xl border border-zinc-800 bg-zinc-950 p-2",
   "text-sm text-zinc-100 shadow-xl",
+].join(" ");
+
+const twMenuLinkClasses = [
+  "flex min-h-11 items-center justify-between gap-3 rounded-md px-4 py-2",
+  "text-zinc-100 hover:bg-zinc-800 active:bg-white/15",
+  "focus-visible:outline-2 focus-visible:outline-offset-2",
+  "focus-visible:outline-emerald-500",
 ].join(" ");
 
 export default component$(() => {
@@ -88,7 +97,7 @@ export default component$(() => {
               aria-label={link.label}
               download={link.download}
               onClick$={() => closeMenu()}
-              class="flex justify-between px-4 py-2 text-zinc-100 hover:bg-zinc-700"
+              class={twMenuLinkClasses}
             >
               <span>{link.label}</span>
               <span>{Icon && <Icon class="h-4 w-4" />}</span>

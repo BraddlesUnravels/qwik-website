@@ -1,0 +1,92 @@
+@layer utilities {
+  .feature-card {
+    background: color-mix(in oklab, var(--color-black) 20%, transparent);
+    border: 1px solid color-mix(in oklab, var(--color-brand) 30%, transparent);
+
+    @variant hover {
+      border-color: color-mix(
+        in oklab,
+        var(--color-brand-bright) 60%,
+        transparent
+      );
+      background: color-mix(in oklab, var(--color-black) 30%, transparent);
+    }
+  }
+
+  .project-card {
+    background: color-mix(in oklab, var(--color-black) 20%, transparent);
+    border: 1px solid
+      color-mix(in oklab, var(--brand-secondary) 20%, transparent);
+
+    @variant hover {
+      background: color-mix(in oklab, var(--color-black) 30%, transparent);
+      border-color: color-mix(
+        in oklab,
+        var(--brand-secondary-bright) 30%,
+        transparent
+      );
+    }
+  }
+
+  .project-image[data-tone="dark"] {
+    filter: brightness(1.35) contrast(1);
+    border-color: color-mix(
+      in oklab,
+      var(--color-emerald-400) 25%,
+      transparent
+    );
+  }
+
+  .project-image[data-tone="diagram"] {
+    border-color: color-mix(
+      in oklab,
+      var(--color-emerald-400) 25%,
+      transparent
+    );
+    background-color: rgb(7 10 16 / 0.5);
+  }
+
+  .card-bg {
+    background: oklab(14.4273% -0.00196 -0.014133 / 0.5);
+  }
+
+  .emerald-text {
+    color: var(--color-emerald-400);
+  }
+
+  .emerald-border {
+    border-color: color-mix(
+      in oklab,
+      var(--color-emerald-400) 25%,
+      transparent
+    );
+  }
+
+  .card-bg {
+    background: rgb(7 10 16 / 0.5);
+  }
+
+  @keyframes cursor-blink {
+    0%,
+    49% {
+      opacity: 0;
+    }
+    50%,
+    100% {
+      opacity: 0.5;
+    }
+  }
+
+  .cursor-blink {
+    animation-name: cursor-blink;
+    animation-duration: 1.2s;
+    animation-timing-function: steps(1, end);
+    animation-iteration-count: 3;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cursor-blink {
+      animation: none;
+    }
+  }
+}

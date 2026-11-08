@@ -1,21 +1,25 @@
 import { component$, useSignal } from "@builder.io/qwik";
 import { TechnologyCarousel } from "~/components/ui/technology-carousel";
 import { Typography } from "~/components/ui/typography";
+import { twMerge } from "tailwind-merge";
 
-const twHeader = [
+const twHeader = twMerge([
   "relative flex flex-col",
   "py-0 max-lg:min-h-[calc(100svh-4.5rem)]",
   "2xl:min-h-[calc(100svh-4.5rem)]",
-].join(" ");
+]);
 
-const twViewProjects = [
+const twViewProjects = twMerge([
   "pointer-events-auto absolute bottom-0 left-1/2",
   "inline-flex -translate-x-1/2 items-center gap-2",
   "rounded-full border border-emerald-400/30",
   "bg-slate-950/90 px-5 py-3 text-sm font-medium text-emerald-300",
-  "shadow-lg transition-colors hover:bg-emerald-950",
+  "shadow-lg transition duration-200 hover:bg-emerald-950",
   "lg:bottom-5",
-].join(" ");
+  "focus-visible:outline-2 focus-visible:outline-offset-4",
+  "motion-reduce:transition-none",
+  "bottom-[calc(1.25rem_+_env(safe-area-inset-bottom,0px))]",
+]);
 
 // const twStickyAnchor = [
 //   "bottom-[calc(1.25rem_+_env(safe-area-inset-bottom,0px))]",
@@ -83,18 +87,18 @@ export default component$(() => {
       </section>
 
       <div
-        class={[
+        class={twMerge([
           "pointer-events-none absolute inset-x-0 top-0 z-40",
           "bottom-[calc(1.25rem+env(safe-area-inset-bottom,0px))]",
           "lg:static lg:contents",
-        ].join(" ")}
+        ])}
       >
         <div
-          class={[
+          class={twMerge([
             "sticky h-0 w-full",
             "top-[calc(100dvh-1.25rem-env(safe-area-inset-bottom,0px))]",
             "lg:static lg:contents",
-          ].join(" ")}
+          ])}
         >
           <a
             id="view-projects-button"
