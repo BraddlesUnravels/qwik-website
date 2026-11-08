@@ -5,6 +5,8 @@ export const projectSummaries = [
   {
     slug: "autodash",
     path: "/projects/autodash",
+    priority: 1,
+    changeFreq: "weekly",
     category: "Full-stack product delivery",
     title: "AutoDash · A new front door for 5,000+ customers",
     description: `
@@ -16,6 +18,8 @@ export const projectSummaries = [
   {
     slug: "access-control-demo",
     path: "/projects/access-control-demo",
+    priority: 1,
+    changeFreq: "weekly",
     category: "Inspectable full-stack application",
     title: "Access Control Demo · What does each account do?",
     description:
@@ -26,6 +30,8 @@ export const projectSummaries = [
   {
     slug: "azure-iac",
     path: "/projects/azure-iac",
+    priority: 1,
+    changeFreq: "weekly",
     category: "Cloud infrastructure and deployment",
     title: "Two apps · One Azure release path.",
     description: `A shared Azure workflow that deploys the right version to the right environment, blocks risky infrastructure changes, and checks each sites health.`,
@@ -35,6 +41,8 @@ export const projectSummaries = [
   {
     slug: "azure-access-and-secrets",
     path: "/projects/azure-access-and-secrets",
+    priority: 0.8,
+    changeFreq: "weekly",
     category: "Cloud authorisation and permissions",
     title: "Preview a change · Only the deployer can apply it.",
     description: `I gave publishing, previewing, deploying and running each app separate permissions. Only the running app reads its secrets from Key Vault.`,
@@ -44,17 +52,22 @@ export const projectSummaries = [
   {
     slug: "lease-balance-calculation",
     path: "/projects/lease-balance-calculation",
+    priority: 0.8,
+    changeFreq: "weekly",
     category: "Legacy modernisation",
-    title: "One lease balance · Why calculate them all?",
+    title: "Financial SQL · On-Demand Balances",
     description: `
-      Calculating every balance locked LeaseCore for ~34 minutes. I untangled 12,000+ lines of SQL so customers could check their own balance on demand.
+      I untangled more than 12,000 lines of financial SQL so 
+      customers and staff could get a current balance on demand
     `,
     featured: false,
-    evidence: ["12,000+ lines of SQL", "~34 minute legacy batch"],
+    evidence: ["12,000+ lines of SQL", "Financial SQL"],
   },
   {
     slug: "site-rebuild",
     path: "/projects/site-rebuild",
+    priority: 1,
+    changeFreq: "weekly",
     category: "Web development and CRM automation",
     title: "Website rebuild · More leads; the same campaigns",
     description: `
@@ -66,6 +79,8 @@ export const projectSummaries = [
   {
     slug: "tqe-legacy-integration",
     path: "/projects/tqe-legacy-integration",
+    priority: 0.9,
+    changeFreq: "weekly",
     category: "Business systems integration",
     title: "Lead to lease · Where did the leads go?",
     description: `
@@ -77,6 +92,8 @@ export const projectSummaries = [
   {
     slug: "autodash-migration",
     path: "/projects/autodash-migration",
+    priority: 0.9,
+    changeFreq: "weekly",
     category: "Identity and migration",
     title: "5,000+ accounts · Same passwords, new portal",
     description: `Customers signed in as usual. On their first login, the new portal upgraded their password hash from SHA-1 to Argon2.`,
@@ -86,6 +103,8 @@ export const projectSummaries = [
   {
     slug: "step-up-authentication",
     path: "/projects/step-up-authentication",
+    priority: 0.9,
+    changeFreq: "weekly",
     category: "Application security",
     title: "Step-up auth · Extra checks only when needed",
     description:
@@ -95,6 +114,8 @@ export const projectSummaries = [
   },
   {
     slug: "ransomware-recovery",
+    priority: 0.9,
+    changeFreq: "weekly",
     path: "/projects/ransomware-recovery",
     category: "Incident response",
     title: "Ransomware recovery · Back online by morning",
@@ -111,6 +132,8 @@ export const projectSummaries = [
   {
     slug: "about-approach",
     path: "/about/approach",
+    priority: 0.8,
+    changeFreq: "monthly",
     category: "How I work",
     title: "What sales leadership taught me about building software",
     description:
@@ -120,7 +143,10 @@ export const projectSummaries = [
   },
 ] as const satisfies readonly ProjectSummary[];
 
-export const engineeringApproach: ProjectSummary = {
+export const engineeringApproach: Omit<
+  ProjectSummary,
+  "priority" | "changeFreq"
+> = {
   slug: "about-approach",
   path: "/about/approach",
   category: "How I work",

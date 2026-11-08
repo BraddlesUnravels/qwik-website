@@ -23,7 +23,7 @@ describe("lib/seo", () => {
         path: "/",
       });
 
-      expect(head.title).toBe("Full Stack Developer | Bradley Laskey");
+      expect(head.title).toBe("Bradley Laskey | Full Stack Developer");
       expect(head.meta).toEqual(
         expect.arrayContaining([
           { name: "description", content: "Portfolio description" },

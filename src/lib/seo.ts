@@ -21,7 +21,7 @@ export const createSeoHead = ({
     : undefined;
 
   return {
-    title: `${title} | Bradley Laskey`,
+    title: `Bradley Laskey | ${title}`,
     meta: [
       { name: "description", content: description },
       { property: "og:title", content: title },
