@@ -26,7 +26,7 @@ export default function precompressAssets(): Plugin {
       clientDirectory = directory;
       gzipDirectory = resolve(config.root, config.build.outDir, "gzip");
     },
-    closeBundle: {
+    writeBundle: {
       order: "post",
       sequential: true,
       async handler() {
