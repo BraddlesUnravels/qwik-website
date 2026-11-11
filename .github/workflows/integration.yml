@@ -109,6 +109,9 @@ jobs:
             exit 1
           fi
 
+      - name: Verify HTTP compression on the production container
+        run: node --test scripts/test-compression-integration.mjs
+
       - name: Collect container logs on failure
         if: failure()
         run: docker compose -f "$COMPOSE_FILE" logs website || true

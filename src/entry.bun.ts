@@ -15,6 +15,11 @@ import render from "./entry.ssr";
 import { mediaAssetName } from "./lib/media-asset";
 import { createMediaResponse } from "./lib/media-response";
 import { normalizeServerRequest } from "./lib/server-origin";
+import {
+  compressPublicHtml,
+  isPrecompressedAssetPath,
+  servePrecompressedAsset,
+} from "./lib/response-compression";
 
 // Create the Qwik City Bun middleware
 const { router, notFound, staticFile } = createQwikCity({
@@ -80,15 +85,29 @@ Bun.serve({
       }
     }
 
-    const staticResponse = await staticFile(request);
+    const pathname = new URL(request.url).pathname;
+    const canServePrecompressed =
+      (request.method === "GET" || request.method === "HEAD") &&
+      isPrecompressedAssetPath(pathname);
+    // Qwik City's Bun static handler only accepts GET.
+    const staticRequest =
+      canServePrecompressed && request.method === "HEAD"
+        ? new Request(request, { method: "GET" })
+        : request;
+    const staticResponse = await staticFile(staticRequest);
     if (staticResponse) {
-      return staticResponse;
+      if (!canServePrecompressed) return staticResponse;
+
+      const gzipFile = Bun.file(
+        new URL(`./gzip${pathname}.gz`, import.meta.url),
+      );
+      return servePrecompressedAsset(request, staticResponse, gzipFile);
     }
 
     // Server-side render this request with Qwik City
     const qwikCityResponse = await router(normalizeServerRequest(request));
     if (qwikCityResponse) {
-      return qwikCityResponse;
+      return compressPublicHtml(request, qwikCityResponse);
     }
 
     // Path not found
