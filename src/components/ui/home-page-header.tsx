@@ -36,31 +36,32 @@ export default component$(() => {
         <Typography variant="eyebrow" tone="emerald">
           Bradley Laskey · Full Stack Developer
         </Typography>
-        <Typography variant="display" class="mt-4 lg:mt-8 2xl:mt-10">
-          I think in business problems.
-        </Typography>
-        <Typography variant="display" class="mt-4 lg:mt-7" tone="emerald">
-          I build in code
-          <span
-            class={
-              cursorDone.value
-                ? "opacity-100 transition-opacity duration-300"
-                : "opacity-0 transition-opacity duration-300"
-            }
-          >
-            .
+        <Typography as="h1" variant="display" class="mt-4 lg:mt-8 2xl:mt-10">
+          <span class="block">I think in business problems.</span>{" "}
+          <span class="mt-4 block text-emerald-400 lg:mt-7">
+            I build in code
+            <span
+              class={
+                cursorDone.value
+                  ? "opacity-100 transition-opacity duration-300"
+                  : "opacity-0 transition-opacity duration-300"
+              }
+            >
+              .
+            </span>
+            <span
+              id="cursor"
+              aria-hidden="true"
+              onAnimationEnd$={() => {
+                cursorDone.value = true;
+              }}
+              class={`${cursorDone.value ? "opacity-0 transition-opacity duration-600" : "-ml-2 inline-block lg:-ml-3"} cursor-blink top-[0.05em] -mb-1 h-[0.78em] w-[0.42em] bg-emerald-400 opacity-5`}
+            />
           </span>
-          <span
-            id="cursor"
-            aria-hidden="true"
-            onAnimationEnd$={() => {
-              cursorDone.value = true;
-            }}
-            class={`${cursorDone.value ? "opacity-0 transition-opacity duration-600" : "-ml-2 inline-block lg:-ml-3"} cursor-blink top-[0.05em] -mb-1 h-[0.78em] w-[0.42em] bg-emerald-400 opacity-5`}
-          />
         </Typography>
       </div>
       <Typography
+        as="p"
         variant="header-text"
         class="mt-8 min-h-15 max-w-4xl lg:mt-12"
       >
@@ -70,9 +71,10 @@ export default component$(() => {
       </Typography>
 
       <Typography
+        as="p"
         variant="header-text"
         tone="brand"
-        class="mt-8 min-h-15 max-w-5xl lg:mt-12"
+        class="mt-8 min-h-15 max-w-4xl lg:mt-12"
       >
         I build applications, modernise legacy platforms and connect systems
         that weren't designed to connect. Turning technical complexity into

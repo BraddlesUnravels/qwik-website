@@ -66,7 +66,7 @@ export default defineConfig(({ mode }): UserConfig => {
     envPrefix: ["VITE_", "PUBLIC_"],
     plugins: [
       ...(useQwikCity ? [qwikCity({ trailingSlash: false })] : []),
-      qwikVite(),
+      qwikVite({ disableFontPreload: true }),
       ssrAssets(),
       tsconfigPaths({ root: "." }),
       tailwindcss(),
