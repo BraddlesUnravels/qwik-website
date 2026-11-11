@@ -13,6 +13,8 @@ export const onGet: RequestHandler = async ({ cacheControl }) => {
   });
 };
 
+export const onHead = onGet;
+
 export default component$(() => {
   return (
     <RootContainer>

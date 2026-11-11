@@ -1,5 +1,6 @@
-import { bunServerAdapter } from "@builder.io/qwik-city/adapters/bun-server/vite";
 import { extendConfig } from "@builder.io/qwik-city/vite";
+import precompressAssets from "../../src/lib/pre-build-compression";
+import { bunServerAdapter } from "@builder.io/qwik-city/adapters/bun-server/vite";
 import baseConfig from "../../vite.config";
 
 export default extendConfig(baseConfig, () => {
@@ -19,6 +20,7 @@ export default extendConfig(baseConfig, () => {
       // SSG is disabled until a verified canonical domain is configured.
       // Enabling SSG without a real origin embeds placeholder hostnames.
       bunServerAdapter(),
+      precompressAssets(),
     ],
   };
 });
