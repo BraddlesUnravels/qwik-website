@@ -8,6 +8,7 @@
         "@builder.io/qwik": "1.20.0",
         "@builder.io/qwik-city": "1.20.0",
         "@eslint/js": "^9.39.1",
+        "@fontsource/fira-sans": "5.3.0",
         "@qwik-ui/headless": "^0.7.7",
         "@qwikest/icons": "^0.0.13",
         "@tailwindcss/vite": "^4.1.4",
@@ -137,6 +138,8 @@
     "@floating-ui/utils": ["@floating-ui/utils@0.2.12", "", {}, "sha512-HpCo8tmWzLVad5s2d19EhAz5zqrrQ6s69qd6moPMQvkOuSwDT1YgRfWSVuc4ennqrgv3OHppiOGMQ7oC13yIww=="],
 
     "@fluejs/noscroll": ["@fluejs/noscroll@1.0.0", "", {}, "sha512-fyu6jPL/BzUWkrxpwmG8RC/8LM4Fp2GprYRco2BBTypIl7zDyuipRHg6NcuoTGh4s5fAV8D1DBDMS2aDhuGclg=="],
+
+    "@fontsource/fira-sans": ["@fontsource/fira-sans@5.3.0", "", {}, "sha512-z1SKSG7eRhm3srlb7rQ3j77QP4TP7OFxCZ4wUWhCdt+3hOF9K0AyvybpAsz6+JWNcCVV7AqC7dbOT3e67P2r5A=="],
 
     "@hapi/address": ["@hapi/address@5.1.1", "", { "dependencies": { "@hapi/hoek": "^11.0.2" } }, "sha512-A+po2d/dVoY7cYajycYI43ZbYMXukuopIsqCjh5QzsBCipDtdofHntljDlpccMjIfTy6UOkg+5KPriwYch2bXA=="],
 

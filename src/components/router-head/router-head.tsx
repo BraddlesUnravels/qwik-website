@@ -1,5 +1,6 @@
 import { component$ } from "@builder.io/qwik";
 import { useDocumentHead } from "@builder.io/qwik-city";
+import firaSansSemibold from "@fontsource/fira-sans/files/fira-sans-latin-600-normal.woff2?url";
 
 export const RouterHead = component$(() => {
   const head = useDocumentHead();
@@ -19,17 +20,12 @@ export const RouterHead = component$(() => {
         sizes="32x32"
       />
 
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-
       <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
+        rel="preload"
+        href={firaSansSemibold}
+        as="font"
+        type="font/woff2"
         crossOrigin="anonymous"
-      />
-
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700&display=swap"
       />
 
       {head.meta.map((meta) => (
