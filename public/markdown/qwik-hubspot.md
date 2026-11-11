@@ -57,4 +57,4 @@ The change improved capture and visibility of leads; it was not measured as a ch
 
 ## Related projects
 
-- [CRM legacy integration](/projects/crm-legacy-integration/)
+- [CRM legacy integration](/projects/tqe-legacy-integration)

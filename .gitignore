@@ -32,6 +32,7 @@ coverage
 cypress/videos
 cypress/screenshots
 cypress/downloads
+.playwright
 
 # Tmp Files
 FILE-BY-FILE-CHANGES.md
