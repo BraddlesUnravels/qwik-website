@@ -62,4 +62,4 @@ The wider lesson is practical: before building the requested fix, find out how p
 
 ## Related projects
 
-- [PipelineAxis CRM integration](/projects/crm-legacy-integration/)
+- [PipelineAxis CRM integration](/projects/tqe-legacy-integration)
