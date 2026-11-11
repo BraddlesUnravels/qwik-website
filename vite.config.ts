@@ -10,14 +10,14 @@ import { defineConfig, type UserConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import pkg from "./package.json";
 import { ssrAssets } from "./src/config/ssr-assets";
-
+import { fileURLToPath } from "node:url";
+import { partytownVite } from "@qwik.dev/partytown/utils";
+import { join } from "path";
 type PkgDep = Record<string, string>;
-
 const { dependencies = {}, devDependencies = {} } = pkg as {
   dependencies?: PkgDep;
   devDependencies?: PkgDep;
 };
-
 function errorOnDuplicatesPkgDeps(
   devDependencies: PkgDep,
   dependencies: PkgDep,
@@ -25,26 +25,21 @@ function errorOnDuplicatesPkgDeps(
   const duplicateDeps = Object.keys(devDependencies).filter(
     (dep) => dependencies[dep],
   );
-
   const qwikPkg = Object.keys(dependencies).filter((value) =>
     /qwik/i.test(value),
   );
-
   if (qwikPkg.length > 0) {
     throw new Error(
       `Move qwik packages ${qwikPkg.join(", ")} to devDependencies`,
     );
   }
-
   if (duplicateDeps.length > 0) {
     throw new Error(
       `The dependency "${duplicateDeps.join(", ")}" is listed in both "devDependencies" and "dependencies". Move duplicated dependencies to "devDependencies" only.`,
     );
   }
 }
-
 errorOnDuplicatesPkgDeps(devDependencies, dependencies);
-
 /**
  * Vite normally starts from index.html, but the qwikCity plugin starts at
  * src/entry.ssr.tsx instead.
@@ -54,6 +49,7 @@ errorOnDuplicatesPkgDeps(devDependencies, dependencies);
  * async loads race server teardown and log:
  *   transport was disconnected, cannot call "fetchModule"
  */
+
 export default defineConfig(({ mode }): UserConfig => {
   const isVitest = mode === "test" || process.env.VITEST === "true";
   // Cypress CT boots this config via devServer and sets CYPRESS.
@@ -61,15 +57,24 @@ export default defineConfig(({ mode }): UserConfig => {
   const isCypressComponent =
     process.env.CYPRESS === "true" || process.env.CYPRESS === "1";
   const useQwikCity = !isVitest && !isCypressComponent;
-
   return {
     envPrefix: ["VITE_", "PUBLIC_"],
     plugins: [
-      ...(useQwikCity ? [qwikCity({ trailingSlash: false })] : []),
+      ...(useQwikCity
+        ? [
+            qwikCity({ trailingSlash: false }),
+            partytownVite({
+              dest: fileURLToPath(
+                new URL("./dist/~partytown", import.meta.url),
+              ),
+            }),
+          ]
+        : []),
       qwikVite({ disableFontPreload: true }),
       ssrAssets(),
       tsconfigPaths({ root: "." }),
       tailwindcss(),
+      partytownVite({ dest: join(__dirname, "dist", "~partytown") }),
     ],
     optimizeDeps: {
       exclude: [],
