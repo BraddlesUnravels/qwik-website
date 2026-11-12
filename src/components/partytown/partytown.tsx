@@ -8,11 +8,14 @@ import { partytownSnippet } from "@qwik.dev/partytown/integration";
  *
  * @public
  */
+export interface PartytownProps extends PartytownConfig {
+  gaMeasurementId?: string;
+}
 
 /**
  * @public
  * You can pass setting with props
  */
-export const QwikPartytown = (props: PartytownConfig): any => {
+export const QwikPartytown = (props: PartytownProps): any => {
   return <script dangerouslySetInnerHTML={partytownSnippet(props)} />;
 };
