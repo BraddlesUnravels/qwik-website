@@ -13,11 +13,14 @@ import { ssrAssets } from "./src/config/ssr-assets";
 import { fileURLToPath } from "node:url";
 import { partytownVite } from "@qwik.dev/partytown/utils";
 import { join } from "path";
+
 type PkgDep = Record<string, string>;
+
 const { dependencies = {}, devDependencies = {} } = pkg as {
   dependencies?: PkgDep;
   devDependencies?: PkgDep;
 };
+
 function errorOnDuplicatesPkgDeps(
   devDependencies: PkgDep,
   dependencies: PkgDep,
@@ -51,6 +54,7 @@ errorOnDuplicatesPkgDeps(devDependencies, dependencies);
  */
 
 export default defineConfig(({ mode }): UserConfig => {
+  const __dirname = fileURLToPath(new URL(".", import.meta.url));
   const isVitest = mode === "test" || process.env.VITEST === "true";
   // Cypress CT boots this config via devServer and sets CYPRESS.
   // E2E starts `vite --mode ssr` in a separate process without CYPRESS set.
