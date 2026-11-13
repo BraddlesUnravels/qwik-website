@@ -9,14 +9,14 @@ export default {
   category: "Full-stack product delivery",
   title: "AutoDash · A new front door for 5,000+ customers",
   description: `
-    I built a customer finance portal that let the business withdraw public access 
-    to an ageing platform without retiring the system it still depended on.
+    I built a customer finance portal that let the business withdraw public
+    access to an ageing platform while keeping essential internal processes running.
   `,
   introduction: `
-    The business needed to take a vulnerable legacy customer portal offline, 
-    but the same platform (LeaseCore) held the lease data and financial processes 
-    staff relied on every day. I owned the delivery of AutoDash, a replacement 
-    customer-facing application that kept those internal processes available.
+    A security review identified vulnerabilities in LeaseCore, the system holding
+    the business's customer accounts, transactions and lease balances. I delivered
+    AutoDash to replace its customer-facing portal while keeping the internal
+    platform in service.
   `,
   featured: true,
   videos: projectVideos["autodash-lease-workflow-desktop"],
@@ -24,22 +24,22 @@ export default {
     {
       label: "Customers",
       value: "5,000+ migrated",
-      description: "Moved from legacy finance portal",
+      description: "Moved from the legacy finance portal",
     },
     {
       label: "Delivery",
       value: "8 months",
-      description: "I delayed release by 2 months, due to security hardening",
+      description: "Extended from six months for additional security work",
     },
     {
       label: "Release",
       value: "November 2024",
-      description: "Production went live on schedule with no downtime",
+      description: "Production cutover completed without downtime",
     },
     {
       label: "Scope",
       value: "Full-stack ownership",
-      description: "Taken from concept to release",
+      description: "Discovery through to production support",
     },
   ],
   sections: [
@@ -51,19 +51,21 @@ export default {
           fullSrc: LegacyApplHomePath,
           alt: "Legacy customer portal home screen with its original navigation and vehicle banner.",
           caption:
-            "The previous customer portal, before AutoDash replaced public access. This is the legacy interface, not the new application.",
+            "The customer portal AutoDash replaced, while the business continued using LeaseCore internally.",
         },
       ],
       paragraphs: [
         `
-          A security review had identified vulnerabilities in LeaseCore, including unsupported dependencies. 
-          The business could not retire LeaseCore immediately: it stored customer accounts, transactions 
-          and lease balances, and its public portal still let customers view budgets, submit claims and request support. 
-          Simply switching off external access would have removed services customers needed.
+          A security review had identified vulnerabilities and unsupported
+          dependencies in LeaseCore. It held the business's customer accounts,
+          transactions and lease balances, so taking the whole platform offline
+          was not practical. Its public portal also provided services customers
+          still needed to manage their leases.
         `,
         `
-          The existing portal also used four-digit usernames, could display balances that had not been 
-          recalculated since the last batch, and routed ordinary changes through support staff.
+          The existing portal while limited, could still show balances (calculated as of the previous payroll), and sent routine
+          account changes through support staff. The business needed to reduce
+          exposure while keeping its core lease system running.
         `,
       ],
     },
@@ -71,11 +73,17 @@ export default {
       title: "My role",
       paragraphs: [
         `
-          I worked with the board to define the first release around two constraints: 
-          reduce exposure of the legacy application and preserve the customer journeys 
-          already in use. I was responsible for discovery, architecture, database and API work, 
-          the React interface, authentication, deployment and production support. A six-month 
-          target became an eight-month delivery as we included additional self-service and security work.
+          I worked with the board to define the first release around two
+          priorities: reduce exposure of the legacy application and preserve
+          the customer services already in use. I owned delivery from discovery
+          and architecture through the database, API, interface, security,
+          deployment and production support.
+        `,
+        `
+          The original six-month target became an eight-month delivery as we
+          added security and self-service capabilities. Extra verification for
+          sensitive changes let customers update contact and payment details
+          online, replacing phone calls and manual processing.
         `,
       ],
     },
@@ -84,37 +92,54 @@ export default {
       videos: [projectVideos["autodash-lease-workflow-mobile"]],
       subsections: [
         {
-          title: "Keep the existing business data where it belonged",
+          title: "Keep the data connected",
           paragraphs: [
             `
-              Most of the information AutoDash needed already lived in the LeaseCore MSSQL database. 
-              Rather than introduce a third database and another synchronisation problem, I added portal-owned 
-              tables for identities, MFA, preferences and activity alongside the existing lease data. 
-              The Node.js API exposed controlled operations and reused legacy stored procedures where they remained necessary. 
-              This kept the legacy dependency explicit; it did not remove all of its testing limitations.
+              Most of the information AutoDash needed already lived in the
+              LeaseCore MSSQL database. Rather than add another database and
+              synchronisation problem, I added portal-owned tables for accounts,
+              authentication, preferences and activity alongside the existing
+              lease data.
+            `,
+            `
+              A TypeScript API controlled access to the data and reused legacy
+              stored procedures where necessary. This avoided duplicating
+              information, though the remaining dependency on those procedures
+              limited what I could test independently.
             `,
           ],
         },
         {
-          title: "Design around actual customer and staff behaviour",
+          title: "Build around everyday frustrations",
           paragraphs: [
             `
-              I mapped the old database and application workflows, listened to customer calls and reviewed prototypes 
-              with directors, managers and frontline staff. Feedback shaped the budget breakdown, clearer transactions, 
-              downloadable documents and the self-service changes that had previously required manual support. 
-              I kept the first release focused on replacing the existing customer journey rather than rebuilding 
-              internal lease management.
+              I mapped the existing workflows, reviewed prototypes with
+              directors and frontline staff, and listened to customer calls to
+              identify recurring problems. That work shaped email-based
+              sign-in, clearer transactions, downloadable documents and
+              self-service account changes.
+            `,
+            `
+              Customers could also see budget allocations alongside spending
+              across categories such as fuel, maintenance, registration and
+              tyres. This made it easier to understand how much remained in
+              each part of their annual vehicle budget.
             `,
           ],
         },
         {
-          title: "Deliver and operate the replacement",
+          title: "Prepare for release",
           paragraphs: [
             `
-              I built the React client and the Express API in TypeScript, 
-              implemented email-based sign-in, MFA and authorisation, and prepared the customer migration. 
-              Docker, GitHub Actions, Azure Bicep, staging, Sentry and Grafana supported deployment and production 
-              troubleshooting. Employees with active leases tested the live journey before customer cutover.
+              I made a staging version of the portal available to staff before launch.
+              Some employees also held leases through the business, so they could try
+              it using their own customer accounts. Their feedback helped me refine
+              the interface before the wider customer release.
+            `,
+            `
+              I set up automated deployments to Azure, giving me a repeatable way to
+              release the application and subsequent updates. I also added error
+              tracking and monitoring to help investigate problems after release.
             `,
           ],
         },
@@ -124,13 +149,32 @@ export default {
       title: "The result",
       paragraphs: [
         `
-          AutoDash went into production on 14 November 2024 and supported the migration of more than 5,000 customers. 
-          Customers gained current lease information, more understandable budgets, documents and self-service account changes. 
-          Staff reported far fewer calls about forgotten usernames and routine profile updates.
+          AutoDash entered production on 14 November 2024, and more than 5,000
+          customers moved to the new portal. Customers gained current lease
+          balances, clearer budgets, document access and the ability to make
+          account changes themselves.
         `,
         `
-          The key architectural outcome was the separation of public customer access from the older portal while keeping 
-          the internal lease-management (LeaseCore) platform in service.
+          Staff reported far fewer calls about forgotten usernames and routine
+          profile updates. They could direct customers to self-service
+          documents and clearer financial information instead of preparing
+          repeated emails or explaining stale balances over the phone.
+        `,
+        `
+          The business was able to withdraw all public access to the old system and its 
+          portal. While keeping the critical business services available internally.
+        `,
+      ],
+    },
+    {
+      title: "What I took from it",
+      paragraphs: [
+        `
+          My sales-management experience helped me decide what to build.
+          Listening across customer calls gave me a way to check staff feedback
+          against recurring problems. It also helped me explain which
+          improvements justified extra time before release and which could
+          wait until the replacement was in use.
         `,
       ],
     },

@@ -39,12 +39,18 @@ export const projectSummaries = [
     priority: 1,
     changeFreq: "weekly",
     category: "Full-stack product delivery",
-    title: "AutoDash · A new front door for 5,000+ customers",
+    title: "AutoDash · From concept to cloud",
     description: `
-      LeaseCore had to stay. I built AutoDash so customers could manage their accounts while LeaseCore moved behind the scenes.
+      I built a new customer finance portal with clearer budgets and secure
+      self-service, carefully controlling access to the vulnerable platform
+      the business still relied on.
     `,
     featured: true,
-    evidence: ["5,000+ migrated", "8 months"],
+    evidence: [
+      "5,000+ customers migrated",
+      "8 month delivery",
+      "Deployed on Azure",
+    ],
   },
   {
     ...content.aca,
