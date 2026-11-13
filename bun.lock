@@ -10,7 +10,7 @@
         "@eslint/js": "^9.39.1",
         "@fontsource/fira-sans": "5.3.0",
         "@qwik-ui/headless": "^0.7.7",
-        "@qwik.dev/partytown": "^0.11.1",
+        "@qwik.dev/partytown": "1.0.5",
         "@qwikest/icons": "^0.0.13",
         "@tailwindcss/vite": "^4.1.4",
         "@types/bun": "^1.4.2",
@@ -234,7 +234,7 @@
 
     "@qwik-ui/headless": ["@qwik-ui/headless@0.7.7", "", { "dependencies": { "@floating-ui/core": "^1.6.2", "@floating-ui/dom": "^1.6.5", "@fluejs/noscroll": "^1.0.0", "@oddbird/popover-polyfill": "0.4.3", "focus-trap": "7.5.4" }, "peerDependencies": { "@builder.io/qwik": ">=1.3.1" } }, "sha512-PdOgh72dWZNmq5F6HzHWBctd+7L+uwbPed33g2dlYyqVlFIVi0uKiFh/sM+v72HIv/hXylEWAWP4ExMRI5DzXQ=="],
 
-    "@qwik.dev/partytown": ["@qwik.dev/partytown@0.11.2", "", { "dependencies": { "dotenv": "^16.4.7" }, "bin": { "partytown": "bin/partytown.cjs" } }, "sha512-795y49CqBiKiwKAD+QBZlzlqEK275hVcazZ7wBPSfgC23L+vWuA7PJmMpgxojOucZHzYi5rAAQ+IP1I3BKVZxw=="],
+    "@qwik.dev/partytown": ["@qwik.dev/partytown@1.0.5", "", { "bin": { "partytown": "bin/partytown.cjs" } }, "sha512-E912WTT6XibcM9d4WJpMg6fjiYCYQS8j039oqYznnHis2uSjZ5622QTRaxykaveznGcwB4VhGXUEju4YCC2GOA=="],
 
     "@qwikest/icons": ["@qwikest/icons@0.0.13", "", { "peerDependencies": { "@builder.io/qwik": ">=1.0.0" } }, "sha512-e0wY8vmx0nDSUiuCATlk+ojTvdBV4txIGHHWjZW5SRkv4XB8H9+3WSDcLPz0ItUdRyzcrohE9k2jtQI/98aRPA=="],
 
@@ -577,8 +577,6 @@
     "domhandler": ["domhandler@5.0.3", "", { "dependencies": { "domelementtype": "^2.3.0" } }, "sha512-cgwlv/1iFQiFnU96XXgROh8xTeetsnJiDsTc7TYCLFd9+/WNkIqPTxiM/8pSd8VIrhXGTf1Ny1q1hquVqDJB5w=="],
 
     "domutils": ["domutils@3.2.2", "", { "dependencies": { "dom-serializer": "^2.0.0", "domelementtype": "^2.3.0", "domhandler": "^5.0.3" } }, "sha512-6kZKyUajlDuqlHKVX1w7gyslj9MPIXzIFiz/rGu35uC1wMi+kMhQwGhl4lt9unC9Vb9INnY9Z3/ZA3+FhASLaw=="],
-
-    "dotenv": ["dotenv@16.6.1", "", {}, "sha512-uBq4egWHTcTt33a72vpSG0z3HnPuIl6NqYcTrKEg2azoEyl2hpW0zqlxysq2pK9HlDIHyHyakeYaYnSAwd8bow=="],
 
     "dunder-proto": ["dunder-proto@1.0.1", "", { "dependencies": { "call-bind-apply-helpers": "^1.0.1", "es-errors": "^1.3.0", "gopd": "^1.2.0" } }, "sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A=="],
 

@@ -15,11 +15,13 @@ import render from "./entry.ssr";
 import { mediaAssetName } from "./lib/media-asset";
 import { createMediaResponse } from "./lib/media-response";
 import { normalizeServerRequest } from "./lib/server-origin";
+import { addAnalyticsContentSecurityPolicy } from "./lib/analytics";
 import {
   compressPublicHtml,
   isPrecompressedAssetPath,
   servePrecompressedAsset,
 } from "./lib/response-compression";
+import { PARTYTOWN_LIBRARY_PATH } from "./config/partytown";
 
 // Create the Qwik City Bun middleware
 const { router, notFound, staticFile } = createQwikCity({
@@ -96,6 +98,20 @@ Bun.serve({
         : request;
     const staticResponse = await staticFile(staticRequest);
     if (staticResponse) {
+      // A registered service worker outlives page loads, so keep this one
+      // revalidating. The other Partytown assets are keyed by the versioned
+      // path and keep the immutable default. None are precompressed because
+      // the gzip step only covers /assets and /build.
+      if (pathname === `${PARTYTOWN_LIBRARY_PATH}partytown-sw.js`) {
+        const headers = new Headers(staticResponse.headers);
+        headers.set("Cache-Control", "public, max-age=0, must-revalidate");
+        return new Response(staticResponse.body, {
+          status: staticResponse.status,
+          statusText: staticResponse.statusText,
+          headers,
+        });
+      }
+
       if (!canServePrecompressed) return staticResponse;
 
       const gzipFile = Bun.file(
@@ -107,7 +123,10 @@ Bun.serve({
     // Server-side render this request with Qwik City
     const qwikCityResponse = await router(normalizeServerRequest(request));
     if (qwikCityResponse) {
-      return compressPublicHtml(request, qwikCityResponse);
+      return compressPublicHtml(
+        request,
+        addAnalyticsContentSecurityPolicy(qwikCityResponse),
+      );
     }
 
     // Path not found
