@@ -1,10 +1,41 @@
 import type { ProjectSummary } from "./types";
 
+export const content = {
+  autodash: { slug: "autodash", path: "/projects/autodash" },
+  aca: { slug: "access-control-demo", path: "/projects/access-control-demo" },
+  iac: { slug: "azure-iac", path: "/projects/azure-iac" },
+  azure: {
+    slug: "azure-access-and-secrets",
+    path: "/projects/azure-access-and-secrets",
+  },
+  integration: {
+    slug: "tqe-legacy-integration",
+    path: "/projects/tqe-legacy-integration",
+  },
+  financialSql: {
+    slug: "lease-balance-calculation",
+    path: "/projects/lease-balance-calculation",
+  },
+  siteRebuild: { slug: "site-rebuild", path: "/projects/site-rebuild" },
+  migration: {
+    slug: "autodash-migration",
+    path: "/projects/autodash-migration",
+  },
+  stepUp: {
+    slug: "step-up-authentication",
+    path: "/projects/step-up-authentication",
+  },
+  ransomware: {
+    slug: "ransomware-recovery",
+    path: "/projects/ransomware-recovery",
+  },
+  approach: { slug: "about-approach", path: "/about/approach" },
+};
+
 // Order reflects the recommended work-page reading path.
 export const projectSummaries = [
   {
-    slug: "autodash",
-    path: "/projects/autodash",
+    ...content.autodash,
     priority: 1,
     changeFreq: "weekly",
     category: "Full-stack product delivery",
@@ -16,20 +47,20 @@ export const projectSummaries = [
     evidence: ["5,000+ migrated", "8 months"],
   },
   {
-    slug: "access-control-demo",
-    path: "/projects/access-control-demo",
+    ...content.aca,
     priority: 1,
     changeFreq: "weekly",
-    category: "Inspectable full-stack application",
-    title: "Access Control Demo · What does each account do?",
-    description:
-      "Switch accounts in the live demo, try a forbidden action, and trace how the API, database and tests handle it.",
+    category: "Application Security",
+    title: "Same app. Different access.",
+    description: `
+      A live booking app demonstrating least privilege across the server and database.
+      Students manage their own bookings; administrators have read-only access.
+    `,
     featured: true,
-    evidence: ["2 students + 1 admin", "PostgreSQL RLS"],
+    evidence: ["Live demo", "Layered security", "2 students + 1 admin"],
   },
   {
-    slug: "azure-iac",
-    path: "/projects/azure-iac",
+    ...content.iac,
     priority: 1,
     changeFreq: "weekly",
     category: "Cloud infrastructure and deployment",
@@ -39,8 +70,7 @@ export const projectSummaries = [
     evidence: ["2 applications", "Public infrastructure code"],
   },
   {
-    slug: "azure-access-and-secrets",
-    path: "/projects/azure-access-and-secrets",
+    ...content.azure,
     priority: 0.8,
     changeFreq: "weekly",
     category: "Cloud authorisation and permissions",
@@ -50,8 +80,7 @@ export const projectSummaries = [
     evidence: ["4 shared identities", "Azure Key Vault"],
   },
   {
-    slug: "lease-balance-calculation",
-    path: "/projects/lease-balance-calculation",
+    ...content.financialSql,
     priority: 0.8,
     changeFreq: "weekly",
     category: "Legacy modernisation",
@@ -64,8 +93,7 @@ export const projectSummaries = [
     evidence: ["12,000+ lines of SQL", "Financial SQL"],
   },
   {
-    slug: "site-rebuild",
-    path: "/projects/site-rebuild",
+    ...content.siteRebuild,
     priority: 1,
     changeFreq: "weekly",
     category: "Web development and CRM automation",
@@ -77,8 +105,7 @@ export const projectSummaries = [
     evidence: ["3 months", "100 in 3 categories"],
   },
   {
-    slug: "tqe-legacy-integration",
-    path: "/projects/tqe-legacy-integration",
+    ...content.integration,
     priority: 0.9,
     changeFreq: "weekly",
     category: "Business systems integration",
@@ -90,8 +117,7 @@ export const projectSummaries = [
     evidence: ["Torque", "QuoteCore", "LeaseCore"],
   },
   {
-    slug: "autodash-migration",
-    path: "/projects/autodash-migration",
+    ...content.migration,
     priority: 0.9,
     changeFreq: "weekly",
     category: "Identity and migration",
@@ -101,8 +127,7 @@ export const projectSummaries = [
     evidence: ["5,000+ Users", "SHA-1", "Argon2"],
   },
   {
-    slug: "step-up-authentication",
-    path: "/projects/step-up-authentication",
+    ...content.stepUp,
     priority: 0.9,
     changeFreq: "weekly",
     category: "Application security",
@@ -113,10 +138,9 @@ export const projectSummaries = [
     evidence: ["6-digit code", "SMS delivery", "5 minutes approval window"],
   },
   {
-    slug: "ransomware-recovery",
+    ...content.ransomware,
     priority: 0.9,
     changeFreq: "weekly",
-    path: "/projects/ransomware-recovery",
     category: "Incident response",
     title: "Ransomware recovery · Back online by morning",
     description: `
@@ -130,8 +154,7 @@ export const projectSummaries = [
     ],
   },
   {
-    slug: "about-approach",
-    path: "/about/approach",
+    ...content.approach,
     priority: 0.8,
     changeFreq: "monthly",
     category: "How I work",
@@ -147,8 +170,7 @@ export const engineeringApproach: Omit<
   ProjectSummary,
   "priority" | "changeFreq"
 > = {
-  slug: "about-approach",
-  path: "/about/approach",
+  ...content.approach,
   category: "How I work",
   title: "What sales leadership taught me about building software",
   description:

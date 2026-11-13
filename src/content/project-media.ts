@@ -158,6 +158,8 @@ export const projectVideos = {
       "Create a consultation, switch students and inspect the administrator view. UI visibility alone does not prove API or database enforcement.",
     src: recordOwnershipDesktop,
     poster: recordOwnershipDesktopPoster,
+    autoPlay: true,
+    loop: true,
   },
   "access-consultation-mobile": {
     id: "access-consultation-mobile",
@@ -170,6 +172,8 @@ export const projectVideos = {
       "Enter a name, reason and date, then inspect the new consultation in the mobile list.",
     src: studentCreateMobile,
     poster: studentCreateMobilePoster,
+    autoPlay: true,
+    loop: true,
   },
   "torque-lead-full-workflow": {
     id: "torque-lead-full-workflow",
