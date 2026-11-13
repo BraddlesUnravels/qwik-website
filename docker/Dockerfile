@@ -11,6 +11,8 @@ RUN HUSKY=0 bun install --frozen-lockfile
 
 COPY . .
 
+ARG PUBLIC_GA_MEASUREMENT_ID
+
 # App compile only. Lint/types/tests remain CI concerns (see .github/workflows).
 RUN bun run build.docker
 

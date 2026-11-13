@@ -152,83 +152,80 @@ jobs:
       - name: Production client and server build
         run: bun run build.docker
 
-      - name: Component tests
-        # v7.4.4+ is required on runners with Node >=24.20 (got v11 socket bug).
-        uses: cypress-io/github-action@c541a95ea92d9239347a2355f2e895cd4b3f8060 # v7.4.6
-        with:
-          install: false
-          component: true
-          command: bun run test.ct
+      - name: Install Playwright Chromium
+        run: bunx playwright install --with-deps chromium
 
-      # Do not use the action start/wait-on inputs. Their built-in ping uses got and
-      # can fail immediately with ERR_SOCKET_CLOSED_BEFORE_CONNECTION on Node >=24.20
-      # before Vite binds. bun run test.e2e uses start-server-and-test + wait-on (axios).
-      - name: E2E tests
-        uses: cypress-io/github-action@c541a95ea92d9239347a2355f2e895cd4b3f8060 # v7.4.6
+      - name: Browser tests
+        run: bun run test.e2e
+
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          install: false
-          command: bun run test.e2e
+          name: playwright-report
+          path: playwright-report
+          if-no-files-found: ignore
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@b5ca514318bd6ebac0fb2aedd5d36ec1b5c232a2 # v3.10.0
 
       - name: Build release image
-        run: docker build -f docker/Dockerfile -t "${IMAGE_NAME}" .
+        env:
+          PUBLIC_GA_MEASUREMENT_ID: ${{ vars.PUBLIC_GA_MEASUREMENT_ID }}
+        run: |
+          docker build \
+            --build-arg PUBLIC_GA_MEASUREMENT_ID \
+            -f docker/Dockerfile \
+            -t "${IMAGE_NAME}" .
 
-      # HTTP checks mirror IaC deploy-workload-release.sh verify for qwik-website:
-      # GET /health -> 200, GET / -> 200, GET /projects/access-control-demo -> 200.
+      - name: Build analytics-enabled smoke image
+        run: |
+          docker build \
+            --build-arg PUBLIC_GA_MEASUREMENT_ID=G-TEST123456 \
+            -f docker/Dockerfile \
+            -t qwik-website:analytics-enabled-smoke .
+
+      - name: Build analytics-disabled smoke image
+        run: |
+          docker build \
+            --build-arg PUBLIC_GA_MEASUREMENT_ID= \
+            -f docker/Dockerfile \
+            -t qwik-website:analytics-disabled-smoke .
+
+      - name: Resolve Partytown library path
+        id: partytown
+        run: |
+          version="$(jq -er '.devDependencies["@qwik.dev/partytown"]' package.json)"
+          echo "library-path=/~partytown/${version}/" >> "${GITHUB_OUTPUT}"
+
+      - name: Verify analytics-enabled image
+        env:
+          PARTYTOWN_LIBRARY_PATH: ${{ steps.partytown.outputs.library-path }}
+        run: |
+          bash .github/scripts/smoke-test-analytics-enabled.sh \
+            qwik-website:analytics-enabled-smoke G-TEST123456 \
+            "${PARTYTOWN_LIBRARY_PATH}"
+
+      - name: Verify analytics-disabled image
+        run: |
+          bash .github/scripts/smoke-test-analytics-disabled.sh \
+            qwik-website:analytics-disabled-smoke
+
+      # Verify the exact release candidate configuration before publishing.
       - name: Smoke test the built image
         shell: bash
+        env:
+          PUBLIC_GA_MEASUREMENT_ID: ${{ vars.PUBLIC_GA_MEASUREMENT_ID }}
+          PARTYTOWN_LIBRARY_PATH: ${{ steps.partytown.outputs.library-path }}
         run: |
           set -euo pipefail
 
-          container_name="qwik-release-smoke-${GITHUB_RUN_ID}"
-          host_port=18080
-          url="http://127.0.0.1:${host_port}"
-          health_path="/health"
-
-          cleanup() {
-            docker logs "${container_name}" >/tmp/qwik-smoke-logs 2>&1 || true
-            docker rm -f "${container_name}" >/dev/null 2>&1 || true
-          }
-          trap cleanup EXIT
-
-          docker run --rm -d \
-            --name "${container_name}" \
-            -p "${host_port}:3000" \
-            "${IMAGE_NAME}"
-
-          health_url="${url}${health_path}"
-          ready=0
-          for _ in $(seq 1 30); do
-            health_code="$(curl -sS -o /tmp/scw-live-health -w '%{http_code}' --max-time 10 "${health_url}" || true)"
-            if [[ "${health_code}" == '200' ]]; then
-              ready=1
-              break
-            fi
-            sleep 5
-          done
-
-          if [[ "${ready}" -ne 1 ]]; then
-            echo "Live health verification failed for ${health_url}" >&2
-            cat /tmp/scw-live-health >&2 || true
-            docker logs "${container_name}" || true
-            exit 1
-          fi
-
-          homepage_code="$(curl -sS -o /tmp/scw-live-home -w '%{http_code}' "${url}/")"
-          if [[ "${homepage_code}" != '200' ]]; then
-            echo "Homepage expected 200, got ${homepage_code}" >&2
-            docker logs "${container_name}" || true
-            exit 1
-          fi
-
-          # Qwik City uses trailingSlash: false; bare paths are canonical (slash forms 301).
-          project_code="$(curl -sS -o /tmp/scw-live-project -w '%{http_code}' "${url}/projects/access-control-demo")"
-          if [[ "${project_code}" != '200' ]]; then
-            echo "Project page expected 200, got ${project_code}" >&2
-            docker logs "${container_name}" || true
-            exit 1
+          measurement_id="$(printf '%s' "${PUBLIC_GA_MEASUREMENT_ID}" | sed -E 's/^[[:space:]]+//; s/[[:space:]]+$//')"
+          if [[ "${measurement_id}" =~ ^G-[A-Z0-9]+$ ]]; then
+            bash .github/scripts/smoke-test-analytics-enabled.sh \
+              "${IMAGE_NAME}" "${measurement_id}" "${PARTYTOWN_LIBRARY_PATH}"
+          else
+            bash .github/scripts/smoke-test-analytics-disabled.sh "${IMAGE_NAME}"
           fi
 
       - name: Azure OIDC login as image publisher
@@ -288,6 +285,26 @@ jobs:
 
           echo "image-tag=${remote_tag}" >> "${GITHUB_OUTPUT}"
           echo "image-digest=${digest}" >> "${GITHUB_OUTPUT}"
+
+      - name: Verify selected registry image analytics configuration
+        shell: bash
+        env:
+          PUBLIC_GA_MEASUREMENT_ID: ${{ vars.PUBLIC_GA_MEASUREMENT_ID }}
+          PARTYTOWN_LIBRARY_PATH: ${{ steps.partytown.outputs.library-path }}
+          IMAGE_DIGEST: ${{ steps.push.outputs.image-digest }}
+        run: |
+          set -euo pipefail
+
+          image="${ACR_LOGIN_SERVER}/${CONTAINER_REPOSITORY}@${IMAGE_DIGEST}"
+          docker pull "${image}"
+
+          measurement_id="$(printf '%s' "${PUBLIC_GA_MEASUREMENT_ID}" | sed -E 's/^[[:space:]]+//; s/[[:space:]]+$//')"
+          if [[ "${measurement_id}" =~ ^G-[A-Z0-9]+$ ]]; then
+            bash .github/scripts/smoke-test-analytics-enabled.sh \
+              "${image}" "${measurement_id}" "${PARTYTOWN_LIBRARY_PATH}"
+          else
+            bash .github/scripts/smoke-test-analytics-disabled.sh "${image}"
+          fi
 
       - name: Record non-secret release evidence
         id: evidence

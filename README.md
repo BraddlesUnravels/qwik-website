@@ -11,18 +11,19 @@ bun install --frozen-lockfile
 bun run dev
 ```
 
-Open the URL Vite prints. The site runs with the checked-in content and assets. The live demo button needs [server-side configuration](doc/runtime.md#live-demo-redirect).
+Open the URL Vite prints. The site runs with the checked-in content and assets. The live demo button needs [server-side configuration](docs/runtime.md#live-demo-redirect).
 
 ## Working on the site
 
-| Task                                          | Guide                                   |
-| --------------------------------------------- | --------------------------------------- |
-| Run a local build or find a route             | [Development](doc/development.md)       |
-| Update a project card or case study           | [Portfolio content](doc/content.md)     |
-| Add a screenshot, diagram or video            | [Project media](doc/media.md)           |
-| Change typography, navigation or interactions | [UI and accessibility](doc/ui.md)       |
-| Run tests or troubleshoot a CI check          | [Testing](doc/testing.md)               |
-| Configure the demo redirect, SEO or server    | [Runtime configuration](doc/runtime.md) |
-| Run the container or publish a release        | [Deployment](doc/deployment.md)         |
+| Task                                          | Guide                                    |
+| --------------------------------------------- | ---------------------------------------- |
+| Run a local build or find a route             | [Development](#run-it-locally)           |
+| Update a project card or case study           | [Portfolio content](docs/content.md)     |
+| Add a screenshot, diagram or video            | [Project media](docs/media.md)           |
+| Change typography, navigation or interactions | [UI and accessibility](docs/ui.md)       |
+| Run tests or troubleshoot a CI check          | [Testing](docs/testing.md)               |
+| Configure the demo redirect, SEO or server    | [Runtime configuration](docs/runtime.md) |
+| Configure or troubleshoot Google Analytics    | [Analytics](docs/analytics.md)           |
+| Run the container or publish a release        | [Deployment](docs/deployment.md)         |
 
-[Audit notes](doc/audit.md) record the gaps I found and the checks I ran.
+[Audit notes](docs/last-docs-audit.md) record the gaps I found and the checks I ran.
