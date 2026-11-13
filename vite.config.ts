@@ -47,7 +47,7 @@ errorOnDuplicatesPkgDeps(devDependencies, dependencies);
  * Vite normally starts from index.html, but the qwikCity plugin starts at
  * src/entry.ssr.tsx instead.
  *
- * Unit tests and Cypress component tests do not need qwikCity. Leaving it
+ * Unit tests do not need qwikCity. Leaving it
  * enabled makes Vite SSR-load route modules (layout.tsx and friends); those
  * async loads race server teardown and log:
  *   transport was disconnected, cannot call "fetchModule"
@@ -56,11 +56,7 @@ errorOnDuplicatesPkgDeps(devDependencies, dependencies);
 export default defineConfig(({ mode }): UserConfig => {
   const __dirname = fileURLToPath(new URL(".", import.meta.url));
   const isVitest = mode === "test" || process.env.VITEST === "true";
-  // Cypress CT boots this config via devServer and sets CYPRESS.
-  // E2E starts `vite --mode ssr` in a separate process without CYPRESS set.
-  const isCypressComponent =
-    process.env.CYPRESS === "true" || process.env.CYPRESS === "1";
-  const useQwikCity = !isVitest && !isCypressComponent;
+  const useQwikCity = !isVitest;
   return {
     envPrefix: ["VITE_", "PUBLIC_"],
     plugins: [

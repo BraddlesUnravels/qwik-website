@@ -29,15 +29,12 @@ coverage
 
 # Tests and local tooling (image build does not run lint/tests)
 test
-cypress
-cypress.config.ts
-cypress.d.ts
+playwright
+playwright.config.ts
 **/*.test.ts
 **/*.test.tsx
 **/*.spec.ts
 **/*.spec.tsx
-**/*.cy.ts
-**/*.cy.tsx
 .prettierrc.json
 .prettierignore
 
