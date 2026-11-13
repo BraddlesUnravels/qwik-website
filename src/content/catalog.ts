@@ -65,15 +65,20 @@ export const projectSummaries = [
     featured: true,
     evidence: ["Live demo", "Layered security", "2 students + 1 admin"],
   },
+
   {
     ...content.iac,
     priority: 1,
     changeFreq: "weekly",
     category: "Cloud infrastructure and deployment",
-    title: "Two apps · One Azure release path.",
-    description: `A shared Azure workflow that deploys the right version to the right environment, blocks risky infrastructure changes, and checks each sites health.`,
+    title: "Azure IaC · The next app starts here",
+    description: `
+      A small, working example of infrastructure patterns I've used
+      commercially, with reusable Azure components and shared deployment
+      checks supporting my personal projects.
+    `,
     featured: true,
-    evidence: ["2 applications", "Public infrastructure code"],
+    evidence: ["2 applications deployed", "Public infrastructure code"],
   },
   {
     ...content.azure,
