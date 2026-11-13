@@ -4,7 +4,7 @@ applyTo: "**/*.{test,spec}.{ts,tsx}"
 
 # Testing Instructions
 
-Apply these instructions whenever writing or modifying automated TypeScript tests.
+Apply these instructions whenever writing or modifying automated TypeScript tests. They are general policies that apply to any repository. Project-specific facts, such as commands, directories, and domain rules, belong in the project documentation.
 
 ## Testing Principles
 
@@ -12,41 +12,34 @@ Tests must describe observable behaviour.
 
 Prioritise:
 
-1. Security behaviour
+1. Security behaviour and access rules
 2. Public contracts
-3. Domain behaviour
+3. Domain rules and state transitions
 4. Error handling
 5. Important edge cases
 6. Implementation details only when unavoidable
 
 Do not test private implementation details when the same behaviour can be verified through a public boundary.
 
+Do not weaken an assertion merely to make a failing test pass.
+
 ## Test Structure
 
-Tests should mirror the source structure.
-
-Examples:
+Tests should mirror the source structure, following the repository's existing test directory conventions.
 
 ```text
-lib/server/auth.ts
-test/lib/server/auth.test.ts
+src/lib/auth.ts
+test/lib/auth.test.ts
 ```
-
-```text
-app/api/consultations/route.ts
-test/app/api/consultations/route.test.ts
-```
-
-Follow the repository's existing test directory conventions when they differ.
 
 Keep related tests together under clear `describe` blocks.
 
-Use behaviour-focused test names.
+Name each test with a behaviour-focused sentence. Follow the repository's existing title convention, such as a consistent prefix like `should`.
 
 Prefer:
 
 ```ts
-it("rejects unauthenticated requests with 401", async () => {
+it("should reject unauthenticated requests with 401", async () => {
   // ...
 });
 ```
@@ -61,25 +54,21 @@ it("works", async () => {
 
 ## Arrange, Act, Assert
 
-Structure tests into clear phases:
+Structure tests into clear phases separated by blank lines:
 
 ```ts
-it("returns only consultations owned by the authenticated student", async () => {
-  const student = createStudent();
-  const ownedConsultation = createConsultation({
-    studentUserId: student.id,
-  });
-  const otherConsultation = createConsultation();
+it("should return only the records owned by the caller", async () => {
+  const caller = createUser();
+  const ownedRecord = createRecord({ ownerId: caller.id });
+  const otherRecord = createRecord();
 
-  const response = await requestConsultations(student);
+  const response = await requestRecords(caller);
 
   expect(response.status).toBe(200);
-  expect(response.body.consultations).toEqual([ownedConsultation]);
-  expect(response.body.consultations).not.toContain(otherConsultation);
+  expect(response.body.records).toEqual([ownedRecord]);
+  expect(response.body.records).not.toContain(otherRecord);
 });
 ```
-
-Blank lines may separate arrange, act, and assert sections.
 
 Comments such as `Arrange`, `Act`, and `Assert` are unnecessary when the structure is already obvious.
 
@@ -92,12 +81,10 @@ Each test must be independent.
 - Restore replaced globals.
 - Use fresh test data.
 - Avoid shared mutable state.
-- Clean up database records or transactions when required.
+- Clean up persisted records or transactions when required.
 - Do not depend on local seed state unless the test is explicitly an integration or demonstration test.
 
-Use deterministic values.
-
-Avoid current timestamps unless time is controlled.
+Use deterministic values. Control time when a test depends on it.
 
 ## Exact Assertions
 
@@ -108,8 +95,6 @@ For public error responses, assert:
 - HTTP status
 - Response shape
 - Exact message when message stability is intentional
-
-Example:
 
 ```ts
 expect(response.status).toBe(403);
@@ -139,147 +124,65 @@ Avoid:
 await expect(operation()).rejects.toThrow();
 ```
 
-Prefer:
+## Security Tests
 
-```ts
-await expect(operation()).rejects.toThrow(
-  "Consultation cannot be modified after cancellation.",
-);
-```
-
-## Authentication Tests
-
-Protected route tests should cover:
+When a change touches a protected boundary, cover:
 
 - Missing authentication
-- Valid student authentication
-- Valid administrator authentication
-- Missing application profile
-- Incorrect role
-- Session resolution failure when relevant
+- Valid authentication with each permitted role
+- Incorrect or missing role
+- Failure to resolve the session or identity
+- Access to another principal's resources
+- Client-supplied identity, role, or ownership values being ignored or rejected
 
 Do not mock authentication so broadly that role and ownership behaviour are bypassed.
 
-## Authorization Tests
+When ownership-sensitive behaviour depends on a query, assert that the query is scoped by the authenticated identity. Do not limit the test to checking that a query occurred.
 
-Student route tests should cover:
+## State Transition Tests
 
-- Students can access their permitted endpoints.
-- Administrators cannot use student-only endpoints.
-- Students cannot use administrator endpoints.
-- Students can retrieve only their own consultations.
-- Students cannot update another student's consultation.
-- Students cannot cancel another student's consultation.
-- Client-provided ownership values are ignored or rejected.
-- Ownership is derived from the authenticated user.
+For any workflow with defined states:
 
-Administrator route tests should cover:
-
-- Administrators can read all consultations.
-- Students cannot access administrator endpoints.
-- Administrator access remains read-only.
-- Administrator mutation behaviour is not introduced accidentally.
-
-## Consultation Lifecycle Tests
-
-Test each supported state transition.
-
-Required cases include:
-
-- Creation begins in `scheduled`.
-- Scheduled consultations can be rescheduled.
-- Scheduled consultations can become `completed`.
-- Completed consultations can return to `scheduled`.
-- Scheduled consultations can become `cancelled`.
-- Completed consultations can become `cancelled`.
-- Cancelled consultations cannot be rescheduled.
-- Cancelled consultations cannot be completed.
-- Repeated cancellation is idempotent.
-- Cancellation does not physically delete the row.
-
-Assert related timestamps where relevant:
-
-- `completed_at`
-- `cancelled_at`
-- `updated_at`
+- Test each supported transition.
+- Test that unsupported transitions are rejected.
+- Test that terminal states cannot be modified.
+- Test that idempotent operations stay idempotent.
+- Assert related timestamps or metadata that the transition sets or clears.
 
 Use controlled timestamps when exact values matter.
 
-## Request Validation Tests
+## Input Validation Tests
 
-Mutation route tests should cover:
+Tests for operations that accept external input should cover:
 
 - Missing required fields
-- Empty strings
-- Incorrect field types
-- Invalid dates
-- Invalid consultation IDs
-- Unsupported status values
-- Unsupported actions
-- Unexpected ownership fields
+- Empty values
+- Incorrect types
+- Out-of-range and malformed values
+- Unsupported options
+- Unexpected fields
 - Valid payloads
 
-Assert that invalid requests do not perform database mutations.
+Assert that invalid input does not cause side effects such as writes.
 
 ## HTTP Contract Tests
 
-For route handlers, assert:
+For request handlers, assert:
 
 - HTTP status
 - Response body
-- Relevant response headers when part of the contract
-- Database or dependency calls
-- Absence of unauthorized database calls
+- Relevant response headers when they are part of the contract, including security headers
+- Calls made to dependencies
+- Absence of calls that should not happen, such as unauthorised writes
 
-Expected security statuses include:
+Use statuses consistently:
 
 - `401` for unauthenticated requests
-- `403` for authenticated users with the wrong role
-- `404` for resources unavailable within the authenticated user's scope
-- `409` for invalid state transitions when conflict semantics are used
+- `403` for authenticated callers who lack permission
+- `404` for resources unavailable within the caller's scope
+- `409` for conflicts with current state, when conflict semantics are used
 
-Do not expose raw database errors in expected response bodies.
-
-## Mocking
-
-Mock only external boundaries or expensive dependencies.
-
-Appropriate mock targets include:
-
-- Supabase clients
-- Authentication session resolution
-- Time
-- Network operations
-- Environment-dependent behaviour
-
-Avoid mocking the unit's own internal implementation.
-
-Prefer typed mocks.
-
-Reset mocks between tests:
-
-```ts
-beforeEach(() => {
-  vi.clearAllMocks();
-});
-```
-
-Use `vi.restoreAllMocks()` when replacing real implementations or globals.
-
-## Database Call Assertions
-
-When testing ownership-sensitive behaviour, assert that database queries include the authenticated user ID.
-
-For example, verify the equivalent of:
-
-```ts
-.eq("id", consultationId)
-.eq("student_user_id", authenticatedUserId)
-```
-
-Do not limit the test to checking that a query occurred.
-
-Verify that the query was scoped correctly.
+Do not expose raw infrastructure or database errors in expected response bodies.
 
 ## Failure Tests
 
@@ -288,22 +191,34 @@ When a dependency fails:
 - Assert the expected safe public response.
 - Assert that internal details are not returned.
 - Assert logging only when logging is part of the boundary's responsibility.
-- Assert that no later mutation occurs after the failure.
-- Assert that errors are not logged repeatedly across layers.
+- Assert that no later side effect occurs after the failure.
+- Assert that the same error is not logged repeatedly across layers.
+
+Third-party code, such as analytics or embeds, must fail safe. Test that its failure leaves the page usable and does not move its work into a less restricted context.
+
+## Mocking
+
+Mock only external boundaries or expensive dependencies.
+
+Appropriate mock targets include:
+
+- Data-access clients
+- Authentication or session resolution
+- Time
+- Network operations
+- Environment-dependent behaviour
+
+Avoid mocking the unit's own internal implementation.
+
+Prefer typed mocks. Reset mocks between tests and restore real implementations and globals that a test replaced.
 
 ## Test Data
 
 Use factory functions when they improve readability and consistency.
 
-Prefer:
-
 ```ts
-const consultation = createConsultation({
-  status: "cancelled",
-});
+const record = createRecord({ status: "cancelled" });
 ```
-
-over repeated large object literals.
 
 Factories should:
 
@@ -313,7 +228,17 @@ Factories should:
 - Return fresh values
 - Use deterministic identifiers and timestamps
 
-Do not create a generic test factory framework for a small number of simple values.
+Do not create a generic test-factory framework for a small number of simple values.
+
+## Browser and End-to-End Tests
+
+Use end-to-end tests for behaviour that depends on a real browser, such as navigation, media, service workers, and response headers on a served build.
+
+- Run against a production build when the behaviour differs in development.
+- Stub third-party network calls so tests are deterministic and send nothing to real services.
+- Assert what the user or the network observes, not internal script text or private globals.
+- Prefer accessible locators, such as roles and labels, over brittle selectors.
+- Wait on conditions, not fixed delays.
 
 ## Test Coverage Boundaries
 
@@ -321,47 +246,21 @@ Focus coverage on meaningful behaviour rather than achieving a percentage throug
 
 High-priority boundaries include:
 
-- Authentication
-- Role resolution
+- Authentication and role resolution
 - Ownership enforcement
-- Route handlers
+- Request handlers
 - State transitions
 - Validation
 - Safe error responses
-- RLS policies
+- Security headers and policies
+- Data-layer access policies, when the project has them
 
-Snapshot tests should not replace explicit assertions for security-sensitive behaviour.
+Snapshot tests must not replace explicit assertions for security-sensitive behaviour.
 
 ## Running Tests
 
-Run the narrowest relevant test while developing.
+Run the narrowest relevant test while developing, then the broader suite. Use the scripts defined in the project's `package.json`.
 
-Examples:
-
-```bash
-npm test -- auth.test.ts
-```
-
-```bash
-npm test -- consultations
-```
-
-Before considering a substantial change complete, run:
-
-```bash
-npm test
-npm run test:db
-```
-
-Run the complete repository quality checks when appropriate:
-
-```bash
-npm run format:check
-npm run typecheck
-npm run lint
-npm test
-npm run test:db
-npm run build
-```
+Before considering a substantial change complete, run every applicable check described in the repository instructions.
 
 Do not state that a test passed unless it was actually executed.

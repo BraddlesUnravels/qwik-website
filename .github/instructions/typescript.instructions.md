@@ -2,9 +2,9 @@
 applyTo: "**/*.{ts,tsx}"
 ---
 
-# TypeScript and Next.js Instructions
+# TypeScript Instructions
 
-Apply these instructions whenever writing or modifying TypeScript or TSX.
+Apply these instructions whenever writing or modifying TypeScript or TSX. They are general policies that apply to any repository and framework. Project-specific facts, such as framework conventions, commands, and domain rules, belong in the project documentation.
 
 ## TypeScript Style
 
@@ -23,70 +23,59 @@ Prefer code that is easy to scan and has consistent shapes.
 Use exported arrow functions for ordinary module operations:
 
 ```ts
-export const getConsultations = async () => {
+export const getOrders = async () => {
   // ...
 };
 ```
 
-Use default exports where required or conventional for Next.js and configuration files.
+Use default exports where a framework or tool requires or conventionally expects them, such as pages, layouts, and configuration files.
 
 ## Type Definitions
 
 Use string literal unions for closed sets:
 
 ```ts
-export type UserRole = "student" | "admin";
-
-export type ConsultationStatus = "scheduled" | "completed" | "cancelled";
+export type UserRole = "member" | "admin";
 ```
 
 Do not use TypeScript enums.
 
 Prefer explicit types at module and framework boundaries, including:
 
-- Route request payloads
-- Route response bodies
+- Request payloads and response bodies
 - Authentication context
-- Database mapping boundaries
+- Data-access mapping boundaries
 - Shared component props
 - Reusable exported functions
 
 Allow TypeScript to infer straightforward local implementation details.
 
-Do not create generic types until there is a real repeated relationship between types.
-
-Do not create generic abstractions solely because two functions have superficially similar shapes.
+Do not create generic types or abstractions until there is a real repeated relationship. Two functions with superficially similar shapes are not enough.
 
 ## Nullability
 
 Prefer `undefined` for optional values within application code.
 
-At Supabase/database boundaries, preserve `null` when it represents SQL `NULL`. For example, clearing `completed_at` requires writing `null`; `undefined` may omit the field instead of updating it.
+At storage and API boundaries, preserve `null` when it represents an explicit empty value. For example, clearing a stored field requires writing `null`, because `undefined` may omit the field instead of updating it.
 
-Do not hide database nullability with unsafe assertions.
-
-Convert nullable database values at an explicit mapping boundary when the application benefits from an `undefined`-based shape.
+Do not hide nullability with unsafe assertions. Convert nullable values at an explicit mapping boundary when the application benefits from an `undefined`-based shape.
 
 ## External Data
 
 Treat the following as untrusted until validated or narrowed:
 
 - Request bodies
-- URL parameters
-- Search parameters
+- URL and search parameters
 - Form data
-- Supabase responses
+- Headers and cookies
+- Responses from databases and third-party services
 - Authentication metadata
 - Environment variables
 - Values from external libraries typed as `unknown`
 
-Do not cast request data directly into the desired type.
+Do not cast external data directly into the desired type. Validate it before use.
 
-Validate external data before use.
-
-Prefer `unknown` over `any`.
-
-Do not use an assertion such as `as SomeType` to replace runtime validation.
+Prefer `unknown` over `any`. Do not use `as SomeType` to replace runtime validation.
 
 ## Type Assertions
 
@@ -99,13 +88,7 @@ Use type assertions only when:
 
 Do not use assertions to silence unresolved type errors.
 
-Avoid double assertions such as:
-
-```ts
-value as unknown as SomeType;
-```
-
-Use one only when an external library boundary makes it unavoidable and document the reason.
+Avoid double assertions such as `value as unknown as SomeType`. Use one only when an external library boundary makes it unavoidable, and document the reason.
 
 ## Imports
 
@@ -117,21 +100,17 @@ Order imports as:
 2. Internal aliases
 3. Relative modules
 
-Import from public surfaces when available.
-
-Do not reach into another module's internal path to bypass its intended API.
+Import from public surfaces when available. Do not reach into another module's internal path to bypass its intended API.
 
 Use type-only imports when an import is used only as a type:
 
 ```ts
-import type { Consultation } from "@/types/consultation";
+import type { Order } from "@/types/order";
 ```
 
 ## Functions
 
-Prefer small, intention-focused functions.
-
-A function should normally perform one meaningful operation or coordinate a small sequence of closely related operations.
+Prefer small, intention-focused functions. A function should normally perform one meaningful operation or coordinate a small sequence of closely related operations.
 
 Extract a helper when it:
 
@@ -143,15 +122,7 @@ Extract a helper when it:
 
 Do not extract a helper only to reduce line count.
 
-Avoid vague names such as:
-
-- `handleData`
-- `processItem`
-- `doRequest`
-- `manageState`
-- `executeAction`
-
-Use names that describe the specific operation.
+Avoid vague names such as `handleData`, `processItem`, `doRequest`, `manageState`, and `executeAction`. Use names that describe the specific operation.
 
 ## Control Flow
 
@@ -172,8 +143,8 @@ if (!user) {
   throw new Error("Authenticated user is required.");
 }
 
-if (user.role !== "student") {
-  throw new Error("Student access is required.");
+if (user.role !== "admin") {
+  throw new Error("Administrator access is required.");
 }
 
 return performOperation();
@@ -183,7 +154,7 @@ Avoid:
 
 ```ts
 if (user) {
-  if (user.role === "student") {
+  if (user.role === "admin") {
     return performOperation();
   }
 }
@@ -193,31 +164,14 @@ Do not add `else` after a branch that returns, throws, or otherwise exits.
 
 ## Asynchronous Code
 
-Prefer `async` and `await`.
-
-Avoid promise chains when sequential code is clearer.
-
-Prefer:
-
-```ts
-const user = await getAuthenticatedUser();
-const consultations = await getConsultations(user.id);
-```
-
-Avoid:
-
-```ts
-return getAuthenticatedUser().then((user) => {
-  return getConsultations(user.id);
-});
-```
+Prefer `async` and `await`. Avoid promise chains when sequential code is clearer.
 
 Run independent operations concurrently when safe:
 
 ```ts
-const [profile, consultations] = await Promise.all([
+const [profile, orders] = await Promise.all([
   getProfile(userId),
-  getConsultations(userId),
+  getOrders(userId),
 ]);
 ```
 
@@ -226,7 +180,9 @@ Do not run operations concurrently when:
 - One depends on another
 - Ordering is important
 - Partial execution could leave inconsistent state
-- One operation determines whether another is authorized
+- One operation determines whether another is authorised
+
+Do not leave promises unhandled. Do not add `async` to a function that does not await anything.
 
 ## Collections
 
@@ -238,184 +194,96 @@ Prefer:
 - `some` for existence checks
 - `every` for universal checks
 
-Use a loop when it improves readability or avoids unnecessary passes.
+Use a loop when it improves readability, allows early exit, or avoids unnecessary passes.
 
-Use `reduce` only when accumulation is the clearest representation.
+Use `reduce` only when accumulation is the clearest representation. Do not use it for simple mapping, filtering, or lookup.
 
-Do not use `reduce` for simple mapping, filtering, or lookup operations.
+## Components and Rendering
 
-## Next.js Components
+Keep server and client responsibilities explicit when the framework distinguishes them.
 
-Keep server and client responsibilities explicit.
-
-- Do not add `"use client"` unless the component requires client-side state, effects, browser APIs, or event handlers.
-- Keep server-compatible components as server components.
-- Do not move authorization into a client component.
-- Do not expose server-only clients, keys, or logic to browser bundles.
-- Keep role-sensitive navigation and rendering consistent with server-side authorization.
+- Keep server-compatible components on the server unless they need client state, effects, browser APIs, or event handlers.
+- Keep client components focused on interaction and presentation.
+- Pass serialisable data from server code into focused client components.
+- Do not move authorisation into client code.
+- Do not expose server-only clients, secrets, or logic to browser bundles.
 - Treat hidden UI actions as usability behaviour, not access control.
+- Use framework conventions directly instead of wrapping them in unnecessary abstractions.
 
-Use Next.js conventions directly instead of wrapping them in unnecessary abstractions.
+Keep components focused. Separate a component when it:
 
-## Client Components
+- Encapsulates meaningful reusable UI
+- Owns a focused interaction
+- Makes role-specific behaviour clearer
+- Reduces substantial duplication
 
-A client component is appropriate when it requires:
+Do not split a component merely because it has reached an arbitrary line count.
 
-- React state
-- React effects
-- Browser APIs
-- Client-side event handlers
-- Interactive form behaviour
-- Optimistic UI behaviour
+Use descriptive prop names. Avoid passing large generic objects when a component needs only a few fields.
 
-Keep client components focused on interaction and presentation.
+## Request Handlers
 
-Do not place the following inside client components:
-
-- Service-role credentials
-- Server-only Supabase clients
-- Database access
-- Trusted authorization decisions
-- Secret environment variables
-
-## Server Components
-
-Use server components for:
-
-- Server-side data retrieval
-- Initial authenticated rendering
-- Role-aware server rendering
-- Non-interactive presentation
-- Work that requires server-only dependencies
-
-Do not convert a server component into a client component merely to simplify data flow.
-
-Prefer passing serializable data from server components into focused client components.
-
-## Route Handlers
-
-Next.js route handlers are security boundaries.
-
-For a protected route, use a readable sequence:
+Request handlers are security boundaries. For a protected handler, use a readable, flat sequence:
 
 1. Resolve authentication
 2. Resolve and enforce the required role
-3. Validate route parameters or request data
-4. Enforce resource ownership or state rules
-5. Perform the database operation
-6. Return the HTTP response
-
-Keep this control flow explicit and flat.
-
-Example shape:
+3. Validate parameters and request data
+4. Enforce resource ownership and state rules
+5. Perform the operation
+6. Return the response
 
 ```ts
 export const GET = async () => {
   const auth = await requireAuthenticatedUser();
 
-  if (auth.profile.role !== "student") {
+  if (auth.role !== "member") {
     return Response.json(
-      { message: "Student access is required." },
+      { message: "Member access is required." },
       { status: 403 },
     );
   }
 
-  const consultations = await getOwnedConsultations(auth.user.id);
+  const orders = await getOwnedOrders(auth.userId);
 
-  return Response.json({ consultations });
+  return Response.json({ orders });
 };
 ```
 
-Do not hide important authorization decisions inside generic request wrappers.
+Do not hide important authorisation decisions inside generic request wrappers. Shared authentication and role helpers are appropriate when they make the boundary clearer.
 
-Shared authentication and role helpers are appropriate when they make the security boundary clearer.
+## Authentication and Ownership
 
-## Authentication
-
-Use the server-side Supabase client to resolve the current user.
+Resolve the current user from the trusted server-side session, and the role from trusted application data.
 
 Do not trust:
 
-- Client-provided user IDs
-- Client-provided roles
+- Client-provided user IDs or roles
 - Request-body ownership fields
 - Browser state as proof of authentication
 - Unverified authentication metadata
+- Email addresses or UI routes as proof of administrative access
 
-Resolve the authenticated user from the trusted server-side session.
-
-Resolve the application role from the trusted application profile.
-
-Do not infer administrative access from an email address or UI route.
-
-## Ownership
-
-Student-owned consultation operations must be scoped using the authenticated user ID.
-
-For reads or mutations of one consultation, prefer a query equivalent to:
-
-```ts
-.eq("id", consultationId)
-.eq("student_user_id", authenticatedUserId)
-```
-
-Do not trust a `studentUserId` supplied in the request body.
-
-For consultation creation, assign ownership from the authenticated user:
-
-```ts
-const consultation = {
-  student_user_id: authenticatedUser.id,
-  first_name: input.firstName,
-  last_name: input.lastName,
-  reason: input.reason,
-  scheduled_for: input.scheduledFor,
-};
-```
-
-Do not allow the client to choose the owner.
-
-## Administrator Access
-
-Administrator routes must explicitly require the `admin` role.
-
-Administrator consultation access is read-only.
-
-Do not add administrator mutation handlers or reuse student mutation handlers for administrators.
-
-Do not grant administrators broader database permissions merely because they have broader read access.
+Scope reads and mutations of owned resources by the authenticated identity in the query itself, rather than fetching by ID alone and checking ownership afterwards. Assign ownership from the authenticated user on creation. Do not let the client choose the owner.
 
 ## Request Validation
 
-Validate all mutation payloads before database operations.
+Validate all input that causes side effects before performing them.
 
-Validation must cover required fields and domain rules, including:
-
-- `firstName`
-- `lastName`
-- `reason`
-- `scheduledFor`
-- Supported status transitions
-- Route identifiers
+Validation must cover required fields, types, formats, domain rules, supported state transitions, and route identifiers.
 
 Reject:
 
 - Missing required values
 - Incorrect value types
-- Invalid dates
-- Unsupported status values
-- Unsupported actions
-- Unexpected ownership fields when they create ambiguity
+- Invalid dates and out-of-range values
+- Unsupported options and actions
+- Unexpected fields when they create ambiguity
 
-Keep validation messages sentence case and human readable.
-
-Do not rely only on TypeScript types for runtime request validation.
+Keep validation messages sentence case and human readable. Do not rely only on TypeScript types for runtime validation.
 
 ## HTTP Responses
 
-Use HTTP statuses consistently.
-
-Expected mappings include:
+Use HTTP statuses consistently:
 
 - `200 OK` for successful reads or idempotent updates
 - `201 Created` for successful creation
@@ -426,124 +294,49 @@ Expected mappings include:
 - `409 Conflict` when a state transition conflicts with current state
 - `500 Internal Server Error` for unexpected failures
 
-Do not expose raw Supabase or PostgreSQL error messages to clients.
+Use a consistent response shape within the repository. Prefer clear messages such as `{ "message": "Order not found." }` over vague ones such as `{ "error": "Something went wrong" }`.
 
-Use a consistent response shape within the repository.
-
-Prefer clear messages:
-
-```json
-{
-  "message": "Consultation not found."
-}
-```
-
-Avoid vague messages:
-
-```json
-{
-  "error": "Something went wrong"
-}
-```
+Do not expose raw database, authentication, or infrastructure errors to clients.
 
 ## Error Handling
 
-Catch errors at route boundaries when converting them into HTTP responses.
+Catch errors at boundaries where they are converted into responses or recovered from.
 
-Do not catch errors solely to log and rethrow them.
-
-Do not return stack traces, SQL text, internal table names, or authentication details.
+Do not catch an error solely to log and rethrow it. Do not return stack traces, query text, internal names, or authentication details.
 
 When an unexpected error occurs:
 
-- Log the internal error at the server boundary
+- Log the internal error once, at the boundary that handles it
 - Return a safe client-facing message
-- Preserve the original error for server diagnostics
+- Preserve the original error for diagnostics
 
-## Consultation State Changes
+## Data Access
 
-Supported consultation states are:
+Select only the columns or fields that are needed.
 
-```ts
-export type ConsultationStatus = "scheduled" | "completed" | "cancelled";
-```
+Always inspect the error result of a data-access call. Do not assume a missing value means a successful empty result.
 
-Preserve these state rules:
+Keep ownership and role restrictions in the query where possible, and keep storage-level access policies independently enforced.
 
-- New consultations begin as `scheduled`.
-- Scheduled consultations may become `completed`.
-- Completed consultations may return to `scheduled`.
-- Scheduled or completed consultations may become `cancelled`.
-- Cancelled consultations cannot be modified.
-- Cancelling an already cancelled consultation is idempotent.
-
-When marking a consultation completed:
-
-- Set the status to `completed`.
-- Set `completed_at`.
-- Clear incompatible cancellation metadata when required by the schema.
-
-When returning a consultation to scheduled:
-
-- Set the status to `scheduled`.
-- Clear `completed_at`.
-
-When cancelling a consultation:
-
-- Set the status to `cancelled`.
-- Set `cancelled_at`.
-- Do not physically delete the row.
-
-## Supabase Queries
-
-Select only required columns where practical.
-
-Prefer:
-
-```ts
-.select("id, first_name, last_name, reason, scheduled_for, status")
-```
-
-over:
-
-```ts
-.select("*")
-```
-
-unless all fields are intentionally required.
-
-Always inspect the Supabase error result.
-
-Do not assume a missing data value is equivalent to a successful empty result.
-
-Keep ownership and role restrictions in the query where possible.
+Do not physically delete records through application operations when the domain defines a status transition instead.
 
 ## Environment Variables
 
 Access environment variables through server-safe boundaries.
 
-Do not expose server-only values using the `NEXT_PUBLIC_` prefix.
+Do not expose server-only values through a public-prefixed variable.
 
-Validate required environment variables before use.
+Validate required variables before use, and throw a clear configuration error when a required value is missing. Validate the format of optional values that change behaviour, and disable the feature when the value is invalid.
 
-Throw a clear startup or configuration error when required values are missing.
+## Third-Party Code
 
-## Components
+Treat third-party scripts and embeds as untrusted.
 
-Keep components focused.
-
-Separate a component when it:
-
-- Encapsulates meaningful reusable UI
-- Owns a focused interaction
-- Makes role-specific behaviour clearer
-- Reduces substantial duplication
-
-Do not split a component merely because it has reached an arbitrary line count.
-
-Use descriptive prop names.
-
-Avoid passing large generic objects when a component requires only a small set of fields.
+- Load them deliberately and document what they load and send.
+- Isolate them from the main thread or page context where practical.
+- Make failure safe: a failing third-party script must not break the page or fall back to a less restricted context.
+- Do not load them in a way that blocks the initial render.
+- Treat Content Security Policy and similar headers as part of the security surface, and test them.
 
 ## Accessibility
 
@@ -552,11 +345,8 @@ Interactive elements must:
 - Use semantic HTML
 - Have accessible names
 - Be keyboard usable
-- Communicate disabled states
-- Communicate loading states
+- Communicate disabled and loading states
 - Associate labels with inputs
 - Expose validation errors meaningfully
 
-Do not use a visual-only element as a button.
-
-Use native elements before adding custom keyboard behaviour.
+Do not use a visual-only element as a button. Use native elements before adding custom keyboard behaviour.
