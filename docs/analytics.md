@@ -32,4 +32,4 @@ The version in the path makes most files safe to cache as immutable. The Bun ent
 
 ## Testing
 
-Unit tests cover the measurement ID validation, the Content Security Policy header and the Partytown path. See [Testing](testing.md).
+Unit tests cover the measurement ID validation, the Content Security Policy header and the Partytown path. The release workflow also runs [smoke scripts](../.github/scripts/) against the built and published images. See [Testing](testing.md).
