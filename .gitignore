@@ -29,10 +29,10 @@ tsconfig.tsbuildinfo
 
 # Tests
 coverage
-cypress/videos
-cypress/screenshots
-cypress/downloads
 .playwright
+playwright-report
+playwright-results
+test-results
 
 # Tmp Files
 FILE-BY-FILE-CHANGES.md

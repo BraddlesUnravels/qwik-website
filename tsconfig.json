@@ -21,6 +21,6 @@
       "~/*": ["./src/*"]
     }
   },
-  "include": ["src", "test", "./*.d.ts", "./*.config.ts"],
-  "exclude": ["src/**/*.cy.ts", "src/**/*.cy.tsx", "scripts/**"]
+  "include": ["src", "test", "playwright", "./*.d.ts", "./*.config.ts"],
+  "exclude": ["scripts/**"]
 }
