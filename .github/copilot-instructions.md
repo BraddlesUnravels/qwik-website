@@ -2,7 +2,9 @@
 
 Follow these instructions when reviewing, writing, or modifying code in this repository.
 
-These rules define the preferred engineering approach. Follow them unless they conflict with:
+These rules are general engineering policies. They apply to any project and stack. Project-specific facts, such as architecture, commands and domain rules, belong in the project documentation.
+
+Follow these policies unless they conflict with:
 
 1. Correctness or security
 2. An explicit task requirement
@@ -10,42 +12,6 @@ These rules define the preferred engineering approach. Follow them unless they c
 4. An established repository convention
 
 When an exception is necessary, keep it narrow and explain the reason.
-
-## Project Purpose
-
-This repository is a small full-stack learning management system demonstrating:
-
-- Authentication
-- Role-based access control
-- Resource ownership
-- Server-side authorization
-- PostgreSQL row-level security
-- Defense in depth
-
-The domain is intentionally small so authentication and authorization boundaries remain explicit and easy to review.
-
-Do not introduce architectural complexity that obscures these boundaries.
-
-## Technology
-
-The project uses:
-
-- Next.js
-- TypeScript
-- Supabase Auth
-- PostgreSQL
-- PostgreSQL row-level security
-- Vitest
-- Supabase CLI
-- npm
-
-Before using an API or framework feature that is unclear, inspect:
-
-1. Existing repository usage
-2. Installed package versions
-3. Available documentation or MCP tools such as context-7, linear, or something similar.
-
-Prefer repository code and version-appropriate documentation over assumptions.
 
 ## Decision Priorities
 
@@ -67,12 +33,12 @@ Before writing or changing code:
 
 - Read the relevant source file completely.
 - Inspect neighbouring modules that solve similar problems.
-- Inspect relevant tests and database policies.
+- Inspect the relevant tests.
 - Identify the layer responsible for the behaviour.
 - Check existing public exports before importing internal files.
-- Confirm whether the change affects authentication, roles, ownership, or row-level security.
+- Check whether the change affects security, data access, or an external contract.
 - Preserve existing naming and response conventions unless the task explicitly changes them.
-- Consult available documentation or MCP tools when external behaviour is uncertain.
+- Inspect installed package versions and version-appropriate documentation before using an unfamiliar API. Prefer repository code and documentation over assumptions.
 
 Do not introduce a new pattern when an appropriate repository pattern already exists.
 
@@ -85,138 +51,35 @@ Make the smallest complete change that correctly satisfies the task.
 - Do not perform opportunistic refactors.
 - Do not change public APIs unless required.
 - Do not add speculative abstractions.
+- Do not add a dependency without a clear need. Prefer what the project already uses.
 - Update tests when observable behaviour changes.
-- Update documentation when commands, architecture, or externally visible behaviour changes.
+- Update documentation when commands, architecture, configuration, or externally visible behaviour changes.
 
 A small complete change is preferred over either a broad refactor or an incomplete minimal diff.
 
 ## Architecture
 
-The intended request flow is:
+Preserve the architecture the project already has.
 
-```text
-Browser UI
-    |
-    v
-Next.js route handlers
-    |
-    v
-Supabase client
-    |
-    v
-PostgreSQL with row-level security
-```
-
-Preserve this deliberately small architecture.
-
-For the current project scope:
-
-- Authentication, authorization, validation, and persistence may remain visible in route handlers.
-- Do not introduce service or repository layers merely to follow a generic architecture pattern.
-- Extract shared logic only when it removes meaningful duplication, defines a security boundary, or represents a stable domain operation.
 - Keep framework-specific concerns near framework boundaries.
-- Keep database authorization independently enforced through row-level security.
+- Keep validation, side effects, and presentation clearly separated.
+- Extract shared logic only when it removes meaningful duplication, defines a security or framework boundary, or represents a stable operation.
+- Do not introduce service layers, repositories, or other generic patterns merely to follow a convention.
+- Add a layer only when there is a concrete need, such as complex workflows, multi-step transactions, external integrations, multiple entry points, or substantial repeated logic.
 
-Additional layers may become appropriate only when there are:
+## Security
 
-- Complex domain workflows
-- Multi-step transactions
-- External integrations
-- Multiple application entry points
-- Substantial repeated domain logic
+Treat security as a requirement of every change.
 
-## Authorization Doctrine
-
-Authorization is enforced independently at the application and database layers.
-
-Never treat the user interface as a security boundary.
-
-### User interface
-
-The UI may hide controls that are unavailable to the current user, but hidden controls do not provide authorization.
-
-### Route handlers
-
-Route handlers must enforce all applicable requirements:
-
-- Authentication
-- Application role
-- Resource ownership
-- Request validation
-- Allowed state transitions
-- Appropriate HTTP response behaviour
-
-### Database
-
-PostgreSQL row-level security must independently enforce access to protected rows.
-
-Do not weaken database policies because an equivalent route-handler check exists.
-
-Do not remove route-handler checks because an equivalent row-level security policy exists.
-
-The overlap is intentional defense in depth.
-
-## Roles
-
-The project has two roles:
-
-```text
-student
-admin
-```
-
-Use string literal unions rather than TypeScript enums.
-
-### Students
-
-Students may operate only on consultations belonging to their authenticated user ID.
-
-Student reads and mutations must be scoped by ownership.
-
-For an individual consultation operation, use both:
-
-- Consultation ID
-- Authenticated student user ID
-
-Prefer enforcing ownership in the database query itself.
-
-Do not retrieve a consultation by ID alone and rely only on a later ownership check when the query can enforce ownership directly.
-
-### Administrators
-
-Administrators have read-only access to consultations belonging to all students.
-
-Do not add administrator create, update, cancel, or delete behaviour unless the authorization model is explicitly changed.
-
-Administrators must not use student consultation endpoints.
-
-## Consultation Lifecycle
-
-Supported consultation states are:
-
-```text
-scheduled
-completed
-cancelled
-```
-
-Preserve valid state transitions.
-
-Students may:
-
-- Create a scheduled consultation
-- Reschedule a consultation
-- Mark a consultation as completed
-- Return a completed consultation to scheduled
-- Cancel a consultation
-
-Cancelled consultations cannot be modified unless the project requirements explicitly change.
-
-Cancellation is a status transition, not a physical database deletion.
-
-Cancellation must remain idempotent when a consultation is already cancelled.
-
-Do not physically delete consultation records through authenticated application operations.
+- Never treat the user interface as a security boundary. Enforce access rules on the server or in the data layer.
+- Enforce authentication and authorization at the boundary that owns the resource. Overlapping checks in more than one layer are intentional defence in depth. Do not remove one because another exists.
+- Derive identity and ownership from trusted server-side state. Do not trust identifiers, roles, or ownership values supplied by the client.
+- Treat all external input as untrusted until validated: request bodies, URL and search parameters, form data, headers, cookies, environment variables, and third-party responses.
+- Grant the least privilege needed and prefer deny by default.
+- Do not weaken a security control to make a test or a feature pass.
+- Do not commit secrets. Load them from the environment, and do not expose server-only values to browser code.
+- Add third-party scripts, embeds, and network destinations deliberately. Document what they load and what they send.
+- Treat Content Security Policy and similar response headers as part of the security surface. Any change to them needs a test.
 
 ## Functions and Control Flow
 
@@ -275,15 +138,17 @@ Catch an error only when:
 - Translating it at a boundary
 - Adding meaningful context
 - Performing required cleanup
-- Converting it into an appropriate HTTP response
+- Converting it into an appropriate response
 
 Do not catch and immediately rethrow an unchanged error.
+
+Features that depend on a third party or the browser, such as analytics, must fail safe. A failure in them must not break the site.
 
 ## Logging
 
 Use structured logging only at meaningful boundaries, such as:
 
-- Route-handler failures
+- Request handler failures
 - Authentication boundaries
 - Background or CLI entry points
 - Top-level unexpected failures
@@ -293,12 +158,8 @@ Do not log:
 - Every function call
 - Successful routine steps
 - The same error at multiple layers
-- Secrets
-- Passwords
-- Access tokens
-- Refresh tokens
-- Session values
-- Authentication cookies
+- Secrets, passwords, access tokens, or refresh tokens
+- Session values or authentication cookies
 - Sensitive personal information
 
 Log an error once at the layer responsible for handling or reporting it.
@@ -314,7 +175,7 @@ Types should prevent mistakes and improve editor support without obscuring runti
 - Use targeted `any` only when required by an untyped external boundary, and explain why.
 - Use string literal unions instead of enums.
 - Prefer `undefined` internally.
-- Preserve `null` at database boundaries when it represents SQL `NULL`.
+- Preserve `null` where an external contract gives it meaning, such as SQL `NULL` or a JSON API.
 - Normalise external nullable values at clear boundaries when useful.
 - Avoid complicated conditional or generic types when a simpler named type is clearer.
 
@@ -329,12 +190,7 @@ Prefer:
 - Imports through public module surfaces
 - Functions and plain objects over classes for ordinary application code
 
-Default exports are acceptable where required or conventional, including:
-
-- Next.js pages
-- Next.js layouts
-- Framework configuration
-- Other framework-defined entry points
+Default exports are acceptable where the framework requires or conventionally expects them, including pages, layouts, routes, framework configuration, and other framework-defined entry points.
 
 Follow existing repository conventions when they are more specific.
 
@@ -387,17 +243,31 @@ Do not create multiple intermediate arrays in performance-sensitive paths withou
 
 Avoid obvious unnecessary work, including:
 
-- Repeated database queries
+- Repeated queries or network requests
 - Unbounded result sets
 - Sequential independent requests
 - Repeated parsing or transformation
 - Avoidable collection passes
 - Recreating expensive clients inside repeated operations
-- Fetching columns that are not used
+- Fetching data that is not used
+- Work on the critical rendering path that could run after load
 
 Do not sacrifice readability for speculative optimisation.
 
 Measure material performance changes where practical.
+
+## Accessibility
+
+Interactive elements must:
+
+- Use semantic HTML
+- Have accessible names
+- Be keyboard usable
+- Communicate disabled and loading states
+- Associate labels with inputs
+- Expose validation errors meaningfully
+
+Use native elements before adding custom keyboard behaviour. Do not use a visual-only element as a button.
 
 ## Comments
 
@@ -405,7 +275,7 @@ Comments should explain:
 
 - Why a non-obvious decision exists
 - Why a security restriction is required
-- Why an exception to the normal doctrine is necessary
+- Why an exception to the normal approach is necessary
 - Why framework behaviour requires an unusual implementation
 
 Do not use comments to repeat what the code already states.
@@ -418,15 +288,14 @@ Tests must cover observable behaviour affected by a change.
 
 Prioritise tests for:
 
-- Authentication requirements
-- Role restrictions
-- Resource ownership
-- Consultation state transitions
-- Invalid request payloads
-- Unauthenticated requests
-- Forbidden operations
-- Row-level security policies
-- Error response contracts
+- Security behaviour and access rules
+- Public contracts, including response shape and headers
+- Domain rules and state transitions
+- Input validation and invalid payloads
+- Error handling and safe failure
+- Important edge cases
+
+Do not test private implementation details when the same behaviour can be verified through a public boundary.
 
 Do not weaken an assertion merely to make a failing test pass.
 
@@ -439,20 +308,20 @@ For internal errors, prefer asserting:
 - Relevant properties
 - Stable message content
 
+Name each test with a behaviour-focused sentence. Keep tests independent, deterministic, and free of shared mutable state.
+
 ## Validation Commands
 
-Use the narrowest relevant checks while developing.
+Use the narrowest relevant checks while developing. The project's scripts are defined in `package.json`.
 
-Before considering a substantial change complete, run the applicable project checks:
+Before considering a substantial change complete, run every applicable check:
 
-```bash
-npm run format:check
-npm run typecheck
-npm run lint
-npm test
-npm run test:db
-npm run build
-```
+- Format check
+- Type check
+- Lint
+- Unit tests
+- End-to-end tests
+- Production build
 
 When developing a narrow change, run the relevant targeted test first before running the broader suite.
 
