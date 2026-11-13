@@ -1,57 +1,91 @@
 import type { Project } from "../types";
+import { content } from "../catalog";
 import IacReleaseDiagram from "~/media/diagrams/azure-iac-release-path.svg?url&no-inline";
 import IacReleasePath from "~/media/diagrams/azure-iac-release-path.svg";
 
 export default {
-  slug: "azure-iac",
-  path: "/projects/azure-iac",
+  ...content.iac,
   category: "Cloud infrastructure and deployment",
-  title: "One Azure release process for two web applications",
-  description:
-    "I built a shared Azure release process that checks the version and destination, previews infrastructure changes and checks the website after deployment.",
-  introduction:
-    "My portfolio website and Access Control Demo have separate code repositories but share the same release needs. I built reusable Azure infrastructure and a common deployment process so both applications follow the same checks when a new version goes live.",
+  title: "Azure infrastructure I can build on",
+  description: `
+    The Azure infrastructure behind my personal applications, organised
+    around reusable components, clear responsibilities and repeatable releases.
+  `,
+  introduction: `
+    I brought patterns I've used in commercial projects into the infrastructure
+    behind my portfolio and Access Control Demo. This is a small, public example
+    of how I organise cloud resources, keep application requirements separate
+    and make deployments repeatable.
+  `,
   featured: true,
   metrics: [
     {
-      label: "Applications",
-      value: ">=2",
-      description: "Currently 2 apps. This site and the domo site",
+      label: "Current use",
+      value: "2 applications",
+      description: "My portfolio website and Access Control Demo.",
     },
     {
-      label: "Release process",
-      value: "1 shared path",
-      description: "Single workflow for both apps",
+      label: "Infrastructure",
+      value: "Reusable modules",
+      description:
+        "Shared Bicep resource definitions with application-specific configuration.",
     },
     {
-      label: "Automated tests",
-      value: "112",
-      description: "Checks configuration and deployment behaviour.",
+      label: "Deployment",
+      value: "1 shared workflow",
+      description:
+        "Both applications deploy through the same GitHub Actions workflow.",
     },
     {
-      label: "Infastructure as Code",
-      value: "Small IaC Demo",
-      description: "Showcases a slice of my commercial skills",
+      label: "Verification",
+      value: "Before + after",
+      description:
+        "Configuration and change checks before deployment; website health checks afterwards.",
     },
   ],
   sections: [
     {
-      title: "What I needed",
+      title: "Start with what can be shared",
       paragraphs: [
-        "A working application build is only part of a release. The intended version needs to reach the right application without changing unrelated resources or disrupting shared services. I wanted one repeatable process across my projects, with clear ownership of application code and cloud infrastructure.",
+        `
+          My portfolio uses Qwik and the Access Control Demo uses Next.js, but
+          both need similar hosting and deployment capabilities. I kept each
+          application's code, tests and container build in its own repository,
+          and brought the Azure resource definitions and deployment checks
+          together here.
+        `,
+        `
+          Bicep modules define resources I can reuse, while each application
+          has its own settings for capacity, health checks and approved secret
+          references. Shared services, such as the container registry, sit
+          separately from the setup each application needs.
+        `,
+        `
+          That gives me a starting point for another project, with a clear
+          place for the requirements that differ.
+        `,
       ],
     },
     {
-      title: "My contribution",
+      title: "Keep a release focused",
       paragraphs: [
-        "I built the Azure resource definitions, shared release workflow, configuration checks and automated tests. I also wrote the release and recovery runbooks. Each application repository owns its code, tests, packaged application and database migrations; the infrastructure repository owns the hosting resources and release rules.",
-      ],
-    },
-    {
-      title: "How a release reaches the website",
-      paragraphs: [
-        "The workflow checks the source repository and release commit against GitHub, then checks the application settings and destination against a centrally maintained configuration. It deploys a fixed packaged version, identified by its image digest, rather than a moving label such as “latest”.",
-        "Before applying a release, the workflow inspects Azure’s preview of the proposed changes. Its checks reject deletions, unrelated resource changes and changes to the shared image registry or secret store. The preview runs again immediately before deployment.",
+        `
+          I separated initial infrastructure setup from application updates
+          so a routine release only needs permission to change a limited set
+          of resources.
+        `,
+        `
+          Before deploying, the shared workflow verifies the application's
+          source and packaged version, checks its settings and previews the
+          proposed Azure changes. It stops the release if the proposed 
+          changes would delete resources or affect other applications or shared services.
+        `,
+        `
+          Afterwards, it checks the deployed image, domain bindings and
+          website health. Automated tests cover accepted and rejected inputs,
+          while runbooks document release and recovery steps. If the final
+          checks fail, recovery remains manual.
+        `,
       ],
       images: [
         {
@@ -60,24 +94,44 @@ export default {
           w: 640,
           h: 1100,
           tone: "diagram",
-          alt: "The portfolio website and Access Control Demo share source and configuration checks, a change preview, production deployment and website checks. A failed final check requires manual recovery.",
+          alt: `
+            The portfolio website and Access Control Demo feed into shared release checks, 
+            an Azure change preview, production deployment and live website checks. 
+            Recovery after a failed final check is manual.
+          `,
           caption:
-            "The proposed changes are checked before deployment. Website checks run after the change has been applied.",
+            "Both applications use these release checks. The workflow verifies the live result after deployment.",
         },
       ],
     },
     {
-      title: "Check the deployed result",
+      title: "Build out as the projects change",
       paragraphs: [
-        "After deployment, the workflow checks the configured application image, domain bindings and health endpoint. For this portfolio, it also requests the homepage and Access Control Demo project page. Temporary failures are retried within a time limit.",
-        "A persistent failure marks the workflow unsuccessful. It does not undo the deployment; recovery is a manual operation through the release process.",
+        `
+          Today, both live applications use one supported deployment pattern:
+          a single container per application on Azure Container Apps. The
+          repository also includes experimental definitions for other
+          arrangements, including a separate frontend, API and PostgreSQL
+          database.
+        `,
+        `
+          Those additional stacks remain prototypes. Supporting another
+          deployment pattern would mean extending the templates, validation
+          and workflow where needed. The existing layout gives that work a
+          place to go.
+        `,
       ],
     },
     {
-      title: "The result",
+      title: "What I want to carry forward",
       paragraphs: [
-        "Two deployed applications use one production release path, with their own settings and identities. The infrastructure project has 112 automated tests covering invalid requests as well as accepted ones, including mismatched source details, unapproved settings, forbidden infrastructure changes and failed website checks.",
-        "The repository gives reviewers a concrete way to inspect how I take an application from a source commit to a deployed service, including the checks and operational decisions around that change.",
+        `
+          I want to carry useful infrastructure work from one project into
+          the next. Keeping the Azure definitions separate from application
+          code gives me a familiar starting point while leaving room for
+          different frameworks and hosting needs. I can extend it as those
+          needs become real.
+        `,
       ],
     },
   ],
