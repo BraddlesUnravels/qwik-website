@@ -46,7 +46,7 @@ export default component$(() => {
 });
 
 export const head = createSeoHead({
-  title: "Bradley Laskey | Full Stack Developer",
+  title: "Full Stack Developer",
   description:
     "Full Stack Developer specialising in TypeScript, React, Node.js, business systems, legacy modernisation and secure customer applications.",
   path: "/",
