@@ -3,16 +3,16 @@
  * Adapter configs load and extend this file during production builds.
  */
 /// <reference types="vitest/config" />
+import { fileURLToPath } from "node:url";
 import { qwikVite } from "@builder.io/qwik/optimizer";
 import { qwikCity } from "@builder.io/qwik-city/vite";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, type UserConfig } from "vite";
+import { partytownVite } from "@qwik.dev/partytown/utils";
 import tsconfigPaths from "vite-tsconfig-paths";
 import pkg from "./package.json";
 import { ssrAssets } from "./src/config/ssr-assets";
-import { fileURLToPath } from "node:url";
-import { partytownVite } from "@qwik.dev/partytown/utils";
-import { join } from "path";
+import { PARTYTOWN_LIBRARY_PATH } from "./src/config/partytown";
 
 type PkgDep = Record<string, string>;
 
@@ -69,7 +69,7 @@ export default defineConfig(({ mode }): UserConfig => {
             qwikCity({ trailingSlash: false }),
             partytownVite({
               dest: fileURLToPath(
-                new URL("./dist/~partytown", import.meta.url),
+                new URL(`./dist${PARTYTOWN_LIBRARY_PATH}`, import.meta.url),
               ),
             }),
           ]
@@ -78,7 +78,6 @@ export default defineConfig(({ mode }): UserConfig => {
       ssrAssets(),
       tsconfigPaths({ root: "." }),
       tailwindcss(),
-      partytownVite({ dest: join(__dirname, "dist", "~partytown") }),
     ],
     optimizeDeps: {
       exclude: [],

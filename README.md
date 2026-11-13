@@ -23,6 +23,7 @@ Open the URL Vite prints. The site runs with the checked-in content and assets. 
 | Change typography, navigation or interactions | [UI and accessibility](docs/ui.md)       |
 | Run tests or troubleshoot a CI check          | [Testing](docs/testing.md)               |
 | Configure the demo redirect, SEO or server    | [Runtime configuration](docs/runtime.md) |
+| Configure or troubleshoot Google Analytics    | [Analytics](docs/analytics.md)           |
 | Run the container or publish a release        | [Deployment](docs/deployment.md)         |
 
 [Audit notes](docs/last-docs-audit.md) record the gaps I found and the checks I ran.
