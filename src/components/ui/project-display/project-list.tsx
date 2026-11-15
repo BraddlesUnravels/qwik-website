@@ -4,7 +4,11 @@ import ExperienceList from "./experience-list";
 
 export default component$(() => {
   return (
-    <section id="selected-projects" class="scroll-mt-15 py-10 lg:py-20">
+    <section
+      id="selected-projects"
+      tabIndex={-1}
+      class="scroll-mt-(--site-header-height) py-10 focus:outline-none lg:py-20"
+    >
       <FeatureList />
 
       <ExperienceList />
