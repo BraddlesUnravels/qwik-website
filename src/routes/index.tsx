@@ -3,12 +3,14 @@ import PageHeader from "~/components/ui/home-page-header";
 import ProjectList from "~/components/ui/project-display/project-list";
 import { Typography } from "~/components/ui/typography";
 import { createSeoHead } from "~/lib/seo";
-import { MobileBackToTop } from "~/components/ui/mobile-back-to-top-button";
+import { ViewProjectsButton } from "~/components/ui/view-projects-button";
 
 export default component$(() => {
   return (
     <main id="main-page-content">
       <PageHeader />
+
+      <ViewProjectsButton />
 
       <ProjectList />
 
@@ -39,8 +41,6 @@ export default component$(() => {
           </div>
         </div>
       </section>
-
-      <MobileBackToTop />
     </main>
   );
 });
