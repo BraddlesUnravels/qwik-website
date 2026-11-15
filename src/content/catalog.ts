@@ -107,13 +107,15 @@ export const projectSummaries = [
     ...content.siteRebuild,
     priority: 1,
     changeFreq: "weekly",
-    category: "Web development and CRM automation",
-    title: "Website rebuild · More leads; the same campaigns",
+    category: "Web modernisation and CRM integration",
+    title: "New site · More leads captured",
     description: `
-      I replaced WordPress with Qwik and connected enquiries to HubSpot. Recorded daily leads rose by nearly a third without more campaign activity.
-    `,
+      I rebuilt Inside Edge’s WordPress site in Qwik and connected its 
+      forms to HubSpot, so teams could track which campaigns generated 
+      enquiries and who would follow up.
+  `,
     featured: true,
-    evidence: ["3 months", "100 in 3 categories"],
+    evidence: ["Captured leads ↑~33%", "3 x 100 Lighthouse"],
   },
   {
     ...content.integration,

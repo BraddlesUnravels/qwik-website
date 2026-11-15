@@ -1,24 +1,30 @@
 import type { Project } from "../types";
+import { content } from "../catalog";
+// imgs
 import WebsiteLanding from "~/media/site-rebuild/company-website-landing.png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
 import LeaseCalculator from "~/media/site-rebuild/company-website-lease-calculator-monthly.png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
 import EmployeeEnquiry from "~/media/site-rebuild/company-contact-form-employee.png?w=640;960;1280;1600&format=webp&quality=80&withoutEnlargement&as=img";
+// imgs paths
 import WebsiteLandingFull from "~/media/site-rebuild/company-website-landing.png?url&no-inline";
 import LeaseCalculatorFull from "~/media/site-rebuild/company-website-lease-calculator-monthly.png?url&no-inline";
 import EmployeeEnquiryFull from "~/media/site-rebuild/company-contact-form-employee.png?url&no-inline";
 
 export default {
-  slug: "site-rebuild-with-intergration-hubspot",
-  path: "/projects/site-rebuild-with-intergration-hubspot",
+  ...content.siteRebuild,
   category: "Web development and CRM automation",
-  title: "Rebuilding a WordPress site with HubSpot intergration",
+  title: "New site · More leads captured",
   description: `
-    I rebuilt the public website in Qwik and implemented a server-side lead flow 
-    that made enquiries and campaign attribution easier to follow.
+    I replaced WordPress with Qwik and connected enquiries to HubSpot,
+    helping the business record nearly a third more leads without increasing
+    campaign activity.
   `,
   introduction: `
-    The WordPress site was slow, difficult for marketing to update and only part of 
-    the route a prospective customer took into sales. The project needed a faster public 
-    website and a more reliable records of what happened after an enquiry.
+    A month into rebuilding Inside Edge’s public website, I gave the board
+    two options. They could extend the three-month deadline or bring in a
+    second developer to keep the launch on schedule. The business was moving
+    sales and marketing to HubSpot at the same time, and I was responsible
+    for rebuilding the main site, connecting its enquiry forms and getting
+    it live on Azure.
   `,
   featured: true,
   images: [
@@ -27,144 +33,161 @@ export default {
       fullSrc: WebsiteLandingFull,
       alt: "Inside Edge homepage with vehicle imagery and an estimate form.",
       caption:
-        "The rebuilt Inside Edge homepage gives visitors a direct route into a lease estimate.",
+        "The rebuilt homepage gave visitors a direct route into a lease estimate.",
     },
   ],
   metrics: [
     {
       label: "Delivery Deadline",
       value: "3 months",
-      description:
-        "The old wordpress site could not be linked to HubSpot, reslting in manual lead allocation from marketing",
+      description: "The rebuilt site went live on schedule without downtime.",
     },
     {
-      label: "Lighthouse",
-      value: "3 Scores 100%",
+      label: "Lighthouse Score",
+      value: "3 x 100%",
       description:
-        "The new site scored 100% for performance, accessibility and SEO",
+        "Performance, Accessibility and Best Practices all scored 100.",
     },
     {
       label: "Recorded daily leads",
-      value: "Nearly ⅓ more",
+      value: "Incresed ~1/4",
       description:
-        "With the hubspot integration, more leads were tracked, improving visibility and actual conversions",
+        "Existing demand became visible without additional campaign activity.",
     },
     {
-      label: "Cloud Hosting",
-      value: "Azure Container",
+      label: "Lead allocation",
+      value: "Automated",
       description:
-        "The new site is cloud hosted in Azure container apps. The previous site was hosted onsite",
+        "HubSpot assigned website enquiries through the sales workflow.",
     },
   ],
   sections: [
     {
-      title: "The problem",
+      title: "Dividing the work around our strengths",
       paragraphs: [
         `
-          The previous WordPress site scored roughly 50–60 in Lighthouse Performance and 
-          Accessibility and about 40 in SEO. Even small content changes depended on an external contractor. 
-          Meanwhile, offsite and social-media enquiries could move between spreadsheets, documents and email 
-          without becoming traceable CRM records.
+          When my colleague joined, she took on the blog while I continued
+          with the main site. I built the HubSpot integration, drawing on my
+          API experience, and she brought her technical SEO experience to
+          the project.
         `,
         `
-          An earlier project had already routed WordPress website enquiries into the old PipelineAxis CRM. 
-          This later project replaced the website and moved the lead process into HubSpot.
+          Once the forms were connected, I joined her on the SEO work across
+          both parts of the site. It was an area I wanted to understand better.
         `,
       ],
     },
     {
-      title: "My role",
-      paragraphs: [
-        `
-          I selected Qwik after considering Next.js and Astro, but niether could out-perform Qwik on the 
-          main requirements of performance and SEO. I rebuilt the main public website, built its server-side HubSpot connection 
-          and deployed the application to Azure. A second developer owned the blog. We worked together on shared SEO, metadata, 
-          structured data and analytics integration across the complete site.
-        `,
-      ],
-    },
-    {
-      title: "How I approached it",
+      title: "Getting the page on screen sooner",
       images: [
         {
           ...LeaseCalculator,
           fullSrc: LeaseCalculatorFull,
           alt: "Lease calculator showing entered values, a monthly estimate and a contact toggle.",
           caption:
-            "The calculator turns vehicle and salary inputs into an estimate and offers a contact option.",
+            "Visitors could review estimated lease costs and request a follow-up directly from the calculator.",
         },
+      ],
+      paragraphs: [
+        `
+          The old WordPress site was slow, and even small content changes
+          depended on an external contractor.
+        `,
+        `
+          I considered Next.js and Astro before choosing Qwik. It let me send
+          rendered HTML from the server and load interaction code as visitors
+          needed it. Across the site and blog, we added page-specific metadata
+          and structured data. We also used Partytown to run compatible
+          analytics scripts in a browser worker so they competed less with
+          page rendering.
+        `,
+        `
+          The lease calculator was one of the main features of the site.
+          Visitors could start an estimate from the homepage, see a breakdown
+          of their costs and ask for a follow-up.
+        `,
+      ],
+    },
+    {
+      title: "Giving sales a record to work from",
+      images: [
         {
           ...EmployeeEnquiry,
           fullSrc: EmployeeEnquiryFull,
           alt: "Employee enquiry form with contact details, employer details and an enquiry reason.",
           caption:
-            "The employee enquiry form collects the details needed for the server-side lead workflow.",
+            "Website enquiries entered the same HubSpot workflow used to track attribution and sales follow-up.",
         },
       ],
-      subsections: [
-        {
-          title: "Prioritise fast, indexable pages",
-          paragraphs: [
-            `
-              The decision to use Qwik was based on its support for server-rendered content, its resumability model 
-              and control over page metadata. We used Partytown to move compatible third-party analytics work off 
-              the main thread, and added structured data and page-specific metadata. These choices supported the 
-              performance and discoverability requirements the project demanded.
-            `,
-          ],
-        },
-        {
-          title: "Keep lead creation behind the server",
-          paragraphs: [
-            `
-              On form submission, the backend normalised the data and checked HubSpot for an existing contact 
-              using the available identifying details before creating a record when needed. 
-              It carried campaign UTMs, referral information and form origin into the lead workflow, 
-              where HubSpot handled agent allocation.
-            `,
-          ],
-        },
-        {
-          title: "Account for leads created away from the website",
-          paragraphs: [
-            `
-              The wider operating process required offsite and social media leads to enter HubSpot before progressing. 
-              This replaced informal hand-offs and gave sales and marketing a more complete record to use 
-              alongside qualified Aircall call data.
-            `,
-          ],
-        },
+      paragraphs: [
+        `
+          I’d already connected the WordPress forms to the internal CRM. 
+          As the business grew, enquiries started coming in through more 
+          social media platforms and advertising channels. Marketing needed 
+          to see which campaigns were bringing in enquiries, and sales 
+          needed to know who was responsible for following up.
+        `,
+        `
+          I built the HubSpot integration on the server. It normalised the
+          form data and checked for an existing contact using the visitor’s
+          name, phone number and email. If it found no match, it created a
+          new contact.
+        `,
+        `
+          It also recorded which form the visitor used and kept any campaign
+          or referral details, so marketing could trace enquiries back to
+          Google, social media and other advertising channels. HubSpot
+          assigned each website enquiry in rotation, taking agents’
+          workloads into account.
+        `,
+        `
+          The business also required offsite BDM enquiries to be logged in
+          HubSpot before they progressed. Marketing could then review website
+          enquiries and their campaign details alongside qualified calls from
+          the new Aircall system.
+        `,
       ],
     },
     {
-      title: "The result",
+      title: "What changed after launch",
       paragraphs: [
         `
-          The Azure-hosted site achieved Lighthouse scores of 100 for Performance, Accessibility and Best Practices during 
-          testing and benchmarking including production testing. Recorded daily leads increased by just under one-third 
-          without a corresponding increase in campaign activity, suggesting that more existing demand was being captured and made visible. 
-          Staff also reported substantially fewer complaints about customers not receiving a response.
+          We went live on Azure within three months, without downtime.
+          In testing, the site scored 100 in Lighthouse for Performance,
+          Accessibility and Best Practices.
         `,
-        "The change improved capture and visibility of leads; it was not measured as a change in site traffic or sales conversion.",
+        `
+          Inside Edge recorded an avergae increase of ~25% in lead capture without
+          increasing campaign activity. Staff reported far fewer complaints
+          from people who had asked to be contacted and never heard back.
+          Sales managers also had a more complete lead count to work from
+          when setting targets.
+        `,
       ],
     },
   ],
   technologies: [
     {
       label: "Website",
-      value: "Qwik, TypeScript, server rendering, structured data",
+      value: "Qwik, TypeScript, server rendering",
     },
-    { label: "Performance", value: "Partytown, Lighthouse" },
-    { label: "CRM", value: "HubSpot API, UTM and referral attribution" },
+    {
+      label: "Performance and SEO",
+      value: "Partytown, structured data, metadata, Lighthouse",
+    },
+    {
+      label: "CRM",
+      value: "HubSpot API, attribution and lead allocation",
+    },
     {
       label: "Delivery",
-      value: "Azure; joint integration with blog developer",
+      value: "Azure, collaborative delivery",
     },
   ],
   related: [
     {
       label: "CRM legacy integration",
-      href: "/projects/crm-legacy-integration/",
+      href: "/projects/tqe-legacy-integration",
     },
   ],
 } satisfies Project;
