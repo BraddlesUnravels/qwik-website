@@ -154,11 +154,10 @@ export const projectSummaries = [
     ...content.ransomware,
     priority: 0.9,
     changeFreq: "weekly",
-    category: "Incident response",
-    title: "Ransomware recovery · Back online by morning",
-    description: `
-      A ransom note appreared on a workstation screen. I isolated the network, and led network recovery workstation rebuild.
-    `,
+    category: "Cyber Security & Incident Response",
+    title: "Ransomware · The overnight rebuild",
+    description:
+      "I isolated the office network and rebuilt staff workstations. We restored critical systems by 9 am the next day, and I led the initial investigation.",
     featured: false,
     evidence: [
       "Crital Incident",

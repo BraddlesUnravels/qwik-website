@@ -1,201 +1,189 @@
+import { content } from "../catalog";
 import type { Project } from "../types";
 
 export default {
-  slug: "ransomware-recovery",
-  path: "/projects/ransomware-recovery",
-  category: "Incident response",
-  title: "Restoring critical systems after a ransomware incident",
+  ...content.ransomware,
+  category: "Cyber Security & Incident Response",
+  title: "Ransomware recovery · An overnight rebuild",
   description: `
-    I handled initial containment and recovery, helped investigate a likely source of
-    exposed database credentials, and introduced security awareness and threat reporting.
+    I contained an 8Base ransomware incident and rebuilt network and staff systems,
+    helping restore critical operations by the following morning.
   `,
   introduction: `
-    In March 2024, a ransomware incident disrupted three business-critical applications and
-    their databases. I handled initial containment, led network and workstation restoration,
-    and worked with an external specialist on the subsequent investigation. We identified 8Base
-    ransomware and later found a likely source of exposed database credentials in a legacy desktop
-    application. My follow-up work established security training and a reporting channel for
-    suspicious emails, and I gained authority to begin moving on-premises infrastructure to Azure.
+    The morning of Monday 4 March 2024, an administration colleague asked why his computer was
+    displaying a ransom message. Some staff were still working; other machines were
+    already locked. The incident affected all systems business relied on to manage customers, 
+    quotes and leases.
+
+    I handled the initial response, took responsibility for network and workstation
+    recovery, and later led the initial investigation with external specialist
+    support. The IT manager owned server and database restoration.
   `,
   featured: false,
   metrics: [
     {
       label: "Immediate response",
       value: "Containment",
-      description: "Isolated the network, stopped workstation use",
+      description:
+        "Isolated the network, stopped workstation use, briefed board",
     },
     {
-      label: "Recovery responsibility",
-      value: "Network & PCs",
-      description: "Owned all network divice & workstation recovery",
+      label: "Recovery approach",
+      value: "Working in parallel",
+      description:
+        "I rebuilt the network and staff devices while the IT manager restored servers and databases.",
     },
     {
-      label: "Critical service",
-      value: "Next Morning",
-      description: "Restored the critial business services.",
+      label: "Critical services",
+      value: "9 am Tuesday",
+      description:
+        "Available the morning after discovery; wider restoration continued.",
     },
     {
-      label: "Wider recovery",
-      value: "~3 weeks",
-      description: "Further systems brought back online.",
+      label: "Infection source",
+      value: "Confirmed",
+      description:
+        "An email attachment was identified; use of exposed credentials remained unproven.",
     },
   ],
   sections: [
     {
-      title: "The incident",
+      title: "Stopping work to contain the incident",
       paragraphs: [
         `
-          On Monday morning the 4th of March 2024, I was asked to look at a workstation displaying a ransom message.
-          Other machines were affected, and staff were already having difficulty accessing LeaseCore.
-          I stopped workstation activity and moved to contain the incident before more systems were affected.
+          I stopped staff from using company systems, disconnected the office from
+          external connectivity and shut down the business applications. I called the
+          part-time IT manager in and briefed the board, recommending that staff go
+          home while company-issued devices stayed onsite.
+        `,
+        `
+          When the IT manager arrived, he confirmed that all three application
+          databases were encrypted, but protected backups were available. Before
+          server restoration began, I captured a memory dump to preserve evidence of
+          the systems' running state.
         `,
       ],
     },
     {
-      title: "My role",
+      title: "Two people, parallel recovery",
       paragraphs: [
         `
-          I isolated the office from external connectivity, stopped access to the affected business applications, 
-          contacted the part-time IT manager and briefed the board on next steps. We divided the recovery into 
-          parallel workstreams: he took responsibility for servers and databases, while I took responsibility for 
-          the network and end-user devices. I also preserved available evidence before server restoration began.
+          I proposed dividing the recovery: the IT manager would restore servers and
+          databases while I rebuilt the network and end-user environment.
+        `,
+        `
+          Using clean Windows installation media from Microsoft, I prepared six USB
+          drives and rebuilt six workstations at a time. Each needed its existing
+          operating system erased, Windows installed afresh, and Microsoft 365 and
+          the QuoteCore desktop quoting application reinstalled. I also factory-reset
+          network-connected equipmen from the router to the printers printers.
+        `,
+        `
+          We worked through the night and had business-critical systems back online by
+          9 am Tuesday. Recovery of lower-priority systems continued over the next
+          three weeks.
         `,
       ],
     },
     {
-      title: "What I did",
-      subsections: [
-        {
-          title: "Contain the incident and preserve evidence",
-          paragraphs: [
-            `
-              I stopped device use, isolated the network and kept company-issued devices onsite.
-              I investigated the immediate scope of the incident and captured available volatile memory
-              and process information before the IT manager began restoring the servers. He confirmed
-              that protected database backups were available and led the server and database recovery.
-            `,
-          ],
-        },
-        {
-          title: "Restore a usable working environment",
-          paragraphs: [
-            `
-              I prepared six clean Windows installation drives and reimaged workstations in parallel.
-              I then reinstalled Microsoft 365 and the locally installed quoting client, and reset
-              affected network-connected equipment as part of preparing the environment for reconnection.
-              This work ran alongside the server and database restoration.
-            `,
-          ],
-        },
-        {
-          title: "Investigate the intrusion and the likely credential exposure",
-          paragraphs: [
-            `
-              Following the recovery, I worked with an external incident-response specialist to
-              investigate how the attack unfolded. We identified the ransomware as 8Base, a variant
-              of the Phobos ransomware family, and traced the likely initial entry point to a
-              malicious email attachment received from a compromised partner financier.
-            `,
-            `
-              The investigation also uncovered a significant vulnerability in PackEdge, our locally
-              installed quoting application. Its compiled executable contained database credentials
-              in readable plaintext. Because PackEdge connected directly to the database, we identified
-              this as the most likely source of the credentials used by the attackers to access our databases.
-            `,
-            `
-              However, the available logs and memory dumps did not provide sufficient evidence to confirm
-              that the attackers had obtained the credentials from PackEdge. The finding nevertheless
-              exposed a serious security weakness, and required that the application’s owner remediate 
-              the vulnerability.
-            `,
-          ],
-        },
-        {
-          title: "Turn the investigation into practical prevention",
-          paragraphs: [
-            `
-              I required the owner of PackEdge to address the plaintext database credentials bundled
-              with the installed client. I also asked the IT manager to strengthen email scanning and
-              threat detection in our Microsoft environment. Those were separate remediation requests;
-              my role was to identify the risks and press for them to be addressed.
-            `,
-            `
-              I implemented twice yearly cybersecurity awareness training focused on email diligence, tailoring
-              sessions to situations employees encountered in their day-to-day work. I also made
-              cybersecurity training mandatory for new employees during onboarding.
-            `,
-            `
-              I set up a dedicated cyber-threat reporting inbox so anyone in the business could ask
-              for help with a suspicious email, attachment or other potential threat. Most reports
-              were false alarms, but the inbox gave staff a clear action to take instead of making
-              the decision alone. It also surfaced a highly targeted spear-phishing campaign aimed
-              at the operations manager and both directors.
-            `,
-          ],
-        },
-        {
-          title: "Establish a path away from on-premises infrastructure",
-          paragraphs: [
-            `
-              The longer-term outcome was that I was given authority to begin moving on-premises
-              infrastructure to Azure. The incident and follow-up investigation turned infrastructure
-              modernisation from a proposed improvement into an authorised workstream. That authority
-              was the outcome at this stage; it should not be confused with a completed cloud migration.
-            `,
-          ],
-        },
+      title: "Identifying the ransomware and tracing its entry",
+      paragraphs: [
+        `
+          I was asked to lead the initial investigation. With limited post-incident
+          forensic experience, I brought in an external specialist to help reconstruct
+          what had happened.
+        `,
+        `
+          Together, we identified the malware as the Phobos ransomware variant used
+          by 8Base and confirmed that the infection had arrived through an email
+          attachment from a financier partner that had itself suffered a ransomware
+          attack.
+        `,
+        `
+          We tightened email-scanning sensitivity, accepting more legitimate messages
+          being flagged for review. I also ran department-specific workshops around
+          the emails and attachments staff handled in their daily work.
+        `,
+        `
+          In February 2025, an international operation led to the arrest of
+          alleged 8Base operators and disrupted the group's infrastructure.
+        `,
       ],
     },
     {
-      title: "The result",
+      title: "Exposed credentials, an unconfirmed route",
       paragraphs: [
         `
-          Working in parallel, we restored critical applications and enough clean equipment for the
-          business to resume by 9:00 am the following morning. Lower-priority restoration
-          continued over the next three weeks. Protected backups limited the amount of database data
-          requiring reconstruction.
+          The investigation had established how the infection entered, but the route
+          to database access remained unresolved.
         `,
         `
-          My contribution covered initial containment, evidence preservation, network and workstation
-          restoration, investigation, security-awareness training and the new threat-reporting process.
-          The IT manager remained responsible for server and database restoration. The investigation
-          identified a likely initial email entry point and a separate, plausible source of database
-          credential exposure. The intrusion and investigation led to my being authorised to start 
-          moving on-premises infrastructure to Azure.
+          About a month later, a QuoteCore update produced a database authentication
+          error on a staff member's machine. I opened the application's compiled
+          executable in a text editor and found database credentials stored in
+          plaintext.
+        `,
+        `
+          Those credentials exposed a viable route into the database. However, no logs
+          or alerts established that the attackers had used them. The discovery
+          confirmed a credential exposure; its role in the incident remained unproven.
+        `,
+      ],
+    },
+    {
+      title: "Results",
+      paragraphs: [
+        `
+          Working with the IT manager, I helped restore critical operations by the
+          following morning, while the wider recovery continued over three weeks. His
+          protected backups made database restoration possible; my work rebuilt the
+          network and staff devices needed to use those systems.
+        `,
+        `
+          The follow-up established the infection source, strengthened email controls
+          and uncovered a database credential exposure. My responsibilities expanded
+          to include broader vulnerability remediation, with authority to act on
+          security weaknesses.
         `,
       ],
     },
   ],
   technologies: [
     {
-      label: "Response",
-      value:
-        "Network isolation, application shutdown, device control, network scanning",
+      label: "Containment",
+      value: "Network isolation, service shutdown and device control",
     },
-    { label: "Network scanning", value: "arp-scan, nmap, Wireshark, tcpdump" },
     {
       label: "Evidence preservation",
-      value: "Volatile memory capture, process information capture",
+      value: "Volatile memory and process capture",
     },
     {
       label: "Recovery",
-      value: "Windows reimaging, Microsoft 365, network-device reset",
+      value: "Windows reimaging, Linux and network-device reset",
     },
     {
       label: "Investigation",
       value:
-        "External incident-response support, 8Base / Phobos identification, compiled-client examination",
+        "External incident-response support and compiled-client examination",
     },
     {
-      label: "Follow-up",
-      value:
-        "Credential remediation request, Microsoft email scanning and detection request, employee and onboarding training, threat-reporting inbox, Azure migration authority",
+      label: "Prevention",
+      value: "Email scanning, staff workshops and vulnerability remediation",
     },
   ],
+  lesson: `
+    Finding exposed credentials a month later reinforced a practical lesson for me:
+    getting systems running again and understanding how they were compromised are
+    separate jobs.
+  `,
   related: [
     {
-      label: "LeaseTrack customer portal",
-      href: "/projects/customer-finance-portal/",
+      label: "8Base ransomware: Background and Phobos connection",
+      href: "https://brandefense.io/knowledge-hub/ransomware-groups/8base/",
+    },
+    {
+      label: "US Department of Justice: 8Base arrests and disruption",
+      href: "https://www.justice.gov/opa/pr/phobos-ransomware-affiliates-arrested-coordinated-international-disruption",
     },
   ],
 } satisfies Project;
