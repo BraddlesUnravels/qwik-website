@@ -19,7 +19,7 @@ bun run ci
 
 Use `bun run test.unit.watch` while editing tests and `bun run test.unit.coverage` to generate the HTML coverage report under `coverage/`. `bun run test.all` runs both suites. `bun run ci` also runs formatting, lint, type checking and the build.
 
-Playwright runs Chromium against the production build. `bun run test.e2e` builds the client and Bun server with `PUBLIC_GA_MEASUREMENT_ID=G-TEST123456`, then serves it on port 4177. Google endpoints are stubbed, so the specs make no real analytics requests. Partytown cannot run its service worker under the Vite dev server, which is why the specs use the production build. If Playwright reports a missing browser, run `bunx playwright install chromium` from the repo root. The HTML report is written to `playwright-report/`.
+Playwright runs Chromium against the production build. `bun run test.e2e` builds the client and Bun server with `PUBLIC_GA_MEASUREMENT_ID=G-TEST123456`, then serves it on port 4177 with a test-only demo URL and access code. Google endpoints and the demo redirect are stubbed, so the specs make no real requests to those services. Partytown cannot run its service worker under the Vite dev server, which is why the specs use the production build. If Playwright reports a missing browser, run `bunx playwright install chromium` from the repo root. The HTML report is written to `playwright-report/`.
 
 For a focused check of the media regression tests, run `node scripts/test-media-mutations.mjs`. The [script](../scripts/test-media-mutations.mjs) applies deliberate changes in a temporary copy and writes its results to `test-results/media-mutations.json`.
 

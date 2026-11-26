@@ -1,4 +1,4 @@
-import { component$, useSignal } from "@builder.io/qwik";
+import { $, component$, useOnDocument, useSignal } from "@builder.io/qwik";
 import { MessageDialog } from "~/components/ui/app-modal/message-dialog";
 import {
   Form,
@@ -53,7 +53,6 @@ export const useDemoAccessRedirect = routeAction$(
           "The live demo is unavailable right now. Please try again later.",
       });
     }
-
     throw redirect(302, link);
   },
 );
@@ -62,6 +61,15 @@ export default component$(() => {
   const project = useProject().value;
   const demoAccess = useDemoAccessRedirect();
   const demoErrorOpen = useSignal(false);
+
+  useOnDocument(
+    "qinit",
+    $(() => {
+      if (demoAccess.value?.failed) {
+        demoErrorOpen.value = true;
+      }
+    }),
+  );
 
   if (!project) {
     return (
@@ -92,12 +100,8 @@ export default component$(() => {
           id="demo-access"
           q:slot="actions"
           action={demoAccess}
+          reloadDocument
           class="mt-10 flex flex-col items-start gap-3"
-          onSubmitCompleted$={(event) => {
-            if (event.detail.value?.failed) {
-              demoErrorOpen.value = true;
-            }
-          }}
         >
           <button
             aria-label="Try demo"
