@@ -16,7 +16,7 @@ Keep secrets out of `PUBLIC_` and `VITE_` settings because Vite can expose those
 
 ## Live demo redirect
 
-“Try the live demo” on `/projects/access-control-demo` submits a Qwik City server action. The action resolves `ACA_DEMO_ACCESS_LINK` through [demo-access.ts](../src/lib/demo-access.ts) and sends a 302 redirect. Missing or invalid configuration returns a 503 from the action and shows an error on the page.
+“Try the live demo” on `/projects/access-control-demo` submits a Qwik City server action with a normal browser form submission. The action resolves `ACA_DEMO_ACCESS_LINK` through [demo-access.ts](../src/lib/demo-access.ts) and sends a 302 redirect. Missing or invalid configuration returns a 503 from the action and shows an error on the page.
 
 The standard template is `{{ACA_DEMO_DOMAIN}}/?code={{ACA_GENERAL_ACCESS_CODE}}`. In Azure, the IaC workload supplies the domain and template and reads the code from Key Vault. The browser receives the code in the redirect URL. The demo application handles its own access gate and authorisation.
 

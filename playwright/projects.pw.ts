@@ -1,6 +1,28 @@
 import { expect, test } from "./support/test";
 
 test.describe("Project pages", () => {
+  test("opens the live demo with its configured access code", async ({
+    page,
+  }) => {
+    let status: number | undefined;
+    let location: string | undefined;
+    await page.route(
+      "**/projects/access-control-demo?qaction=*",
+      async (route) => {
+        const response = await route.fetch({ maxRedirects: 0 });
+        status = response.status();
+        location = response.headers().location;
+        await route.fulfill({ status: 200, body: "Redirect intercepted" });
+      },
+    );
+    await page.goto("/projects/access-control-demo");
+    await page.getByRole("button", { name: "Try demo" }).click();
+
+    await expect(page.getByText("Redirect intercepted")).toBeVisible();
+    expect(status).toBe(302);
+    expect(location).toBe("https://demo.example.test/?code=test-code");
+  });
+
   test("should render the AutoDash project and its lead image", async ({
     page,
   }) => {

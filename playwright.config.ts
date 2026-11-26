@@ -17,6 +17,12 @@ export default defineConfig({
   // Analytics settings are inlined at build time, so the server is built here.
   webServer: {
     command: `PUBLIC_GA_MEASUREMENT_ID=G-TEST123456 bun run build.docker && PORT=${port} bun server/entry.bun.js`,
+    env: {
+      ACA_DEMO_ACCESS_LINK:
+        "{{ACA_DEMO_DOMAIN}}/?code={{ACA_GENERAL_ACCESS_CODE}}",
+      ACA_DEMO_DOMAIN: "https://demo.example.test",
+      ACA_GENERAL_ACCESS_CODE: "test-code",
+    },
     url: `http://127.0.0.1:${port}/health`,
     reuseExistingServer: false,
     timeout: 300_000,
